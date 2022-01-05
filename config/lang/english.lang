@@ -1,0 +1,39 @@
+<LANGUAGE>
+  <CATEGORY Name="Hints">
+	<Entry Name="HintLookAround">Use the mouse to look around.</Entry>
+	<Entry Name="HintMoveAround">To move around, use the movement keys ($Input{Forward} $Input{Backward} $Input{Left} $Input{Right})</Entry>
+	<Entry Name="HintDoors">To open doors and containers, first interact with them and pull on the mouse.</Entry>
+	<Entry Name="HintTools">To use an object you have acquired, press $Input{Interact} when the item is displayed on screen.</Entry>
+	<Entry Name="HintGrab_1">Press $Input{Throw} while holding an object to throw it.</Entry>
+	<Entry Name="HintGrab_2">You can press and hold $Input{InteractRotate} and move the mouse to rotate objects.</Entry>
+	<Entry Name="HintGrab_3">You can use $Input{ScrollDown} or $Input{ScrollUp} while holding an object to move it closer or further.</Entry>
+	<Entry Name="HintWheel">Move the mouse in circles while holding a wheel to turn it.</Entry>
+	<Entry Name="HintSlider">Use the mouse while holding drawers to pull/push them.</Entry>
+	<Entry Name="ReadableTextHint">View text using $Input{Interact}</Entry>
+	<Entry Name="ReadablePropAdditionalHint">Use mouse to rotate / $Input{InteractCancel} to exit.</Entry>
+	<Entry Name="ReadableGrabAdditionalHint">Move mouse while pressing $Input{InteractRotate} to rotate object.</Entry>
+	<Entry Name="ReadableTextHintZoomArea">View text using $Input{Interact}</Entry>
+	<Entry Name="HintPhone">Objects can be interacted with using $Input{Interact}</Entry>
+	<Entry Name="HintPickUpItem">Items can be picked up with the interact button $Input{Interact}</Entry>
+	<Entry Name="HintRun">Press and hold $Input{Run} while moving to run.</Entry>
+	<Entry Name="HintJump">Press $Input{Jump} to jump.</Entry>
+	<Entry Name="HintInventory">Use $Input{OpenInventory} to see your inventory.</Entry>
+	<Entry Name="HintSneak">Moving while crouching (Press $Input{Crouch}) is less noisy and reduces the chance of being noticed.</Entry>
+	<Entry Name="HintFlashlight">To toggle your Flashlight, press $Input{Flashlight}</Entry>
+	<Entry Name="HintLean">Press $Input{LeanLeft} or $Input{LeanRight} to lean left or right</Entry>
+	<Entry Name="HintTest1">$Input{LeanLeft} - $Input{Jump} - $Input{Crouch} - $Input{OpenInventory} - $Input{Run} - $Input{Forward}</Entry>
+	<Entry Name="HintComputer1">Use the keyboard to write and execute commands on the terminal.</Entry>
+	<Entry Name="HintComputer2">You can type HELP in order to get information on avilable commands.</Entry>
+  </CATEGORY>
+
+  <CATEGORY Name="Chapter1Notes">
+  <Entry Name="powerstation1notetitle">Read this!</Entry>
+	<Entry Name="powerstation1note">If this breaker stops working for some reason, turn the pressure valve then use the service lever. It should automatically restart after that.</Entry>
+	<Entry Name="SampleMessage2">This is another language entry added by the sample mod!</Entry>
+  </CATEGORY>
+
+  <CATEGORY Name="SampleMap">
+	<Entry Name="SampleMessage">This is a language entry added by the sample mod!</Entry>
+	<Entry Name="SampleMessage2">This is another language entry added by the sample mod!</Entry>
+  </CATEGORY>  
+</LANGUAGE>

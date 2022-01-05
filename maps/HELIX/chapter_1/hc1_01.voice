@@ -1,0 +1,509 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<VoiceData>
+ <Characters>
+  <Character ID="1" Name="Derek" DisplayName="Derek" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="True" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="GUIWorld" Volume="0.8" ReverbVolume="0.875" SpeakerSpread="40" EntitySource="" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+  <Character ID="2" Name="HelperJane" DisplayName="Helper Jane" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="True" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="GUIWorld" Volume="1" ReverbVolume="0.875" SpeakerSpread="40" EntitySource="" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+  <Character ID="3" Name="HelixPa" DisplayName="HELIX PA" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="True" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="GUIWorld" Volume="1" ReverbVolume="0.875" SpeakerSpread="40" EntitySource="" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+ </Characters>
+ <Effects />
+ <Scenes>
+  <Scene ID="2" Name="OmnitoolConfigTerminal" FocusPrio="0" DefaultCriteria="" Volume="1" ReverbVolume="1" />
+ </Scenes>
+ <Subjects>
+  <Subject Name="1_DerekWakeup" UseSingleRandomLine="False" SceneId="1" EffectId="-1">
+   <Line CharacterId="1" Prio="0" ChangeSource="True" EntitySource="Player" MinDist="1" MaxDist="9" MinFreq="8000" MaxFreq="200" MaxListeningDist="9" FrequencyFilter="Low Pass">
+    <Sound Text="What the..." EndPadding="-0.2" Volume="0.85" ReverbVolume="0" FileName="terminal_helperjane_addcortexchip_001_helperjane_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="2" Prio="0" ChangeSource="True" EntitySource="Player" MinDist="1" MaxDist="9" MinFreq="8000" MaxFreq="200" MaxListeningDist="9" FrequencyFilter="Low Pass">
+    <Sound Text="Custom Cortex Chip found, shutting down helper jane" EndPadding="-0.2" Volume="0.85" ReverbVolume="0" FileName="terminal_helperjane_addcortexchip_001_helperjane_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="3_OmnitoolJaneServiceActivate" UseSingleRandomLine="False" SceneId="2" EffectId="-1">
+   <Line CharacterId="2" Prio="0" ChangeSource="True" EntitySource="Player" MinDist="1" MaxDist="9" MinFreq="8000" MaxFreq="200" MaxListeningDist="9" FrequencyFilter="Low Pass">
+    <Sound Text="Service Terminal 3 Activated" Volume="0.6" FileName="helperjane_serviceconsoleactivated.ogg" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="4_ConfigChipDetected" UseSingleRandomLine="False" SceneId="2" EffectId="-1">
+   <Line CharacterId="2" Prio="0" PlayOnce="True">
+    <Sound Text="Tool Chip found." Timestamp="2014-08-15 02:00" />
+   </Line>
+  </Subject>
+   <Line CharacterId="5_SecurityCipherUpdated" Prio="0" Callback="LineCallback_LastHuman_Anim" PlayOnce="True">
+    <Sound Text="Security Cipher Updated" VoiceOffset="0.4" Volume="0.65" FileName="general_helperjaneupdatetoolchip_001_helperjane_001" Timestamp="2015-04-30 03:05" />
+   </Line>
+  </Subject>
+  <Subject Name="4_TalkToLastHuman_2" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="You serious about me killing you?" VoiceOffset="0.75" EndPadding="0.1" FileName="lindwall_4_talktolasthuman_2_001_player_001" Timestamp="2015-01-26 05:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="No, I'd love to hang around here until I dry up to the size of a raisin." VoiceOffset="0.5" Timestamp="2014-08-15 02:21" />
+   </Line>
+   <Line CharacterId="10" Direction="serious/sad" Prio="0" PlayOnce="True">
+    <Sound Text="Simon, this fucking sucks. *cough* I don't want to live like this." VoiceOffset="0.75" Volume="0.75" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="4_TalkToLastHuman_3" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="Shouldn't we be doing something to keep you alive?" VoiceOffset="1" EndPadding="0.2" Timestamp="2014-08-15 02:25" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Why?" VoiceOffset="0.65" Timestamp="2014-08-15 02:25" />
+   </Line>
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="You're the last human. I just find it disrespectful to our entire history not to fight this. Sure we have the ARK, but you're the real deal." EndPadding="0.2" Volume="0.75" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Thanks. That's probably the best compliment I've ever got. But the truth is that the ARK is all we have. We'll have to accept second best, you know?" VoiceOffset="0.75" Volume="0.8" FileName="lindwall_4_talktolasthuman_3_004_lindwall_001" Timestamp="2015-04-30 03:05" />
+   </Line>
+  </Subject>
+  <Subject Name="4_TalkToLastHuman_4" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="None of this feels right." EndPadding="0.2" FileName="lindwall_4_talktolasthuman_4_001_player_001" Timestamp="2015-01-30 11:05" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Simon, I want to die." VoiceOffset="0.7" FileName="lindwall_4_talktolasthuman_4_002_lindwall_001" Timestamp="2014-08-15 02:26" />
+   </Line>
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="Sarah..." VoiceOffset="0.75" EndPadding="0.2" FileName="lindwall_4_talktolasthuman_4_003_player_001" Timestamp="2014-08-15 02:26" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Just think about it." VoiceOffset="0.5" FileName="lindwall_4_talktolasthuman_4_004_lindwall_001" Timestamp="2014-08-15 02:26" />
+   </Line>
+  </Subject>
+  <Subject Name="4_TalkToLastHuman_5" UseSingleRandomLine="True" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="Good luck, Simon." Volume="0.75" Timestamp="2014-08-15 02:28" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="Knock it out of the park." Volume="0.75" Timestamp="2014-08-15 02:28" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="Be careful." Volume="0.75" Timestamp="2014-08-15 02:28" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="Don't let me down." Volume="0.75" Timestamp="2014-08-15 02:28" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="Go ahead. Go save humanity. What's left of it." Volume="0.65" Timestamp="2014-08-15 02:28" />
+   </Line>
+  </Subject>
+  <Subject Name="4_KillLastHuman_Start" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Would you stay with me, please?" VoiceOffset="1.5" Volume="0.85" FileName="lindwall_4_killlasthuman_start_001_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+  </Subject>
+  <Subject Name="4_KillLastHuman_Staying" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Direction="sad and tired" Prio="0" PlayOnce="True">
+    <Sound Text="It won't be long now. Just... please just stay." VoiceOffset="0.7" EndPadding="-0.4" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_001_lindwall_001" Timestamp="2015-04-10 02:53" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="What a crazy thing this was -- life." VoiceOffset="2" Volume="0.85" FileName="lindwall_4_killlasthuman_staying_002_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Least I won't have to turn thirty. Hurray." VoiceOffset="2" EndPadding="-0.1" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_003_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Wish I coulda died at home with my friends." VoiceOffset="3" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_004_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="You ever been to Greenland? It's very beautiful." VoiceOffset="1.75" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_005_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Well, at least when you get out of the city." VoiceOffset="1" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_006_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Nanoq is busy and, yes, there's like 12 million people trying to get around, but it's a great place." VoiceOffset="1.5" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_007_lindwall_001" Timestamp="2015-01-30 11:05" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Or rather. It was a great place. Before the comet ended it all." VoiceOffset="1" EndPadding="-0.4" FileName="lindwall_4_killlasthuman_staying_008_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="You know what? I prefer it this way." VoiceOffset="1.5" FileName="lindwall_4_killlasthuman_staying_009_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="I liked Pathos. Liked my colleagues. Ian, Nick, Jasper, even Catherine." VoiceOffset="2" FileName="lindwall_4_killlasthuman_staying_010_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="People thought she was weird because she was quiet, but she was cool." VoiceOffset="1.5" Volume="0.75" FileName="lindwall_4_killlasthuman_staying_011_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+  </Subject>
+  <Subject Name="4_KillLastHuman_Left" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_001_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.45" FileName="lindwall_4_killlasthuman_left_002_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.45" FileName="lindwall_4_killlasthuman_left_003_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_004_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_005_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.25" FileName="lindwall_4_killlasthuman_left_006_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.3" FileName="lindwall_4_killlasthuman_left_007_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.3" FileName="lindwall_4_killlasthuman_left_008_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.3" FileName="lindwall_4_killlasthuman_left_009_lindwall_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_010_lindwall_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_011_lindwall_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="10" Direction="trouble breathing" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_012_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+   <Line CharacterId="10" Direction="trouble breathing" Prio="0" PlayOnce="True">
+    <Sound Text="*breathes*" Volume="0.35" FileName="lindwall_4_killlasthuman_left_013_lindwall_001" Timestamp="2014-10-05 03:01" />
+   </Line>
+  </Subject>
+  <Subject Name="4_KillLastHuman_ReEnter" UseSingleRandomLine="True" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Thank you, for staying." Volume="0.7" FileName="lindwall_4_killlasthuman_reenter_001_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Please stay." Volume="0.7" FileName="lindwall_4_killlasthuman_reenter_002_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Please, don't leave. Not yet." Volume="0.7" FileName="lindwall_4_killlasthuman_reenter_003_lindwall_001" Timestamp="2014-08-18 01:20" />
+   </Line>
+  </Subject>
+  <Subject Name="4_KillLastHuman_End_Staying" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Simon, you still there?" VoiceOffset="1.5" Volume="0.95" FileName="lindwall_4_killlasthuman_end_staying_001_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="I'm here, Sarah." VoiceOffset="0.25" FileName="lindwall_4_killlasthuman_end_staying_002_player_001" Timestamp="2014-08-18 05:01" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Don't let them die, okay? Send them out there. To the stars." VoiceOffset="0.5" Volume="0.85" FileName="lindwall_4_killlasthuman_end_staying_003_lindwall_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+  </Subject>
+  <Subject Name="3_DatamineArkCrewMember1" UseSingleRandomLine="False" SceneId="5" EffectId="-1">
+   <Line CharacterId="26" Direction="crying" Context="Hill is dying from malnourishment/organ failure. Lindwall is there to comfort." Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="What the fuck did we do?" ExtraEffectFile="Flashback/Level/04_02/hills_blackbox" EndPadding="-0.6" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_001_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Hey, try not to think about it." EndPadding="-0.7" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_002_lindwall_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="My whole life. I've been a good man. We messed up, Sarah." EndPadding="-0.8" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_003_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="There, there." EndPadding="-0.8" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_004_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Should have launched. Taken the chance." EndPadding="-0.35" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_005_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="There's time. Ivashkin says we could try again, when things calm down." EndPadding="-0.5" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_006_lindwall_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="You got to do it, you know? You got to." Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_007_hill_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="*cough*" EndPadding="0.6" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember1_008_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Sssh..." Volume="0.65" ReverbVolume="0" EndsAfterExtraEffect="True" FileName="datamine_3_dataminearkcrewmember1_009_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="3_CrewMember_2" UseSingleRandomLine="True" SceneId="7" EffectId="-1">
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="Aleksey." Volume="0.6" FileName="ivashkin_3_crewmember_2_001_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="Alek-" FileName="ivashkin_3_crewmember_2_002_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="- sey" FileName="ivashkin_3_crewmember_2_003_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="Lyoshka." FileName="ivashkin_3_crewmember_2_004_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="My boy." FileName="ivashkin_3_crewmember_2_005_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="Aleksey." FileName="ivashkin_3_crewmember_2_006_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="My..." FileName="ivashkin_3_crewmember_2_007_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="15" Prio="0">
+    <Sound Text="... boy." FileName="ivashkin_3_crewmember_2_008_ivashkin_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+  </Subject>
+  <Subject Name="3_DatamineArkCrewMember3" UseSingleRandomLine="False" SceneId="5" EffectId="-1">
+   <Line CharacterId="25" Context="Pedersen is &quot;peacefully&quot; dying. Lindwall and Hill there to comfort, gets into an argument." Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Can't we do anything for him?" ExtraEffectFile="Flashback/Level/04_02/pederson_blackbox" EndPadding="-1" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_001_lindwall_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="No. Were out of sedatives. If we had a gun, this would be the time to pull it out." EndPadding="-0.35" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_002_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Did not expect it to end like this. Should have jumped the climber back to Omicron." EndPadding="-0.6" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_003_lindwall_001" Timestamp="2015-04-10 02:53" />
+   </Line>
+   <Line CharacterId="24" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Without the ARK?" EndPadding="-0.2" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_004_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Forget about the ARK." EndPadding="-0.1" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_005_lindwall_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="No, you don't get to say that. It's the only thing left of value. You know that." EndPadding="-0.4" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_006_hill_001" Timestamp="2014-09-02 11:31" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Yeah, yeah." EndPadding="-0.8" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_007_lindwall_001" Timestamp="2015-04-10 02:53" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Promise you won't leave it behind." EndPadding="-1.2" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_008_hill_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="25" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="We'll all be dead one day, then what?" EndPadding="-0.5" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_009_lindwall_001" Timestamp="2014-08-22 07:16" />
+   </Line>
+   <Line CharacterId="26" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Well, better keep it safe until then. Don't want the WAU to take it; swallow it whole." EndPadding="-0.9" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_010_hill_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+   <Line CharacterId="24" Direction="death moan" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="I... I'm sorry, Catherine." EndPadding="-0.8" Volume="0.65" ReverbVolume="0" FileName="datamine_3_dataminearkcrewmember3_011_pedersen_001" Timestamp="2015-01-26 05:49" />
+   </Line>
+   <Line CharacterId="26" Direction="Hill leans in closer to Pedersen (and the microphone)." Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="It's okay, Ian. Just let it out. Let it all out." EndPadding="-0.8" Volume="0.65" ReverbVolume="0" EndsAfterExtraEffect="True" FileName="datamine_3_dataminearkcrewmember3_012_hill_001" Timestamp="2015-01-26 05:49" />
+   </Line>
+  </Subject>
+  <Subject Name="2_CallingInfirmary" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="Anyone there?" VoiceOffset="0.5" FileName="lindwall_2_callinginfirmary_002_player_001" Timestamp="2015-01-26 05:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Not in the mood to talk to robots. No offense." ExtraEffectFile="Flashback/Level/04_02/call_infirmary_lindwall/02" VoiceOffset="1.5" Volume="0.75" FileName="lindwall_2_callinginfirmary_003_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="4_EnterInfirmary" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Direction="startled" Prio="0" PlayOnce="True">
+    <Sound Text="You... you're different." FileName="lindwall_4_enterinfirmary_001_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+  </Subject>
+  <Subject Name="4_LeftInfirmary_NoTalk" UseSingleRandomLine="True" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="2" PlayOnce="True">
+    <Sound Text="Don't leave. Haven't figured out who you are yet." Volume="0.75" FileName="lindwall_4_leftinfirmary_notalk_001_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+   <Line CharacterId="10" Prio="1" PlayOnce="True">
+    <Sound Text="What the hell is it doing?" Volume="0.75" FileName="lindwall_4_leftinfirmary_notalk_002_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="WAU'll never get it right." Volume="0.5" FileName="lindwall_4_leftinfirmary_notalk_003_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+  </Subject>
+  <Subject Name="4_LeftInfirmary_Talked" UseSingleRandomLine="True" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="I'll be here if you need anything." Volume="0.5" FileName="lindwall_4_leftinfirmary_talked_001_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Be careful." Volume="0.6" FileName="lindwall_4_leftinfirmary_talked_002_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="See you later." Volume="0.5" FileName="lindwall_4_leftinfirmary_talked_003_lindwall_001" Timestamp="2014-09-05 04:49" />
+   </Line>
+  </Subject>
+  <Subject Name="4_DetachArk_TalkedNoKill" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Direction="almost in tears" Prio="0" PlayOnce="True">
+    <Sound Text="Please don't leave me like this." VoiceOffset="2" TextOffset="2" Volume="0.7" FileName="lindwall_4_detachark_talkednokill_002_lindwall_001" Timestamp="2014-09-08 04:37" />
+   </Line>
+  </Subject>
+  <Subject Name="4_DetachArk_TalkedKill" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" PlayOnce="True">
+    <Sound Text="Take good care of it. They're counting on you." EndPadding="-0.5" Volume="0.85" FileName="lindwall_4_detachark_talkedkill_001_lindwall_001" Timestamp="2014-11-14 04:21" />
+   </Line>
+  </Subject>
+  <Subject Name="4_TryDataminingLindwall" UseSingleRandomLine="False" SceneId="9" EffectId="-1">
+   <Line CharacterId="1" Prio="0" PlayOnce="True">
+    <Sound Text="The Blackbox is inactive. Probably found a way to switch it off." FileName="comment_4_trydatamininglindwall_001_player_001" Timestamp="2015-01-30 11:05" />
+   </Line>
+  </Subject>
+  <Subject Name="3_CrewMember_2_Datamine" UseSingleRandomLine="True" SceneId="7" EffectId="-1">
+   <Line CharacterId="15" Direction="dying breath" Prio="0">
+    <Sound Text="Finally, Aleksey." FileName="ivashkin_3_crewmember_2_datamine_001_ivashkin_001" Timestamp="2014-11-14 04:21" />
+   </Line>
+  </Subject>
+  <Subject Name="4_LastHumanIdle_NoTalk" UseSingleRandomLine="True" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="1" PlayOnce="True">
+    <Sound Text="Don't mind me." Volume="0.5" FileName="lindwall_4_lasthumanidle_notalk_001_lindwall_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="10" Prio="1" PlayOnce="True">
+    <Sound Text="Go ahead, make yourself at home." Volume="0.65" FileName="lindwall_4_lasthumanidle_notalk_002_lindwall_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="10" Prio="1" PlayOnce="True">
+    <Sound Text="Nice suit. Used to have one just like it." Volume="0.7" FileName="lindwall_4_lasthumanidle_notalk_003_lindwall_001" Timestamp="2015-01-26 05:49" />
+   </Line>
+   <Line CharacterId="10" Prio="1" PlayOnce="True">
+    <Sound Text="Can I help you with anything?" Volume="0.7" FileName="lindwall_4_lasthumanidle_notalk_004_lindwall_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.2" FileName="lindwall_4_lasthumanidle_notalk_005_lindwall_001" Timestamp="2014-12-11 10:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.2" FileName="lindwall_4_lasthumanidle_notalk_006_lindwall_001" Timestamp="2014-12-11 10:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.2" FileName="lindwall_4_lasthumanidle_notalk_007_lindwall_001" Timestamp="2014-12-11 10:49" />
+   </Line>
+  </Subject>
+  <Subject Name="4_LastHumanIdle_Talked" UseSingleRandomLine="True" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Direction="chit chat" Prio="1" PlayOnce="True">
+    <Sound Text="If I knew you'd come, I would have cleaned this place up a little bit." Volume="0.65" FileName="lindwall_4_lasthumanidle_talked_001_lindwall_001" Timestamp="2015-04-10 02:53" />
+   </Line>
+   <Line CharacterId="10" Direction="chit chat" Prio="1" PlayOnce="True">
+    <Sound Text="I'm glad you came by. Good to get this over with." Volume="0.7" FileName="lindwall_4_lasthumanidle_talked_002_lindwall_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="10" Direction="chit chat" Prio="1" PlayOnce="True">
+    <Sound Text="I still can't believe I'm the last one. That's crazy." Volume="0.8" FileName="lindwall_4_lasthumanidle_talked_003_lindwall_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.25" FileName="lindwall_4_lasthumanidle_talked_004_lindwall_001" Timestamp="2014-12-11 10:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.2" FileName="lindwall_4_lasthumanidle_talked_005_lindwall_001" Timestamp="2014-12-11 10:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.25" FileName="lindwall_4_lasthumanidle_talked_006_lindwall_001" Timestamp="2014-12-11 10:49" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.2" FileName="lindwall_4_lasthumanidle_talked_007_lindwall_001" Timestamp="2015-03-05 12:25" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.25" FileName="lindwall_4_lasthumanidle_talked_008_lindwall_001" Timestamp="2015-03-05 12:25" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.35" FileName="lindwall_4_lasthumanidle_talked_009_lindwall_001" Timestamp="2015-03-05 12:25" />
+   </Line>
+   <Line CharacterId="10" Prio="0">
+    <Sound Text="*sigh*" Volume="0.25" FileName="lindwall_4_lasthumanidle_talked_010_lindwall_001" Timestamp="2015-03-05 12:25" />
+   </Line>
+  </Subject>
+  <Subject Name="3_RossWhisper" UseSingleRandomLine="True" SceneId="3" EffectId="-1">
+   <Line CharacterId="18" Prio="0" PlayOnce="True">
+    <Sound Text="We have to leave." ExtraEffectFile="Flashback/Ross/4.2/ross_3_rosswhisper_001_rossgui_001" TextOffset="1.2" EndsAfterExtraEffect="True" FileName="ross_3_rosswhisper_001_rossgui_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="18" Prio="0" PlayOnce="True">
+    <Sound Text="Move on, Simon." ExtraEffectFile="Flashback/Ross/4.2/ross_3_rosswhisper_002_rossgui_001" TextOffset="1.2" EndsAfterExtraEffect="True" FileName="ross_3_rosswhisper_002_rossgui_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="18" Prio="0" PlayOnce="True">
+    <Sound Text="There's nothing here." ExtraEffectFile="Flashback/Ross/4.2/ross_3_rosswhisper_003_rossgui_001" TextOffset="1.2" EndsAfterExtraEffect="True" FileName="ross_3_rosswhisper_003_rossgui_001" Timestamp="2014-12-10 05:32" />
+   </Line>
+   <Line CharacterId="18" Prio="0" PlayOnce="True">
+    <Sound Text="It won't stop." ExtraEffectFile="Flashback/Ross/4.2/ross_3_rosswhisper_004_rossgui_001" EndsAfterExtraEffect="True" FileName="ross_3_rosswhisper_004_rossgui_001" Timestamp="2014-12-11 12:01" />
+   </Line>
+   <Line CharacterId="18" Prio="0" PlayOnce="True">
+    <Sound Text="It will swallow everything." ExtraEffectFile="Flashback/Ross/4.2/ross_3_rosswhisper_005_rossgui_001" TextOffset="1.2 " EndsAfterExtraEffect="True" FileName="ross_3_rosswhisper_005_rossgui_001" Timestamp="2014-12-11 12:01" />
+   </Line>
+   <Line CharacterId="18" Prio="0" PlayOnce="True">
+    <Sound Text="We have to stop it." ExtraEffectFile="Flashback/Ross/4.2/ross_3_rosswhisper_006_rossgui_001" TextOffset="1.2" FileName="ross_3_rosswhisper_006_rossgui_001" Timestamp="2014-12-11 12:01" />
+   </Line>
+  </Subject>
+  <Subject Name="1_IntroComment" UseSingleRandomLine="True" SceneId="9" EffectId="-1">
+   <Line CharacterId="1" Prio="0">
+    <Sound Text="Never been happier to be inside." VoiceOffset="6" FileName="comment_1_introcomment_001_player_001" Timestamp="2015-01-26 05:49" />
+    <Sound Text="Now let's find the ARK." VoiceOffset="0.35" FileName="comment_1_introcomment_001_player_002" Timestamp="2015-04-10 02:53" />
+   </Line>
+  </Subject>
+  <Subject Name="4_ClimbLadderWithARK" UseSingleRandomLine="True" SceneId="9" EffectId="-1">
+   <Line CharacterId="1" Direction="reaction, yet telling yourself" Prio="1" PlayOnce="True">
+    <Sound Text="No way I can climb a ladder while carrying the ARK like this." FileName="comment_4_climbladderwithark_001_player_001" Timestamp="2015-01-15 10:01" />
+   </Line>
+   <Line CharacterId="1" Direction="telling yourself" Prio="0">
+    <Sound Text="Can't climb with the ARK." FileName="comment_4_climbladderwithark_002_player_001" Timestamp="2015-04-10 02:53" />
+   </Line>
+   <Line CharacterId="1" Direction="telling yourself" Prio="0">
+    <Sound Text="Can't climb and carry the ARK." FileName="comment_4_climbladderwithark_003_player_001" Timestamp="2015-01-15 10:01" />
+   </Line>
+   <Line CharacterId="1" Direction="telling yourself" Prio="0">
+    <Sound Text="Not while carrying the ARK." FileName="comment_4_climbladderwithark_004_player_001" Timestamp="2015-01-15 10:01" />
+   </Line>
+  </Subject>
+  <Subject Name="4_DropArkInAirlock" UseSingleRandomLine="False" SceneId="9" EffectId="-1">
+   <Line CharacterId="1" Direction="phew" Prio="0" WIP="True" PlayOnce="True">
+    <Sound Text="Ah! I won't have to lug it to Phi." FileName="comment_4_droparkinairlock_001_player_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="4_InfirmaryTerminal_NotTalked" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Direction="amused" Prio="0" WIP="True">
+    <Sound Text="What are you doing? What are you looking for?" Volume="0.75" FileName="lindwall_4_infirmaryterminal_nottalked_001_lindwall_001" Timestamp="2015-01-19 04:12" />
+   </Line>
+  </Subject>
+  <Subject Name="4_InfirmaryTerminal_Talked" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="0" WIP="True">
+    <Sound Text="Huh. Be my guest. I got no secrets worth keeping." Volume="0.7" FileName="lindwall_4_infirmaryterminal_talked_001_lindwall_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="3_CrewMember_2_Drained" UseSingleRandomLine="True" SceneId="7" EffectId="-1">
+   <Line CharacterId="15" Direction="dying, whimper" Prio="0" WIP="True">
+    <Sound Text="Argh..." FileName="ivashkin_3_crewmember_2_drained_001_ivashkin_001" Timestamp="2015-01-19 04:12" />
+   </Line>
+  </Subject>
+  <Subject Name="4_AirlockStopped" UseSingleRandomLine="False" SceneId="9" EffectId="-1">
+   <Line CharacterId="1" Direction="slightly annoyed" Prio="0" WIP="True" PlayOnce="True">
+    <Sound Text="Now what? Come on -- flood the room already!" FileName="comment_4_airlockstopped_001_player_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="4_AirlockPipePulled" UseSingleRandomLine="False" SceneId="9" EffectId="-1">
+   <Line CharacterId="1" Prio="0" Callback="Audio_AirlockVoiceDucking" WIP="True" PlayOnce="True">
+    <Sound Text="Is this enough? Are there more." VoiceOffset="0.5" FileName="comment_4_airlockpipepulled_001_player_001" Timestamp="2015-04-10 02:53" />
+   </Line>
+  </Subject>
+  <Subject Name="4_KillLastHuman_FinalBreath" UseSingleRandomLine="False" SceneId="4" EffectId="-1">
+   <Line CharacterId="10" Prio="1">
+    <Sound Text="*sigh*" VoiceOffset="6" Volume="0.25" FileName="lindwall_4_killlasthuman_finalbreath_001_lindwall_001" Timestamp="2015-03-05 01:52" />
+   </Line>
+  </Subject>
+  <Subject Name="RossRecording_1" UseSingleRandomLine="False" SceneId="12" EffectId="-1">
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="The pattern has stopped evolving. The WAU has managed to find balance. I convinced SSE Wolchezk to turn off all external control systems making the WAU our de facto caretaker. So far it's exceeding expectations." Volume="0.7" FileName="rossdatapad_rossrecording_1_001_rossrecording_001" Timestamp="2015-05-11 07:03" />
+   </Line>
+  </Subject>
+  <Subject Name="RossRecording_2" UseSingleRandomLine="False" SceneId="12" EffectId="-1">
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Since the comet crashed a few days ago -- January 12 -- the WAU has dropped to a low energy state. It hasn't abandoned its duties. It's keeping climate and life support going, but it has been simplifying the pattern -- redefining its protocol." Volume="0.7" FileName="rossdatapad_rossrecording_2_001_rossrecording_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="RossRecording_3" UseSingleRandomLine="False" SceneId="12" EffectId="-1">
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="The WAU has started to grow physically. It's not just the core chamber, all around Pathos-II, Structure Gel is bursting through the pipes and bleeding through walls. I don't know what WAU could possibly stand to gain from this, but I assume it is intentional." Volume="0.7" FileName="rossdatapad_rossrecording_3_001_rossrecording_001" Timestamp="2015-05-11 07:03" />
+   </Line>
+  </Subject>
+  <Subject Name="RossRecording_4" UseSingleRandomLine="False" SceneId="12" EffectId="-1">
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="The heart of WAU has claimed such a large part of the core chamber that there can no longer be any question to its heightened awareness. Not only does its expansion suggest an unexpected understanding of space, but also its own physical manifestation within the world." Volume="0.7" FileName="rossdatapad_rossrecording_4_001_rossrecording_001" Timestamp="2015-05-22 05:18" />
+   </Line>
+  </Subject>
+  <Subject Name="RossRecording_5" UseSingleRandomLine="False" SceneId="12" EffectId="-1">
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="The WAU is reaching out to every machine, every life form, to manipulate, to control. It's trying to help, save its creators from all this, just like the protocol demands. But really, what is good enough?" Volume="0.7" FileName="rossdatapad_rossrecording_5_001_rossrecording_001" Timestamp="2015-05-11 07:03" />
+   </Line>
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Where is the line drawn for what is human and what is not? Would walking corpses do? Would a group of machines thinking they're human be acceptable?" VoiceOffset="1" Volume="0.7" FileName="rossdatapad_rossrecording_5_002_rossrecording_001" Timestamp="2015-05-11 07:03" />
+   </Line>
+   <Line CharacterId="22" Prio="0" ChangeSource="True" EntitySource="Player">
+    <Sound Text="We can't trust a machine to know, to understand what it means to be. We have to terminate the WAU-project. It can be done. I just need to get some help from Omicron." VoiceOffset="1" Volume="0.7" FileName="rossdatapad_rossrecording_5_003_rossrecording_001" Timestamp="2015-05-11 07:03" />
+   </Line>
+  </Subject>
+  <Subject Name="AirlockDepressurising" UseSingleRandomLine="False" SceneId="11" EffectId="-1">
+   <Line CharacterId="11" Prio="0" PlayOnce="True" ChangeSource="True" EntitySource="Player">
+    <Sound Text="Caution, airlock pressurizing. Stand clear." Volume="0.55" FileName="automatedvoice_airlockdepressurising_001_automatedvoice_001" Timestamp="2015-07-08 12:49" />
+   </Line>
+  </Subject>
+ </Subjects>
+</VoiceData>

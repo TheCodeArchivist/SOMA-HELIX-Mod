@@ -1,0 +1,7 @@
+<HPLMapTrack_Sound ID="CBB874AF70605B20BA545B6075A6F760FD767F1A" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <Sound ID="268437561" Name="mainframe_loud_1" CreStamp="1641139632" ModStamp="1641139664" WorldPos="21.75 1.25 -52.625" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="level_amb_shared_machines/tech/server/hum" MinDistance="2" MaxDistance="6.5" Volume="5" Active="true" UseCustomProperties="true" UID="16 832 268437561" />
+        </Objects>
+    </Section>
+</HPLMapTrack_Sound>

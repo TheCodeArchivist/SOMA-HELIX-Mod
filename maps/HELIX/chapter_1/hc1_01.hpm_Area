@@ -1,0 +1,470 @@
+<HPLMapTrack_Area ID="CBB874AF70605B20BA545B6075A6F760FD767F1A" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <Area ID="268435829" Name="psa1" CreStamp="1639296084" ModStamp="1639300922" WorldPos="-1 1 -2.75" Rotation="0 0 0" Scale="0.7 1.9 0.7" Active="true" Mesh="" UID="16 150 268435829" AreaType="PlayerStart">
+                <UserVariables>
+                    <Var Name="Crouching" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436097" Name="CrawlArea_1" CreStamp="1639304647" ModStamp="1639305504" WorldPos="0.75 1.75 -27" Rotation="0 0 0" Scale="7.75 1.75 2" Active="true" Mesh="" UID="16 269 268436097" AreaType="Crawl">
+                <UserVariables />
+            </Area>
+            <Area ID="268436099" Name="CrawlArea_2" CreStamp="1639304711" ModStamp="1639304775" WorldPos="-3.75 1.75 -29" Rotation="0 0 0" Scale="2.75 1.75 6.25" Active="true" Mesh="" UID="16 270 268436099" AreaType="Crawl">
+                <UserVariables />
+            </Area>
+            <Area ID="268436100" Name="CrawlArea_3" CreStamp="1639304715" ModStamp="1639304722" WorldPos="-6 1.75 -32.75" Rotation="0 0 0" Scale="6.75 1.75 2" Active="true" Mesh="" UID="16 272 268436100" AreaType="Crawl">
+                <UserVariables />
+            </Area>
+            <Area ID="268436101" Name="ClimbArea_1" CreStamp="1639304957" ModStamp="1639306363" WorldPos="4.625 1.25 -26.75" Rotation="0 1.5708 0" Scale="1.75 0.5 0.25" Active="true" Mesh="" UID="16 257 268436101" AreaType="Climb">
+                <UserVariables>
+                    <Var Name="Crouch" Value="true" />
+                    <Var Name="FeetPosition" Value="TriggerArea_1" />
+                    <Var Name="CanBeClimbed" Value="true" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436102" Name="TriggerArea_1" CreStamp="1639304965" ModStamp="1639309529" WorldPos="3.75 1 -26.75" Rotation="0 0 0" Scale="0.25 0.25 0.25" Active="true" Mesh="" UID="16 275 268436102" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="true" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="false" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="PushButton" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436133" Name="DistortionArea_1" CreStamp="1639305736" ModStamp="1639305736" WorldPos="3.5 0 -24.25" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 268 268436133" AreaType="Distortion">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="EffectAmount" Value="1" />
+                    <Var Name="FadeInTime" Value="1" />
+                    <Var Name="FadeOutTime" Value="1" />
+                    <Var Name="Volume" Value="1" />
+                    <Var Name="SourceEntity" Value="" />
+                    <Var Name="SourceEntityMinDist" Value="1" />
+                    <Var Name="SourceEntityMaxDist" Value="-1" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436134" Name="ToolArea_1" CreStamp="1639305747" ModStamp="1639305747" WorldPos="4.25 0 -22.75" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 267 268436134" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436144" Name="TriggerArea_2" CreStamp="1639306370" ModStamp="1639306401" WorldPos="-8.5 1 -32.75" Rotation="-0 3.14159 -0" Scale="0.25 0.25 0.25" Active="true" Mesh="" UID="16 266 268436144" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="true" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="false" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="PushButton" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436145" Name="ClimbArea_2" CreStamp="1639306370" ModStamp="1639306409" WorldPos="-9.375 1.25 -32.75" Rotation="0 -1.5708 0" Scale="1.75 0.5 0.25" Active="true" Mesh="" UID="16 273 268436145" AreaType="Climb">
+                <UserVariables>
+                    <Var Name="Crouch" Value="true" />
+                    <Var Name="FeetPosition" Value="TriggerArea_1" />
+                    <Var Name="CanBeClimbed" Value="true" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436226" Name="blastdoorshut1trigger" CreStamp="1639308264" ModStamp="1639309610" WorldPos="9.25 1.75 -25.25" Rotation="0 0 0" Scale="8.5 3.25 1" Active="true" Mesh="" UID="16 322 268436226" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="player" />
+                    <Var Name="CC_Funcs" Value="violentlyshutbdoor1" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="true" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="false" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="None" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436227" Name="TriggerArea_3" CreStamp="1639309508" ModStamp="1639309559" WorldPos="2.25 1.75 -26.75" Rotation="0 0 0" Scale="0.25 1.5 2" Active="true" Mesh="" UID="16 321 268436227" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="player" />
+                    <Var Name="CC_Funcs" Value="violentlyshutbdoor2" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="true" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="false" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="PushButton" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436515" Name="elev_cctv_trigger" CreStamp="1639510174" ModStamp="1639510352" WorldPos="0.25 1.5 3.375" Rotation="0 0 0" Scale="3.50998 3.25 3.75" Active="true" Mesh="" UID="16 426 268436515" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="player" />
+                    <Var Name="CC_Funcs" Value="elev_cctv_triggered" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="true" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="false" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="PushButton" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436518" Name="ChamberCameraArea" CreStamp="1639597126" ModStamp="1640888863" WorldPos="3.37571 3.01155 -1.55048" Rotation="0.368197 4.21804 -0.0224801" Scale="0.25 0.25 0.5" Active="true" Mesh="" UID="16 424 268436518" AreaType="CameraAnimation">
+                <UserVariables>
+                    <Var Name="MaxYaw" Value="45" />
+                    <Var Name="MaxPitch" Value="45" />
+                    <Var Name="LookSpeedMultiplier" Value="1" />
+                    <Var Name="ForwardTime" Value="1" />
+                    <Var Name="BackwardTime" Value="1" />
+                    <Var Name="AutoMovement" Value="0" />
+                    <Var Name="LookMoveDistance" Value="0" />
+                    <Var Name="LookMoveMaxAngle" Value="0" />
+                    <Var Name="InteractiveMovement" Value="true" />
+                    <Var Name="UseSpeedFading" Value="true" />
+                    <Var Name="CrouchOnExit" Value="false" />
+                    <Var Name="InitToCamera" Value="false" />
+                    <Var Name="UsePlayerEyeline" Value="false" />
+                    <Var Name="CallbackFunc" Value="" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436622" Name="Cam8654" CreStamp="1639672566" ModStamp="1639672647" WorldPos="1.43785 2.55228 4.61186" Rotation="0.316298 4.29612 -4.27991e-008" Scale="0.25 0.25 0.5" Active="true" Mesh="" UID="16 384 268436622" AreaType="CameraAnimation">
+                <UserVariables>
+                    <Var Name="MaxYaw" Value="45" />
+                    <Var Name="MaxPitch" Value="45" />
+                    <Var Name="LookSpeedMultiplier" Value="1" />
+                    <Var Name="ForwardTime" Value="1" />
+                    <Var Name="BackwardTime" Value="1" />
+                    <Var Name="AutoMovement" Value="0" />
+                    <Var Name="LookMoveDistance" Value="0" />
+                    <Var Name="LookMoveMaxAngle" Value="0" />
+                    <Var Name="InteractiveMovement" Value="true" />
+                    <Var Name="UseSpeedFading" Value="true" />
+                    <Var Name="CrouchOnExit" Value="false" />
+                    <Var Name="InitToCamera" Value="false" />
+                    <Var Name="UsePlayerEyeline" Value="false" />
+                    <Var Name="CallbackFunc" Value="" />
+                </UserVariables>
+            </Area>
+            <Area ID="268436762" Name="TriggerArea_4" CreStamp="1639912749" ModStamp="1639912798" WorldPos="-2.32165 1.25 -1.65508" Rotation="0 0 0" Scale="0.25 0.25 0.25" Active="true" Mesh="" UID="16 187 268436762" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="true" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="flashlight_small_1_OnPlayerInteract" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="false" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="PickUp" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437125" Name="InteractAuxArea_1" CreStamp="1640982686" ModStamp="1640982713" WorldPos="-24.5 1.58586 -17.75" Rotation="0 0 0" Scale="0.25 0.25 0.25" Active="true" Mesh="" UID="16 593 268437125" AreaType="InteractAux">
+                <UserVariables>
+                    <Var Name="InteractParent" Value="note_internet_notice_readable_1" />
+                    <Var Name="UseParentMainBody" Value="true" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437165" Name="OmnitoolConsoleInsert_1" CreStamp="1641069250" ModStamp="1641113516" WorldPos="14.75 1.30258 -48.5" Rotation="0 -0 -0.262793" Scale="0.531053 0.5 0.578022" Active="true" Mesh="" UID="16 591 268437165" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="false" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="true" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="None" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437252" Name="ConfigChipConsoleInsert" CreStamp="1641122539" ModStamp="1641127035" WorldPos="14.7796 1.41258 -48.4729" Rotation="0 -0 -0.262793" Scale="1.00679 0.5 0.747391" Active="false" Mesh="" UID="16 690 268437252" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="false" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="ConfigChipConsoleInsert_OnPlayerInteract" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="true" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="None" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437253" Name="ConfigChipConsoleInsert_ToolArea" CreStamp="1641122562" ModStamp="1641146611" WorldPos="15.25 0.5 -48.7698" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 668 268437253" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="securitychip" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="ConfigChipConsoleInsert" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437257" Name="RCO_Area" CreStamp="1641128987" ModStamp="1641129267" WorldPos="14.875 1.375 -48.5" Rotation="0 0 0" Scale="1 1 1" Active="false" Mesh="" UID="16 588 268437257" AreaType="InteractAux">
+                <UserVariables>
+                    <Var Name="InteractParent" Value="omnitool_configured" />
+                    <Var Name="UseParentMainBody" Value="true" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437664" Name="OmnitoolConsoleInsert_ToolArea" CreStamp="1641146566" ModStamp="1641146758" WorldPos="15.25 0.5 -48.75" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 807 268437664" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_1" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437665" Name="OmnitoolConsoleInsert_ToolArea_1" CreStamp="1641146709" ModStamp="1641147185" WorldPos="15.25 0.5 -48.7353" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 809 268437665" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_2" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437666" Name="OmnitoolConsoleInsert_2" CreStamp="1641147034" ModStamp="1641147035" WorldPos="14.75 1.30258 -48.4526" Rotation="0 -0 -0.262793" Scale="0.531053 0.5 0.578022" Active="true" Mesh="" UID="16 875 268437666" AreaType="Trigger">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="PlayerLookAtCallback" Value="" />
+                    <Var Name="PlayerLookAtCallbackAutoRemove" Value="false" />
+                    <Var Name="PlayerLookAtCheckCenterOfScreen" Value="true" />
+                    <Var Name="PlayerLookAtCheckRayIntersection" Value="true" />
+                    <Var Name="PlayerLookAtMaxDistance" Value="-1" />
+                    <Var Name="PlayerLookAtCallbackDelay" Value="0" />
+                    <Var Name="PlayerInteractCallback" Value="" />
+                    <Var Name="PlayerInteractCallbackAutoRemove" Value="false" />
+                    <Var Name="CanInteractWithoutCallback" Value="true" />
+                    <Var Name="MaxFocusDistance" Value="-1" />
+                    <Var Name="CustomInteractIcon" Value="None" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437727" Name="OmnitoolConsoleInsert_ToolArea_2" CreStamp="1641233219" ModStamp="1641233221" WorldPos="15.25 0.5 -50.875" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 877 268437727" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_2" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437728" Name="OmnitoolConsoleInsert_ToolArea_3" CreStamp="1641233223" ModStamp="1641233224" WorldPos="15.25 0.5 -52.875" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 806 268437728" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_2" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437729" Name="OmnitoolConsoleInsert_ToolArea_4" CreStamp="1641233235" ModStamp="1641233239" WorldPos="15.25 0.5 -51" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 876 268437729" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_1" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437730" Name="OmnitoolConsoleInsert_ToolArea_5" CreStamp="1641233240" ModStamp="1641233242" WorldPos="15.25 0.5 -53" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 808 268437730" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_1" />
+                    <Var Name="LookEntityLOS" Value="true" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437763" Name="ToolArea_2" CreStamp="1641239133" ModStamp="1641311580" WorldPos="11.75 0.5 -30.5" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 695 268437763" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_2" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437764" Name="ToolArea_3" CreStamp="1641239152" ModStamp="1641311580" WorldPos="11.715 0.5 -30.5" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 698 268437764" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_2" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437826" Name="ToolArea_4" CreStamp="1641311582" ModStamp="1641311651" WorldPos="32.2675 0.5 -41.25" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 928 268437826" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_5" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437827" Name="ToolArea_5" CreStamp="1641311582" ModStamp="1641311648" WorldPos="32.2325 0.5 -41.25" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 927 268437827" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_5" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437828" Name="ToolArea_6" CreStamp="1641311597" ModStamp="1641311640" WorldPos="32.2675 0.5 -42.5" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 924 268437828" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_6" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437829" Name="ToolArea_7" CreStamp="1641311597" ModStamp="1641311642" WorldPos="32.2325 0.5 -42.5" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 922 268437829" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_6" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437830" Name="ToolArea_8" CreStamp="1641311599" ModStamp="1641311635" WorldPos="30.0175 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 929 268437830" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_4" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437831" Name="ToolArea_9" CreStamp="1641311599" ModStamp="1641311633" WorldPos="29.9825 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 923 268437831" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_4" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437832" Name="ToolArea_10" CreStamp="1641311604" ModStamp="1641311624" WorldPos="28.7675 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 926 268437832" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_configured" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_3" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437833" Name="ToolArea_11" CreStamp="1641311604" ModStamp="1641311622" WorldPos="28.7325 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 925 268437833" AreaType="Tool">
+                <UserVariables>
+                    <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
+                    <Var Name="ConnectedToolAreas" Value="" />
+                    <Var Name="LookEntities" Value="omnitool_panel_3" />
+                    <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+        </Objects>
+    </Section>
+</HPLMapTrack_Area>

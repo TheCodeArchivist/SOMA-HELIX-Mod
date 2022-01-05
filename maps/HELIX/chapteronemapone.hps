@@ -1,0 +1,269 @@
+#include "interfaces/Map_Interface.hps"
+#include "base/Inputhandler_Types.hps"
+
+#include "helpers/helper_map.hps"
+#include "helpers/helper_props.hps"
+#include "helpers/helper_effects.hps"
+#include "helpers/helper_audio.hps"
+#include "helpers/helper_imgui.hps"
+#include "helpers/helper_sequences.hps"
+#include "helpers/helper_game.hps"
+#include "helpers/helper_modules.hps"
+#include "helpers/helper_ai.hps"
+
+#include "helper_imgui_station.hps"
+#include "helper_imgui_station_apps_common.hps"
+#include "helper_imgui_station_app_error.hps"
+#include "helper_imgui_station_app_numpad.hps"
+#include "helper_imgui_station_app_audioplayback.hps"
+#include "helper_imgui_station_app_mail.hps"
+
+//--------------------------------------------------
+ 
+/*Place any global values here. These must be const variables as they will not be saved*/
+/*This is also the place for enums and classes, but these should be avoided whenever possible*/
+ 
+//--------------------------------------------------
+enum wallterminal1
+{
+	wallterminal1App_MainMenu = -1,
+	wallterminal1App_SystemStatus,
+	wallterminal1App_Unlock
+}
+
+ 
+class cScrMap : iScrMap
+{
+	//--------------------------------------------
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN CALLBACKS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+ 
+	////////////////////////////
+	// Set up map environment
+	void Setup()
+	{
+	
+	}
+	
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run first time starting map
+	void OnStart()
+	{
+		
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when entering map
+	void OnEnter()
+	{	
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when leaving map
+	void OnLeave()
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// The player has died.
+	void OnPlayerKilled(int alRecentDeaths, const tString&in asSource)
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// To get when player makes input (mostly used for debug)
+	void OnAction(int alAction, bool abPressed) 
+	{
+		if(abPressed==false) return;
+		
+		if(alAction == eAction_Test1)
+		{
+		}
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// This only used for pure debug purposes when info needs to printed.
+	float DrawDebugOutput(cGuiSet @apSet,iFontData @apFont,float afY)
+	{
+		//afY = cLux_DrawDebugText("My Debug value:"+..., afY);
+		return afY;
+	}
+ 
+	//-------------------------------------------------------
+ 
+	//} END MAIN CALLBACKS
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN FUNCTIONS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+ 
+	/*Put any variables that are used in more than one scene here.*/
+ 
+	//-------------------------------------------------------
+ 
+	/*Put any functions that are used in more than one scene here.*/
+ 
+	//-------------------------------------------------------
+ 
+	//} END MAIN FUNCTIONS
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE X *NAME OF SCENE*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+ 
+ 
+	 /////////////////////////////////////////
+	 // ==============
+	 // TERMINALS
+	 // ==============
+	 //{//////////////////////////////////////
+ 
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	void computer_panel_medium_white_GUI_1_OnGui(const tString &in asEntityName, float afTimeStep)
+	{
+		cImGuiWindowData windowData = StationGui_CreateDefaultWindowData(); //Creates default window data which is stored in a class
+		cImGuiTextFrameData textFrame = ImGui_GetDefaultTextFrame(); //Creates default textbox data and is stored in a class
+		textFrame.mFont.SetFile("sansation_large_bold.fnt"); //sets the font
+		textFrame.mFontAlign = eFontAlign_Left; //Aligns the text to the left side of the text box. You can also align it to the center or the right side of the text box.
+		textFrame.mbUseBackgroundGfx = false; //Default is true. If true the background behind the frame will be filled in with a solid color and it will look like it was made in MS paint.
+		textFrame.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.04); //Sets the font size to 4% of the screen size.
+		ImGui_SetTransCategory("");
+		bool wallterminal1lockdown = true;
+		bool wallterminal1unlocked = false;
+		
+		if (StationGui_DrawAndCheckErrors()) return;
+		StationGui_SetActiveApp(wallterminal1App_MainMenu);
+		cImGuiLabelData label = ImGui_GetDefaultLabel();
+		label.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.0375);
+		label.mFontAlign = eFontAlign_Left;
+
+		//int lActiveApp = StationGui_GetActiveApp(wallterminal1App_MainMenu = -1);
+		int lActiveApp = StationGui_GetActiveApp();
+		bool bDrawBackButton = true;
+		bool bBackButton = true;
+		int selectedMenu=0;
+		switch(lActiveApp)
+			{
+				case wallterminal1App_MainMenu:	
+					bBackButton = false;					
+					if(wallterminal1lockdown)
+						ImGui_DoLabelExt("Lockdown active!", label, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
+						else ImGui_DoLabelExt("Lockdown lifted!", label, ImGui_NrmPosGroup(cVector3f(0.4, 0.0875, 1)), -1);	
+						
+					StationGui_AddApp("Lockdown",!wallterminal1lockdown);
+					StationGui_AddApp("Unlock",!wallterminal1unlocked,wallterminal1App_Unlock);
+					StationGui_AddApp("System Status",wallterminal1unlocked,wallterminal1App_SystemStatus);
+					StationGui_AddApp("Logout");
+						
+					bBackButton = false;
+					selectedMenu = StationGui_MainMenu();
+					if (selectedMenu==2)
+					{
+						StationGui_SetActiveApp(wallterminal1App_Unlock);
+						wallterminal1lockdown=false;
+						wallterminal1unlocked=true;
+					}
+					if (selectedMenu==3)
+					{
+						StationGui_SetActiveApp(wallterminal1App_Unlock);
+						wallterminal1lockdown=false;
+						wallterminal1unlocked=true;
+					}
+				break;
+				case wallterminal1App_SystemStatus:
+					bBackButton = true;
+					StationGui_TextReaderSingle("Arrival/Departure Log_2102:", "2104, Dec-21 : \tZabala, Cezar \t   (ARRIVAL)\r\n2104, Sept-28: \tThrask, Damon\r\n2104, Sept-2: \tThrask, Damon\r\n2104, Aug-3: \tThrask, Damon\r\n2104, Jan 23: \tThrask, Damon\r\n2103, Apr-13: \tThrask, Damon\r\n2103, Apr-10: \tThrask, Damon\r\n2102, Nov-14: \tDziedzic, Anita  \t(DEPARTURE)\r\n2102, Nov-14: \tHasse, Marcel  \t   (DEPARTURE)\r\n2102, Nov-14: \tNagel, Jonas \t      (DEPARTURE)\r\n2102, Sept-13: \tThrask, Damon\r\n2102, Aug-24: \tHasse, Marcel\r\n2102, Aug-14: \tHasse, Marcel\r\n2102, Jul-17: \tNagel,Jonas \t         (ARRIVAL)\r\n2102, Jun-3: \tDziedzic, Anita\r\n2102, Apr-1: \tThrask, Damon\r\n2101, Feb-24: \tHasse, Marcel  \n#END OF LOG", cStationGui_TextReaderSettings(), cVector3f(0.075, 0.2, 0), cVector2f(0.85, 0.45));
+                
+					if(StationGui_BackButton(bBackButton)) StationGui_SetActiveApp(wallterminal1App_MainMenu);
+					break;
+				case wallterminal1App_Unlock:
+					
+					break;
+			}
+		//cImGuiWindowData windowData = StationGui_CreateDefaultWindowData(); //Creates default window data which is stored in a class
+		//cImGuiTextFrameData textFrame = ImGui_GetDefaultTextFrame(); //Creates default textbox data and is stored in a class
+		//textFrame.mFont.SetFile("sansation_large_bold.fnt"); //sets the font
+		//textFrame.mFontAlign = eFontAlign_Left; //Aligns the text to the left side of the text box. You can also align it to the center or the right side of the text box.
+		//textFrame.mbUseBackgroundGfx = false; //Default is true. If true the background behind the frame will be filled in with a solid color and it will look like it was made in MS paint.
+		//textFrame.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.04); //Sets the font size to 4% of the screen size.
+		
+		//ImGui_SetTransCategory("");
+		//StationGui_DoWindowStart("SYSTEM CHECK // INCONCLUSIVE", windowData, ImGui_NrmPos(0.05, 0.05, 2), ImGui_NrmSize(0.9, 0.9), false);
+		//ImGui_DoTextFrameExt("LOG 148-E // GENERAL SYSTEM CHECK\nSTATUS: INCONCLUSIVE\nATTEMPTING TO CALL: '5752'", 0, 0, 0, textFrame, ImGui_NrmPos(0.025f, 0.025f, 2), ImGui_NrmSizeGroup(0.95, 0.95));
+		//StationGui_DoWindowEnd();
+	}
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+	
+	//} END TERMINALS
+ 
+}

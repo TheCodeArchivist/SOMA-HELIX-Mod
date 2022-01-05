@@ -1,0 +1,637 @@
+#include "interfaces/Map_Interface.hps"
+#include "base/Inputhandler_Types.hps"
+
+#include "helpers/helper_map.hps"
+#include "helpers/helper_props.hps"
+#include "helpers/helper_effects.hps"
+#include "helpers/helper_audio.hps"
+#include "helpers/helper_imgui.hps"
+#include "helpers/helper_sequences.hps"
+#include "helpers/helper_game.hps"
+#include "helpers/helper_modules.hps"
+#include "helpers/helper_ai.hps"
+
+#include "helper_imgui_station.hps"
+#include "helper_imgui_station_apps_common.hps"
+#include "helper_imgui_station_app_error.hps"
+#include "helper_imgui_station_app_numpad.hps"
+#include "helper_imgui_station_app_audioplayback.hps"
+#include "helper_imgui_station_app_mail.hps"
+
+
+//--------------------------------------------------
+ 
+/*Place any global values here. These must be const variables as they will not be saved*/
+/*This is also the place for enums and classes, but these should be avoided whenever possible*/
+ 
+//--------------------------------------------------
+ 
+class cScrMap : iScrMap
+{
+	//--------------------------------------------
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN CALLBACKS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+ 
+	////////////////////////////
+	// Set up map environment
+	void Setup()
+	{
+	
+	}
+	
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run first time starting map
+	void OnStart()
+	{
+		
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when entering map
+	void OnEnter()
+	{	
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when leaving map
+	void OnLeave()
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// The player has died.
+	void OnPlayerKilled(int alRecentDeaths, const tString&in asSource)
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// To get when player makes input (mostly used for debug)
+	void OnAction(int alAction, bool abPressed) 
+	{
+		if(abPressed==false) return;
+		
+		if(alAction == eAction_Test1)
+		{
+		}
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// This only used for pure debug purposes when info needs to printed.
+	float DrawDebugOutput(cGuiSet @apSet,iFontData @apFont,float afY)
+	{
+		//afY = cLux_DrawDebugText("My Debug value:"+..., afY);
+		return afY;
+	}
+ 
+	//-------------------------------------------------------
+ 
+	//} END MAIN CALLBACKS
+ 
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN FUNCTIONS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+ 
+	/*Put any variables that are used in more than one scene here.*/
+ 
+	//-------------------------------------------------------
+ 
+	/*Put any functions that are used in more than one scene here.*/
+ 
+	//-------------------------------------------------------
+ 
+	//} END MAIN FUNCTIONS
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 1 Wake Up
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+		 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE 1
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 2 *Facility teardown*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Blastdoor power failure*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+		 bool violentlyshutbdoor1(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			if(alState==1)
+				{
+					cLux_AddTodoMessage("Blastdoor: Door failure! Falling...");
+					SlideDoor_SetClosed("slidedoor_large_bulkhead_vertical_fastclose_1", true);
+					Entity_SetActive("blastdoorshut1trigger", false);
+				}
+			return false;
+		}
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Blastdoor power failure*
+
+		 /////////////////////////////////////////
+		 // Event *Maintenance Hatch Failure*
+		 //{//////////////////////////////////////
+	
+		 bool violentlyshutbdoor2(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			if(alState==1)
+				{
+					cLux_AddDebugMessage("Shut this fucking hatch!");
+					SlideDoor_SetClosed("slidedoor_hatch_maintenance_tunnels_1", true);
+					Button_SetLocked("highsecurity_2", true);
+					Button_SetLocked("panel_large_inside_2", true);
+					Entity_SetActive("TriggerArea_3", false);
+				}
+			return false;
+		}
+	 
+		 //} END Event Blastdoor breaking
+	 
+	 //} END SCENE 2
+
+	  //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE X *NAME OF SCENE*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 4: Elevator Riding Scene
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		/////////////////////////////////////////
+		// General
+		//{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 	bool unlocknotdone = true;
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		/////////////////////////////////////////
+		// Event 1: *Elevator riding up*
+		//{//////////////////////////////////////
+	 
+		void StartElevatorPhase1()
+		{
+			cLux_AddTodoMessage("Closing elevator doors! Elevator Phase 1 begining...");
+			///Close elevator doors
+			SlideDoor_SetClosed("slidedoor_theta_elevator_rear_1",true);
+			SlideDoor_SetClosed("slidedoor_theta_elevator_rear_2",true);
+			SlideDoor_SetClosed("slidedoor_theta_elevator_front_1",true);
+			///Request ElevatorUnlockTimer
+			Map_AddTimer("timerName",6,"ElevatorUnlockTimer");
+		}
+	 	void ElevatorUnlockTimer (const tString &in asName)
+		{
+			///Request StartElevatorPhase2() function
+			cLux_AddTodoMessage("Elevator: Phase 2 Begining...");
+			StartElevatorPhase2();
+		}
+		void StartElevatorPhase2()
+		{
+			///Begin first unlock sound a,d request ElevatorStartMoving() function
+			Sound_CreateAtEntity("ElevatorStartMoving","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/enter_drop","02_06_elevator_1",0,false);
+			Map_AddTimer("timerName",1.5,"ElevatorStartMoving");
+		}
+		void ElevatorStartMoving (const tString &in asName)
+		{
+			///Start moving the elevator upstairs to Arrival Point 1
+			cLux_AddTodoMessage("Elevator: Start moving elevator.");
+			Sound_Stop("ElevatorStartMoving", 0.01);
+			Sound_CreateAtEntity("ElevatorMoving","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/loop","02_06_elevator_1",0,false);
+
+			Prop_MoveLinearTo("elevshaftstartpos_1","elevshaftarrivalpos_1",5.0f,2.0f,0,true);
+			Entity_SetActive("fan_addon_wall_lab_animated_1", false);
+			int lShakeID = Effect_Shake_Start(0.02,0.2,13,0.2);
+			//Time before impact: 12
+			Effect_Shake_SetSourceEntity(lShakeID, "02_06_elevator_1", 0.5, 7.5);
+			///Request 
+			StartElevatorPhase3();
+		}
+		//} END Event 1 *Going up!*
+
+		/////////////////////////////////////////
+		// Event 2: *Elevator stuck and power outtage*
+		//{//////////////////////////////////////
+		void StartElevatorPhase3()
+		{
+			Map_AddTimer("timerName",12,"ElevatorImpact");
+			///Make the elevator shake
+		}
+		void ElevatorImpact (const tString &in asName)
+		{
+			/// Violently stop the elevator, create stop and power falloff sounds.
+			cLux_AddTodoMessage("Elevator: POWER IS DED. Elevator functions are killed. Brakes engage.");
+			Sound_Stop("ElevatorMoving", 0);
+			Sound_CreateAtEntity("ElevatorStopping","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/stop","02_06_elevator_1",0,false);
+			Sound_CreateAtEntity("ElevatorStopping","01_02_upsilon_inside_02/special/thermal_flow_shutdown/thermal_flow_shutdown_sequence","powerfailingsound_1",0,false);
+			///Is that me or this shake looking kinda thicc -Azure
+			int lShakeID = Effect_Shake_Start(0.09,0.8,0.2,1);
+			Effect_Shake_SetSourceEntity(lShakeID, "02_06_elevator_1", 0.5, 7.5);
+			///Shutdown all of the lights and terminals inside the elevator. Including the CCTV.
+			Lamp_SetLit("02_06_elevator_1",false,false);
+			Lamp_SetLit("camera_surveillance_theta_noheadtrack_1",false,false);
+			Terminal_SetGuiActive("elevatorpad1", false, 0.5);
+			Map_AddTimer("timerName",4,"ElevatorAlarmsStarting");
+		}
+		void ElevatorAlarmsStarting (const tString &in asName)
+		{
+			cLux_AddTodoMessage("Emergency Alarms are now turning on!");
+		    /// Activate the emergency alarms + the emergency lights
+			Sound_CreateAtEntity("EmergencyAlarms","01_02_upsilon_inside_02/special/thermal_flow_shutdown/thermal_flow_shutdown_sequence","powerfailingsound_1",0,false);
+			Lamp_SetLit("elev_emr_lights_*",true);
+			/// Add PA announcement
+			
+			/// End of PA announcement
+			
+			/// Reactivate the big wall terminal (WIP, won't touch it for now)
+			
+			/// End of terminal
+			Map_AddTimer("timerName",8,"ReactivateElevatorLights");
+		}
+		//} END Event 2 *Elevator stuck and power outtage*
+		
+		/////////////////////////////////////////
+		// Event 3: *Reactivate and resume elevator operations*
+		//{//////////////////////////////////////
+	    void ReactivateElevatorLights (const tString &in asName)
+	    {
+	        /// Stop the emergency alarms and turn back on the normal lights, kill the emerency ones
+	        Sound_Stop("EmergencyAlarms", 0);
+	        Lamp_SetLit("02_06_elevator_1", true, true);
+	        Lamp_SetLit("elev_emr_lights_*", false, false);
+	        Terminal_SetGuiActive("elevatorpad1", true, 0.5);
+	        
+	        Map_AddTimer("timerName",8,"ResumeElevatorMovment");
+	    }
+	    void ResumeElevatorMovment (const tString &in asName)
+	    {
+	    	Sound_CreateAtEntity("ElevatorStartMoving","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/enter_drop","02_06_elevator_1",0,false);
+	        ResumingElevatorMovment();
+	    }
+	    
+	    void ResumingElevatorMovment()
+			Map_AddTimer("timerName",2,"ElevatorRestartMoving");
+	    }
+	    
+	    void ElevatorRestartMoving (const tString &in asName)
+	    {
+	    	cLux_AddTodoMessage("Elevator: Restart moving elevator.");
+			Sound_Stop("ElevatorStartMoving", 0);
+			Sound_CreateAtEntity("ElevatorMoving","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/loop","02_06_elevator_1",0,false);
+
+			Prop_MoveLinearTo("elevshaftarrivalpos_1","elevshaftarrivalpos_2",5.0f,2.0f,0,true);
+			int lShakeID = Effect_Shake_Start(0.02,0.2,8,0.2);
+			//Time before floor arrival: 8/10
+			Effect_Shake_SetSourceEntity(lShakeID, "02_06_elevator_1", 0.5, 7.5);
+			
+			Map_AddTimer("timerName",8,"StopElevator");
+	    }
+	    
+	    void StopElevator (const tString &in asName)
+	    {
+	    	cLux_AddTodoMessage("Elevator: Arrived at floor, stopping elevator.");
+	    	Sound_Stop("ElevatorMoving", 0);
+	    	Sound_CreateAtEntity("ElevatorStopping","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/stop","02_06_elevator_1",0,false);
+	    	/// Change big terminal status
+	    	
+	    	/// End big terminal status
+	    	/// Add a chime
+	    	
+	    	/// End the chime
+	    	Map_AddTimer("timerName",4,"MapTransition");
+	    }
+	    void MapTransition (const tString &in asName)
+	    {
+	    	///add a fade out effect to the player gui
+	    	///then make the map transition
+	    	Sound_CreateAtEntity("ElevatorStopping","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/stop","02_06_elevator_1",0,false);
+	    }
+	    
+		//} END Event 3 *Reactivate and resume elevator operations*
+
+	 
+	 //} END SCENE 4
+ 
+	 /////////////////////////////////////////
+	 // ==============
+	 // TERMINALS
+	 // ==============
+	 //{//////////////////////////////////////
+ 
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // *Chamber Customization Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal "Chamber Customization Terminal"
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // *Elevator Button Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //Copied the code from the theta tunnels levl and repurposed it.
+		 void elevatorpad1_OnGui(const tString&in asEntityName, float afTimeStep)
+			{
+				ImGui_SetTransCategory("");
+				cImGuiButtonData button = ImGui_GetDefaultButton();
+				button.mGfxBackground = cImGuiGfx("");
+				button.mbUseInFocusGfx = false;
+				button.mbUseTriggeredGfx = false;
+				button.mbUseInFocusColor = true;
+				button.mbUseTriggeredColor = true;
+				button.mColorBase = cColor(0.227f, 0.51f, 0.557f) * 0.75f;
+				button.mColorInFocus = cColor(0.227f, 0.51f, 0.557f); //cColor_Blue*1.3;
+				button.mColorTriggered = cColor(0.9, 0.6, 0.1);
+				button.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.06);
+				button.mFont.mMaterial = eGuiMaterial_Alpha;
+				ImGui_SetDefaultButton(button);
+			
+				cImGuiLabelData label = ImGui_GetDefaultLabel();
+				label.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.06);
+				label.mFontAlign = eFontAlign_Center;
+				StationGuiBG_Scanlines();
+		 		StationGuiBG_Backdrop();
+				bool bPrevFloorSelected = (ImGui_GetStateInt("FloorSelected_0", 0)==1 || ImGui_GetStateInt("FloorSelected_1", 0)==1);
+				bool bFloorSelected = bPrevFloorSelected;
+				bool bActivateElevator = false;
+			
+				int lSelectedFloor = ImGui_GetStateInt("SelectedFloor",0);
+			
+				ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(0,0.1, 1)), ImGui_NrmSizeGroup(cVector2f(1, 0.825)));
+			
+					///////////////////////////////
+					// ELEVATOR BUTTONS
+					DoElevatorFloorIndicator(lSelectedFloor,0);
+					if (DoElevatorButton("Cryo-Stations", 0, button))
+					{
+						SlideDoor_SetClosed("slidedoor_theta_elevator_rear_1",false);
+						SlideDoor_SetClosed("slidedoor_theta_elevator_rear_2",false);
+					}
+					DoElevatorFloorIndicator(lSelectedFloor,1);
+					if (DoElevatorButton("Maintenance",1, button))
+					{
+						cLux_AddTodoMessage("Sound: Error sound, floor is ded");
+						Sound_CreateAtEntity("Elevator error","Entities_Station/tech/terminal_beeps/theta_elevator/error",asEntityName,0,false);
+					}
+					DoElevatorFloorIndicator(lSelectedFloor,2);
+					if (DoElevatorButton("Sector D Lobby",2, button))
+					{
+						bActivateElevator = true;
+						ImGui_SetStateInt("SelectedFloor",2);
+						StartElevatorPhase1();
+					}
+				
+					///////////////////////////////
+					// CHECK FOR FLOOR CHANGE
+					if (bActivateElevator)
+					{				
+						ImGui_SetStateBool("ElevatorMoving",true);
+						Player_ChangeStateToNormal();
+						Entity_SetInteractionDisabled(asEntityName, true);
+					}
+					ImGui_SetModUseInput(true);
+				ImGui_GroupEnd();
+			}
+
+		//-------------------------------------------------------
+		
+		bool DoElevatorButton(const tString&in asText, int alFloor, cImGuiButtonData button)
+		{
+			ImGui_SetDefaultButton(button);
+			if (ImGui_GetStateBool("ElevatorMoving",false)==true && ImGui_GetStateInt("SelectedFloor",2)!=alFloor)
+				ImGui_SetModUseInput(false);
+				
+			ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(0.15,0.66-alFloor*0.33, 1)), ImGui_NrmSizeGroup(cVector2f(1, 0.32)));
+				ImGui_SetTransCategory("");
+				bool bFloorSelected = ImGui_DoButton("FloorButton_"+asText, "", ImGui_NrmPosGroup(cVector3f(0,0, 0.5)), ImGui_NrmSizeGroup(cVector2f(0.75, 1)));
+				
+				ImGui_SetTransCategory("");
+				ImGui_SetModColorMul(cColor(0,0,0));
+				ImGui_DoLabel(asText, ImGui_NrmPosGroup(cVector3f(0.0,0.35, 0.75)), ImGui_NrmSizeGroup(cVector2f(0.75, 0.3)));
+				ImGui_SetModColorMul(cColor_White);
+				ImGui_DoLabel(asText, ImGui_NrmPosGroup(cVector3f(0.01,0.33, 0.8)), ImGui_NrmSizeGroup(cVector2f(0.75, 0.3)));
+				
+			ImGui_GroupEnd();
+			
+			ImGui_SetModUseInput(true);
+			return bFloorSelected;
+		}
+		
+		void DoElevatorFloorIndicator(int alSelected, int alFloor)
+		{
+			cImGuiButtonData button = ImGui_GetDefaultButton();
+			button.mGfxBackground = cImGuiGfx("");
+			button.mbUseInFocusGfx = false;
+			button.mbUseTriggeredGfx = false;
+			button.mbUseInFocusColor = false;
+			button.mbUseTriggeredColor = false;
+			button.mColorBase = cColor(0.227f, 0.51f, 0.557f);
+			button.mColorInFocus = cColor(0.227f, 0.51f, 0.557f); //cColor_Blue*1.3;
+			ImGui_SetDefaultButton(button);
+			
+			ImGui_SetTransCategory("");
+				if (alSelected == alFloor)
+					ImGui_SetModColorMul(cColor_Red);
+				else
+					ImGui_SetModColorMul(cColor_White);
+				
+			ImGui_SetModUseInput(false);	
+			
+			ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(0.95,0.66-alFloor*0.33, 1)), ImGui_NrmSizeGroup(cVector2f(0.1, 0.32)));
+				ImGui_DoButton("FloorIndicatorR"+alFloor, "", ImGui_NrmPosGroup(cVector3f(0,0, 0.5)), ImGui_NrmSizeGroup(cVector2f(1.0, 1)));
+			ImGui_GroupEnd();
+			ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(0.05,0.66-alFloor*0.33, 1)), ImGui_NrmSizeGroup(cVector2f(0.05, 0.32)));
+				ImGui_DoButton("FloorIndicatorL"+alFloor, "", ImGui_NrmPosGroup(cVector3f(0,0, 0.5)), ImGui_NrmSizeGroup(cVector2f(1.0, 1)));
+			ImGui_GroupEnd();
+			
+			ImGui_SetModColorMul(cColor_White);
+			ImGui_SetModUseInput(true);
+		}
+		 
+	 		
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+
+		 /////////////////////////////////////////
+		 // Terminal *Elevator wall terminal*
+		 //{//////////////////////////////////////
+	 
+		
+	 
+		 //} END Terminal *Name Of Terminal*
+		 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+	
+	//} END TERMINALS
+ 
+}
