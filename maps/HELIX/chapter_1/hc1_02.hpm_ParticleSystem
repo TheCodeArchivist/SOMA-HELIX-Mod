@@ -1,0 +1,8 @@
+<HPLMapTrack_ParticleSystem ID="17EF10673CAC9F221506EB4768F98D202CFE2914" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <ParticleSystem ID="268438577" Name="ParticleSystem_1" CreStamp="1647082890" ModStamp="1647083553" WorldPos="9.62435 2.25 25.6344" Rotation="0 0.261799 0" Scale="1 0.763228 0.001" File="stream_waterfalls.ps" Color="1 1 1 1" Brightness="1" FadeAtDistance="false" MinFadeDistanceStart="2" MaxFadeDistanceStart="110" MinFadeDistanceEnd="1" MaxFadeDistanceEnd="120" CulledByDistance="true" CulledByFog="true" ConnectLight="" UID="16 1115 268438577" />
+            <ParticleSystem ID="268438578" Name="ParticleSystem_2" CreStamp="1647083020" ModStamp="1647083517" WorldPos="10.75 -0.25 25.5" Rotation="0 0 0" Scale="0.25 1 0.5" File="splash_continous_foam_waterfall_large.ps" Color="0.87451 0.827451 0.74902 0.498039" Brightness="0.5" FadeAtDistance="true" MinFadeDistanceStart="2" MaxFadeDistanceStart="100" MinFadeDistanceEnd="1" MaxFadeDistanceEnd="110" CulledByDistance="true" CulledByFog="true" ConnectLight="" UID="16 1114 268438578" />
+        </Objects>
+    </Section>
+</HPLMapTrack_ParticleSystem>

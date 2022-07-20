@@ -1,0 +1,69 @@
+<HPLMapTrack_Area ID="E1E2DB7611E9D6F532692D5191A11F7C46B93C8A" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <Area ID="268435491" Name="LiquidArea_1" CreStamp="1658315899" ModStamp="1658322573" WorldPos="0 -0.5 -2" Rotation="0 0 0" Scale="5.75 2 28.5" Active="true" Mesh="" UID="16 2 268435491" AreaType="Liquid">
+                <UserVariables>
+                    <Var Name="BlocksLineOfSight" Value="false" />
+                    <Var Name="EventInstanceTag" Value="" />
+                    <Var Name="UserVar" Value="" />
+                    <Var Name="CC_Entities" Value="" />
+                    <Var Name="CC_Funcs" Value="" />
+                    <Var Name="ParentAttachEntity" Value="" />
+                    <Var Name="ParentAttachUseRotation" Value="true" />
+                    <Var Name="ParentAttachBody" Value="" />
+                    <Var Name="ParentAttachLocked" Value="false" />
+                    <Var Name="Density" Value="100" />
+                    <Var Name="LinearViscosity" Value="1" />
+                    <Var Name="AngularViscosity" Value="1" />
+                    <Var Name="PhysicsMaterial" Value="Water" />
+                    <Var Name="PlayerSpeedMul" Value="0.8" />
+                    <Var Name="HasWaves" Value="true" />
+                    <Var Name="WaveAmp" Value="1" />
+                    <Var Name="WaveFreq" Value="6" />
+                    <Var Name="MaxWaveDistance" Value="25" />
+                    <Var Name="UpperMaterial" Value="D:/JEUX/steamapps/common/SOMA/textures/liquid/water/waterplane_waves_calm.mat" />
+                    <Var Name="LowerMaterial" Value="D:/JEUX/steamapps/common/SOMA/textures/liquid/water/waterplane_waves_calm.mat" />
+                    <Var Name="GridSize" Value="0" />
+                    <Var Name="TextureTileSize" Value="1" />
+                    <Var Name="StaticMesh" Value="true" />
+                    <Var Name="EnvParticlesToClip" Value="" />
+                    <Var Name="UseFog" Value="false" />
+                    <Var Name="FogColor" Value="1 1 1 1" />
+                    <Var Name="FogStart" Value="0" />
+                    <Var Name="FogEnd" Value="2" />
+                    <Var Name="FogFalloffExp" Value="2" />
+                    <Var Name="FogBrightness" Value="1" />
+                    <Var Name="FogUnderwater" Value="false" />
+                    <Var Name="FogSkybox" Value="false" />
+                    <Var Name="EffectOnExit" Value="true" />
+                    <Var Name="CameraCollideCallback" Value="" />
+                    <Var Name="CameraEnterEffectPreset" Value="" />
+                    <Var Name="CameraExitEffectPreset" Value="" />
+                </UserVariables>
+            </Area>
+            <Area ID="268435492" Name="test" CreStamp="1658315917" ModStamp="1658315928" WorldPos="1.75 1 1.75" Rotation="-0 2.0944 -0" Scale="0.7 1.9 0.7" Active="true" Mesh="" UID="16 1 268435492" AreaType="PlayerStart">
+                <UserVariables>
+                    <Var Name="Crouching" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268435771" Name="MenuCamera_1" CreStamp="1658322162" ModStamp="1658324565" WorldPos="2.41837 2.50696 4.66837" Rotation="0.261799 3.92699 -0" Scale="0.25 0.25 0.5" Active="true" Mesh="" UID="16 197 268435771" AreaType="CameraAnimation">
+                <UserVariables>
+                    <Var Name="MaxYaw" Value="45" />
+                    <Var Name="MaxPitch" Value="45" />
+                    <Var Name="LookSpeedMultiplier" Value="1" />
+                    <Var Name="ForwardTime" Value="1" />
+                    <Var Name="BackwardTime" Value="1" />
+                    <Var Name="AutoMovement" Value="0" />
+                    <Var Name="LookMoveDistance" Value="0" />
+                    <Var Name="LookMoveMaxAngle" Value="0" />
+                    <Var Name="InteractiveMovement" Value="true" />
+                    <Var Name="UseSpeedFading" Value="true" />
+                    <Var Name="CrouchOnExit" Value="false" />
+                    <Var Name="InitToCamera" Value="false" />
+                    <Var Name="UsePlayerEyeline" Value="false" />
+                    <Var Name="CallbackFunc" Value="" />
+                </UserVariables>
+            </Area>
+        </Objects>
+    </Section>
+</HPLMapTrack_Area>

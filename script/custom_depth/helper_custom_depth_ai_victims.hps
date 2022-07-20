@@ -1,0 +1,128 @@
+
+
+//-------------------------------------------------------
+
+/////////////////////////////////////////
+// Victim
+/////////////////////////////////////////
+
+//-------------------------------------------------------
+
+void Victim_ChangeState_Patrol(const tString &in asEntityName)
+{
+	cScript_RunGlobalFunc(asEntityName, "cScrAgentVictim", "_Global_ChangeState_Patrol");
+}
+
+//-------------------------------------------------------
+
+void Victim_ChangeState_Hunt(const tString &in asEntityName)
+{
+	cScript_RunGlobalFunc(asEntityName, "cScrAgentVictim", "_Global_ChangeState_Hunt");
+}
+
+//-------------------------------------------------------
+
+void Victim_SetAttackFatal(const tString &in asEntityName, bool abState)
+{
+	cScript_SetGlobalArgBool(0,abState);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_SetAttackFatal");
+}
+
+//------------------------------------------------------------
+
+void Victim_SetAgressionAmount(const tString &in asEntityName, float afX)
+{
+	cScript_SetGlobalArgFloat(0,afX);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_SetAgressionAmount");
+}
+	
+//------------------------------------------------------------
+
+void Victim_SetComeOutOfHidingTimeMul(const tString &in asEntityName, float afMul)
+{
+	cScript_SetGlobalArgFloat(0,afMul);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_SetComeOutOfHidingTimeMul");
+}
+
+//------------------------------------------------------------
+
+void Victim_SetHideAndWaitPaused(const tString &in asEntityName, bool abPaused)
+{
+	cScript_SetGlobalArgBool(0,abPaused);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_SetHideAndWaitPaused");
+}
+
+//-------------------------------------------------------
+
+bool Victim_IsHidingAndWaiting(const tString &in asEntityName)
+{
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_IsHidingAndWaiting");
+	return cScript_GetGlobalReturnBool();
+}
+
+//-------------------------------------------------------
+
+void Victim_Hunt_RevealCurrentPlayerPos(const tString &in asEntityName)
+{
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_Hunt_RevealCurrentPlayerPos");
+}
+
+//-------------------------------------------------------
+
+void Victim_SetAfterPlayerDeathAnimtionCallback(const tString &in asEntityName, const tString &in asCallback)
+{
+	cScript_SetGlobalArgString(0,asCallback);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_SetAfterPlayerDeathAnimtionCallback");
+}
+
+//-------------------------------------------------------
+
+void Victim_StartPlayerDeathAnimation(const tString &in asEntityName)
+{
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_StartPlayerDeathAnimation");
+}
+
+void Victim_SetBadHearing(const tString &in asEntityName, bool abX)
+{
+	cScript_SetGlobalArgBool(0,abX);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_SetBadHearing");
+}
+
+//-------------------------------------------------------
+
+void Victim_ForceHideAndWaitAppearance(const tString &in asEntityName, bool abUseCustomGoalPos=false, const tString& in asCustomGoalPosEntity="")
+{
+	cVector3f vPos=0;
+	if(asCustomGoalPosEntity!="")
+	{
+		iLuxEntity @pEntity = cLux_GetCurrentMap().GetEntityByName(asCustomGoalPosEntity);
+		if(pEntity is null)
+		{
+			Error("Could not find entity '"+asCustomGoalPosEntity+"' to be used  as custom goal pos for Victim_ForceHideAndWaitAppearance");
+			return;
+		}
+	}
+	
+	
+	cScript_SetGlobalArgBool(0,abUseCustomGoalPos);
+	cScript_SetGlobalArgVector3f(1,vPos);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_ForceHideAndWaitAppearance");
+}
+
+//-------------------------------------------------------
+
+void Victim_AlignRotationWithEntity(const tString &in asEntityName, const tString&in asTargetEntityName)
+{
+	cScript_SetGlobalArgString(0, asTargetEntityName);
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_AlignRotationWithEntity");
+}
+
+//-------------------------------------------------------
+
+bool Victim_IsHunting(const tString &in asEntityName)
+{
+	cScript_RunGlobalFunc(asEntityName,"cScrAgentVictim","_Global_IsHunting");
+	return cScript_GetGlobalReturnBool();
+}
+
+//-------------------------------------------------------

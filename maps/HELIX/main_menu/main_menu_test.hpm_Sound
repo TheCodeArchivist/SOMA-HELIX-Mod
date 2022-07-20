@@ -1,0 +1,7 @@
+<HPLMapTrack_Sound ID="7D6FB09F42389FEA3063B6F95597B42DC431F601" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <Sound ID="268435585" Name="Sound_1" CreStamp="1658319062" ModStamp="1658319062" WorldPos="0 0 -2" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="02_05_theta/amb/spots/dunbat_pool_water" MinDistance="1" MaxDistance="5" Volume="1" Active="true" UseCustomProperties="false" UID="16 117 268435585" />
+        </Objects>
+    </Section>
+</HPLMapTrack_Sound>

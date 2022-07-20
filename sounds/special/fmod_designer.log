@@ -1,0 +1,15 @@
+Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Warning: QPainter::begin: Paint device returned engine == 0, type: 1
+Warning: QPainter::setPen: Painter not active
+Warning: QPainter::setBrush: Painter not active
+Warning: QPainter::setRenderHint: Painter must be active to set rendering hints
+Warning: QPainter::setPen: Painter not active
+Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Debug: "15:08:57 ..\..\src\simpleeventcontroller.cpp:1317 IR: Remove Sounds from Playlist" 
+Debug: "15:09:12 ..\..\src\simpleeventcontroller.cpp:1741 IS: Add Sound to Playlist" 
+Debug: "15:26:06 ..\..\src\simpleeventcontroller.cpp:1741 IS: Add Sound to Playlist" 
+Debug: "15:26:08 ..\..\src\simpleeventcontroller.cpp:1317 IR: Remove Sounds from Playlist" 

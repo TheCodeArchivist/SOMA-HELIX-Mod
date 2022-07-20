@@ -9,3 +9,6 @@ Warning: QPainter::setBrush: Painter not active
 Warning: QPainter::setRenderHint: Painter must be active to set rendering hints
 Warning: QPainter::setPen: Painter not active
 Warning: libpng warning: Interlace handling should be turned on when using png_read_image
+Debug: "11:59:59 ..\..\src\simpleeventcontroller.cpp:1317 IR: Remove Sounds from Playlist" 
+Debug: "12:00:11 ..\..\src\simpleeventcontroller.cpp:1741 IS: Add Sound to Playlist" 
+Debug: "12:02:23 ..\..\src\simpleeventcontroller.cpp:613 HV: Set Playback Mode" 

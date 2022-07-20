@@ -1,0 +1,29 @@
+<LANGUAGE>
+    <CATEGORY Name="ServiceStation_ServStatTerminal">
+        <Entry Name="BootingStatus_1">[STARTING SERVERS...]</Entry>
+        <Entry Name="BootingStatus_2">[STAND BY]</Entry>
+        <Entry Name="BootingStatus_3">[ONLINE][br]SHA-256 Encryption OK!</Entry>
+    </CATEGORY>
+    <CATEGORY Name="ServiceStation_ControlTerminal">
+        <Entry Name="Dummy">[DUMMY TEST]</Entry>
+        <Entry Name="App1">Section Control</Entry>
+        <Entry Name="App2">Lockdown Control</Entry>
+        <Entry Name="App3">Camera Viewer</Entry>
+        <Entry Name="App4">Logoff</Entry>
+        <Entry Name="Startup_Title">CONF.EXE</Entry>
+        <Entry Name="Startup_Text1">Fetching configuration...</Entry>
+        <Entry Name="Startup_Text2">Authentificating in Gateway...</Entry>
+        <Entry Name="Startup_Text3">Verifying Access Permissions...</Entry>
+        <Entry Name="Startup_Text4">Fetching configuration...</Entry>
+        <Entry Name="Startup_Text5">Fetching configuration...</Entry>
+        <Entry Name="Login_SecCodeEnter">Insert Management Code</Entry>
+        <Entry Name="AccessCode_Incorrect">Incorrect Access Code!</Entry>
+    </CATEGORY>
+    <CATEGORY Name="Voices_hc1_03">
+        <Entry Name="servcons_toolchipupdated">Hey Ness. I&apos;ve got someone reporting issues going on inside Sector D.</Entry>
+        <Entry Name="servcons_toolchipfound">Hey! Halford, I need the code again to the stairs!</Entry>
+        <Entry Name="servcons_toolchipupdated">Why? Another of your guest friends got stuck in the restricted area of the facility?</Entry>
+        <Entry Name="servcons_toolchipfound">Looks like you&apos;ve been paying attention.</Entry>
+        <Entry Name="servcons_servcons3active">It&apos;s 221647, next time you&apos;re asking for me the code I&apos;m throwing you out of the stairs.</Entry>
+    </CATEGORY>
+</LANGUAGE>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<VoiceData>
+ <Characters>
+  <Character ID="0" Name="Derek" DisplayName="Derek" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="False" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="World" Volume="1" ReverbVolume="1" SpeakerSpread="40" EntitySource="player" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+  <Character ID="2" Name="Ness" DisplayName="Engineer Ness" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="False" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="World" Volume="1" ReverbVolume="1" SpeakerSpread="40" EntitySource="" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+  <Character ID="3" Name="Gabby" DisplayName="S.S.M Gabby" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="False" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="World" Volume="1" ReverbVolume="1" SpeakerSpread="40" EntitySource="" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+  <Character ID="4" Name="pa" DisplayName="Announcement System" Actor="" AutoGenVoice="False" AutoGenVoiceFile="" AutoGenVoiceSoundFreq="1" WorldSpace="True" AffectedByReverb="True" TextToSpeechVoice="Default" DefaultCriteria="" EntryType="World" Volume="1" ReverbVolume="1" SpeakerSpread="40" EntitySource="" MinDist="0" MaxDist="0" MinFreq="22000" MaxFreq="22000" MaxListeningDist="-1" FrequencyFilter="None" />
+ </Characters>
+ <Effects />
+ <Scenes>
+  <Scene ID="0" Name="AudioLogTerminal" FocusPrio="0" DefaultCriteria="" Volume="1" ReverbVolume="1" />
+  <Scene ID="1" Name="PA System" FocusPrio="0" DefaultCriteria="" Volume="1" ReverbVolume="1" />
+ </Scenes>
+ <Subjects>
+  <Subject Name="hc1_02_CL_1" UseSingleRandomLine="False" SceneId="0" EffectId="-1">
+   <Line CharacterId="3" Prio="0">
+    <Sound Text="Hey Ness. I've got someone reporting issues going on inside Sector D." FileName="servcons_toolchipupdated" Timestamp="2022-03-12 08:59" />
+   </Line>
+   <Line CharacterId="2" Prio="0" FrequencyFilter="Low Pass">
+    <Sound Text="Alright, give me the list." FileName="servcons_servcons3active" Timestamp="2022-03-12 08:59" />
+   </Line>
+   <Line CharacterId="3" Prio="0">
+    <Sound Text="Camera 8687 went down... As well as a processor 12 malfunction in Derek Torres's room. You'll have to fix those" FileName="servcons_toolchipfound" Timestamp="2022-03-12 08:59" />
+   </Line>
+   <Line CharacterId="2" Prio="0">
+    <Sound Text="Sure will do. Anything else?" FileName="specialtest" Timestamp="2022-03-12 08:59" />
+   </Line>
+   <Line CharacterId="3" Prio="0">
+    <Sound Text="Nope, you're free to leave. See ya." FileName="helixtermgeneral_systemstartup" Timestamp="2022-03-12 08:59" />
+   </Line>
+   <Line CharacterId="2" Prio="0">
+    <Sound Text="Bye." Timestamp="2022-03-12 08:59" />
+   </Line>
+  </Subject>
+  <Subject Name="hc1_02_CL_2" UseSingleRandomLine="False" SceneId="0" EffectId="-1">
+   <Line CharacterId="4" Prio="0">
+    <Sound Text="System alert! Power Surge detected in Sector D. Attempting to switch to auxiliary power source." FileName="helixtest1" Timestamp="2022-03-12 09:42" />
+   </Line>
+  </Subject>
+  <Subject Name="hc1_02_CL_4" UseSingleRandomLine="False" SceneId="0" EffectId="-1">
+   <Line CharacterId="0" Prio="0">
+    <Sound Text="Wha... Did I wake? Oh god... What is this place?" FileName="Derek1" Timestamp="2022-03-12 09:42" />
+   </Line>
+   <Line CharacterId="0" Prio="0">
+    <Sound Text="I heard... Where am I?" VoiceOffset="2" FileName="Derek2_PostProcess" Timestamp="2022-03-12 09:42" />
+   </Line>
+  </Subject>
+  <Subject Name="hc1_02_CL_3" UseSingleRandomLine="False" SceneId="0" EffectId="-1">
+   <Line CharacterId="4" Prio="0">
+    <Sound Text="Welcome to the facility! Where we test the finest of tests subjects." FileName="PA1_PostProcess" Timestamp="2022-03-12 09:42" />
+   </Line>
+  </Subject>
+  <Subject Name="hc1_02_bridge_activationannouncement" UseSingleRandomLine="False" SceneId="1" EffectId="-1">
+   <Line CharacterId="4" Prio="0">
+    <Sound Text="Automatic lighting system engaged in Sector Transit Bridge 03-D." FileName="hc1_02_bridge_activationannouncement" Timestamp="2022-05-07 11:27" />
+   </Line>
+  </Subject>
+ </Subjects>
+</VoiceData>

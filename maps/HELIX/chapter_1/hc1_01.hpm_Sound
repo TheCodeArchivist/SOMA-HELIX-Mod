@@ -1,7 +1,10 @@
 <HPLMapTrack_Sound ID="CBB874AF70605B20BA545B6075A6F760FD767F1A" Version="1.00">
     <Section Name="Koneko@DESKTOP-7BSC6LH">
         <Objects>
-            <Sound ID="268437561" Name="mainframe_loud_1" CreStamp="1641139632" ModStamp="1641139664" WorldPos="21.75 1.25 -52.625" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="level_amb_shared_machines/tech/server/hum" MinDistance="2" MaxDistance="6.5" Volume="5" Active="true" UseCustomProperties="true" UID="16 832 268437561" />
+            <Sound ID="268437561" Name="mainframe_loud_1" CreStamp="1641139632" ModStamp="1641482265" WorldPos="21.75 1.25 -52.5" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="level_amb_shared_machines/tech/server/hum" MinDistance="2" MaxDistance="6.5" Volume="5" Active="true" UseCustomProperties="true" UID="16 832 268437561" />
+            <Sound ID="268438386" Name="Sound_4" CreStamp="1655374252" ModStamp="1655374352" WorldPos="-20.5 1.75 -40.5" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="02_05_theta/amb/background/tunnel" MinDistance="4.5" MaxDistance="12" Volume="1" Active="true" UseCustomProperties="true" UID="16 1059 268438386" />
+            <Sound ID="268438387" Name="Sound_5" CreStamp="1655374305" ModStamp="1655374354" WorldPos="-20.5 1.75 -19" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="02_05_theta/amb/background/tunnel" MinDistance="4.5" MaxDistance="12" Volume="1" Active="true" UseCustomProperties="true" UID="16 890 268438387" />
+            <Sound ID="268438388" Name="Sound_1" CreStamp="1655374500" ModStamp="1655374568" WorldPos="22.5 2.25 -52.5" Rotation="0 0 0" Scale="1 1 1" SoundEntityFile="01_02_upsilon_inside_02/sfx/power_plant_terminal_loop" MinDistance="1.5" MaxDistance="4" Volume="1" Active="true" UseCustomProperties="true" UID="16 889 268438388" />
         </Objects>
     </Section>
 </HPLMapTrack_Sound>

@@ -1,0 +1,97 @@
+<LANGUAGE>
+    <CATEGORY Name="Voices_hc1_02">
+        <Entry Name="servcons_toolchipupdated">Hey Ness. I&apos;ve got someone reporting issues going on inside Sector D.</Entry>
+        <Entry Name="servcons_servcons3active">Alright, give me the list.</Entry>
+        <Entry Name="servcons_toolchipfound">Camera 8687 went down... As well as a processor 12 malfunction in Derek Torres&apos;s room. You&apos;ll have to fix those</Entry>
+        <Entry Name="specialtest">Sure will do. Anything else?</Entry>
+        <Entry Name="helixtermgeneral_systemstartup">Nope, you&apos;re free to leave. See ya.</Entry>
+        <Entry Name="AudioLogTerminal_hc1_02_CL_1_006_Ness_001">Bye.</Entry>
+        <Entry Name="helixtest1">System alert! Power Surge detected in Sector D. Attempting to switch to auxiliary power source.</Entry>
+        <Entry Name="Derek1">Wha... Did I wake? Oh god... What is this place?</Entry>
+        <Entry Name="Derek2_PostProcess">I heard... Where am I?</Entry>
+        <Entry Name="PA1_PostProcess">Welcome to the facility! Where we test the finest of tests subjects.</Entry>
+        <Entry Name="hc1_02_bridge_activationannouncement">Automatic lighting system engaged in Sector Transit Bridge 03-D.</Entry>
+    </CATEGORY>
+    <CATEGORY Name="ReadableTexts">
+        <Entry Name="codetext_title">Emergency Override Notice</Entry>
+        <Entry Name="codetext_text">In case the terminal outputs a &quot;LOCKDOWN 22-7-A&quot; alert. Just enter **0007#1171 on the keypad. It should reboot the service terminal on maintenance mode and unlock the door.[br][br]You&apos;re welcome.[br]- Mike Adams</Entry>
+    </CATEGORY>
+    <CATEGORY Name="SPECIAL_CommsLoggs1">
+        <Entry Name="rf_1">????/??/?? 09:47:10</Entry>
+        <Entry Name="rf_2">????/??/?? 17:22:55</Entry>
+        <Entry Name="rf_3">????/??/?? ERR</Entry>
+        <Entry Name="rf_4">DEREK TEST</Entry>
+        <Entry Name="rf_5">DEREK TEST 2</Entry>
+    </CATEGORY>
+    <CATEGORY Name="terminal_airlock0603control">
+        <Entry Name="LoginLabel">Welcome, [ERRUSR] (#////).</Entry>
+        <Entry Name="SecNET">Security NET</Entry>
+        <Entry Name="AirlockMenu">Airlock 0603</Entry>
+        <Entry Name="Logout">Logout</Entry>
+        <Entry Name="Login">Login</Entry>
+        <Entry Name="PathOSErr1">Error Code: PATHOS-7751[br]Type: Disconnection Error</Entry>
+        <Entry Name="PathOSErr2">Error Code: 4467[br]Type: Camera Offline&quot;</Entry>
+        <Entry Name="PathOSErr3">Error Code: DEBUG ALPHA[br]Type: Not Configured Yet! Still WIP.</Entry>
+        <Entry Name="PathOSErr4">Access Denied[br]Type: LOCKDOWN 22-7-A</Entry>
+        <Entry Name="Login0603DialogBoxTitle">Login Successful!</Entry>
+        <Entry Name="Login0603DialogBoxText">Welcome, USERWIP (#0417)</Entry>
+        <Entry Name="Logout">Logout</Entry>
+        <Entry Name="Logout">Logout</Entry>
+        <Entry Name="Logout">Logout</Entry>
+        <Entry Name="AirlockStat">Airlock Status</Entry>
+        <Entry Name="AirlockCont">Airlock Control</Entry>
+        <Entry Name="AirlockCam">Airlock Camera</Entry>
+        <Entry Name="SNCaller">Caller</Entry>
+        <Entry Name="LckStat">Lockdown Status</Entry>
+        <Entry Name="Cams">Cameras</Entry>
+        <Entry Name="IntercomApp_Room_1">Security Office D-22</Entry>
+        <Entry Name="IntercomApp_Room_2">Sector Control</Entry>
+        <Entry Name="IntercomApp_Room_3">Office #2710</Entry>
+        <Entry Name="IntercomApp_Room_4">Annex D-224</Entry>
+        <Entry Name="IntercomApp_Room_5">MNT D-21 Shaft</Entry>
+        <Entry Name="IntercomApp_Room_6">Sector D Lobby</Entry>
+        <Entry Name="IntercomApp_Room_7">Subject Control</Entry>
+        <Entry Name="IntercomApp_Label">INTERCOM</Entry>
+        <Entry Name="FileSelection">Call</Entry>
+        <Entry Name="IntercomApp_Call">Call</Entry>
+        <Entry Name="IntercomApp_Hangup">Hang Up</Entry>
+        <Entry Name="CallerTerminal_Online">ONLINE</Entry>
+        <Entry Name="CallerTerminal_Offline">OFFLINE</Entry>
+    </CATEGORY>
+    <CATEGORY Name="terminal_transferairlockstatus">
+        <Entry Name="TrnsfAirlckStat_inprogress">Pressurization...</Entry>
+        <Entry Name="TrnsfAirlckStat_done">Completed!</Entry>
+        <Entry Name="BigAirlockCycleLoad_title">Airlock Scanning Systems</Entry>
+        <Entry Name="BigAirlockCycleLoad_text">Airlock Operations: Scanning Individuals...</Entry>
+        <Entry Name="BigAirlockIdle">Transfer Airlock[br]Awaiting Personnel...</Entry>
+    </CATEGORY>
+    <CATEGORY Name="terminal_miscdata1">
+        <Entry Name="SysteamLoad_Title">Loading</Entry>
+        <Entry Name="SysteamLoad_Text">Loading</Entry>
+        <Entry Name="BrutalSysRestart">The system has rebooted after an unexpected shutdown.</Entry>
+        <Entry Name="App1">Server Info</Entry>
+        <Entry Name="App2">Connection Logs</Entry>
+        <Entry Name="App3">Communications Logs</Entry>
+        <Entry Name="App4">Public Documents</Entry>
+        <Entry Name="WAULinkErr">WAU Link Error![br]WAU Quantitative Data cannot be showed.</Entry>
+        <Entry Name="ServInfo_1_1">Server Current Status</Entry>
+        <Entry Name="ServInfo_1_2">>> SERVER SYSTEM STATUS:STAT.OK![br]>> ERRORS SYSTEM: 4 MEDIUM LEVEL ERRORS FOUND.[br][br]///HELIX RESEARCH FACILITY[br]///WAU SERVER LINK - v.28-7[br]/!\ CAUTION! /!\[br]WAU INSTABILITY FOUND. UNABLE TO RESOLVE QUANTITATIVE DATA!</Entry>
+        <Entry Name="ServInfo_2_1">Errors</Entry>
+        <Entry Name="ServInfo_2_2">Error 2423-02[br]Error 4148[br]WAUERR:988[br]Error 0453</Entry>
+        <Entry Name="ServInfo_3_1">Time and Date</Entry>
+        <Entry Name="ServInfo_3_2">11/10/2143 | 9:59 PM</Entry>
+        <Entry Name="LoginLogs_Title">Server Connection Logs</Entry>
+        <Entry Name="LoginLogs_Text">ONLINE PERSONNEL:[br]> NONE[br]LAST LOGGED ON PERSONNEL:[br]> Security Officer Markus Merssin [#2751][br]> Security Sector Manager Gabby Tharbes [#2954][br]> Researcher Andra Calypso [#3547][br]> Maintenance Technichian Alex Mashek [#2894][br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> CORRUPTED DATA[br]> SUBJECT WAU.55240 [NT.AUTHORITY$WAU.55240]</Entry>
+        <Entry Name="CommsLogs_Title">Communcations Logs</Entry>
+        <Entry Name="CommsLogs_Text">[Markus.M#2751]: "To all members of Staff, there's an electric outage in Sector Transition Bridge D-03, do not take the bridge until the situation has been resolved."[br][Gabby.T#2954]: "I've got set off Biohazard Alarms in Sector C Laboratories, Sector A Administration Complex and Sector D Transition Offices, I need some officer to check that shit out."[br][Markus.M#2751]: "Roger that, I'm now on it, maintenance fixed the bridge."[br][Andra.C#3547]: "GET OUT! THE SECURITY SYSTEM IS SPRAYING HALON!"[br][Gabby.T#2954]: "Andra, what's going on?"[br][Gabby.T#2954]: "Andra, you're still here?"[br][NT.AUTHORITY$SERVSYSTEM]> Researcher Andra Calypso [#3547] has been autodisconnected![br][Gabby.T#2954]: "Markus, report status!"[br][Gabby.T#2954]: "I'm heading there! Hold tight."[br][NT.AUTHORITY$SERVSYSTEM]> Security Officer Markus Merssin [#2751] has timed out! Connection unstable.[br][Gabby.T#2954]: "I'm heading there! Hold tight."[br][NT.AUTHORITY$SERVSYSTEM]> Maintenance Technichian Alex Mashek [#2894] logged in![br][Alex.M#2894] "Don't go into the main offices! The system's gone haywire! Pass through the 'Maintenance Sections', I'll wait you at 'Hatch Victor-Whiskey'![br][Gabby.T#2954]: "I guess I don't have a choice. To all remaining personnel still alive: Evacuate the modern sections of the facility and head into your nearest 'Maintenance Section', it's the safest way of getting out of this situation alive. Out."[br][NT.AUTHORITY$SERVSYSTEM]> Sector Manager Gabby Tharbes [#6841] has disconnected![br][NT.AUTHORITY$SERVSYSTEM]> Maintenance Technichian Alex Mashek [#2894] has disconnected!</Entry>
+        <Entry Name="PublicDocuments">Public Documents</Entry>
+        <Entry Name="PublicDocuments_Title_1">Sector Transition Bridges</Entry>
+        <Entry Name="PublicDocuments_Text_1">///> SECTOR TRANSITION BRIDGES[br][br]Sector Transition Bridges are connecting the 4 main Sectors and the Tram Stations, Maintenance Sections or Emergency Surface Elevators. In case of an emergency, all personnel must take the Main Transition Bridge (Codenamed 01-(SECTOR)), in case it is blocked or has collapsed, alternate T.Bs are allowed for usage, however it may take longer to get to the regroupment point.[br][br]Sector D Transition Bridges:[br]01-D: Main Transition Bridge : Sector D Tram Station - Sector D Lobby[br]02-D: Alternative Transition Bridge : Sector D Employee Bureau - Hatch Gamma-Vulture[br]03-D: Alternative Transition Bridge : Sector D Laboratories - Maintenance Section D-14[br]04-D: Alternative Transition Bridge : Sector D SL-7 Cryogenic Center - Maintenance Section D-09[br][br]Sector D Transition Bridges:[br]01-D: Main Transition Bridge : Sector D Tram Station - Sector D Lobby[br]02-D: Alternative Transition Bridge : Sector D Employee Bureau - Hatch Gamma-Vulture[br]03-D: Alternative Transition Bridge : Sector D Laboratories - Maintenance Section D-14[br]04-D: Alternative Transition Bridge : Sector D SL-7 Cryogenic Center - Maintenance Section D-09[br][br]Sector D Transition Bridges:[br]01-D: Main Transition Bridge : Sector D Tram Station - Sector D Lobby[br]02-D: Alternative Transition Bridge : Sector D Employee Bureau - Hatch Gamma-Vulture[br]03-D: Alternative Transition Bridge : Sector D Laboratories - Maintenance Section D-14[br]04-D: Alternative Transition Bridge : Sector D SL-7 Cryogenic Center - Maintenance Section D-09[br][br]Sector D Transition Bridges:[br]01-D: Main Transition Bridge : Sector D Tram Station - Sector D Lobby[br]02-D: Alternative Transition Bridge : Sector D Employee Bureau - Hatch Gamma-Vulture[br]03-D: Alternative Transition Bridge : Sector D Laboratories - Maintenance Section D-14[br]04-D: Alternative Transition Bridge : Sector D SL-7 Cryogenic Center - Maintenance Section D-09</Entry>
+        <Entry Name="PublicDocuments_Title_2">Title 2</Entry>
+        <Entry Name="PublicDocuments_Text_2">Text 2</Entry>
+        <Entry Name="PublicDocuments_Title_3">Title 3</Entry>
+        <Entry Name="PublicDocuments_Text_3">Text 3</Entry>
+        <Entry Name="PublicDocuments_Title_4">Title 4</Entry>
+        <Entry Name="PublicDocuments_Text_4">Text 4</Entry>
+    </CATEGORY>
+</LANGUAGE>

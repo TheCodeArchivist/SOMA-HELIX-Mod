@@ -1,0 +1,89 @@
+/**
+ * Returns the rotation of an entity in euler angles.
+ * 
+ * @param asEntityName, The name of the entity.
+ * @return cVector3f, The rotation of the entity in euler angles, in the order (X, Y, Z). Returns a zero vector if the entity was not found. 
+ **/
+cVector3f Entity_GetRotationEuler(const tString &in asEntityName)
+{
+	iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+	if (ent is null) return cVector3f_Zero;
+ 
+	return cMath_MatrixToEulerAngles(ent.GetMatrix().GetRotation());
+}
+ 
+/**
+ * Sets the rotation of an entity using euler angles.
+ * 
+ * @param asEntityName, The name of the entity.
+ * @param avEulerAngles, The rotation to set the entity to, given in euler angles in the order (X, Y, Z).
+ **/
+void Entity_SetRotationEuler(const tString &in asEntityName, cVector3f avEulerAngles)
+{
+	iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+	if (ent is null) return;
+ 
+	cMatrixf mTransform = ent.GetMatrix();
+	cMatrixf mRot = cMath_MatrixRotateXYZ(avEulerAngles);
+	mTransform.SetRotation(mRot);
+	ent.SetMatrix(mTransform);
+}
+ 
+/**
+ * Adds the given euler angles to the current rotation of an entity.
+ * 
+ * @param asEntityName, The name of the entity.
+ * @param avEulerAngles, The rotation to add to the entity, given in euler angles in the order (X, Y, Z).
+ **/
+void Entity_RotateEuler(const tString &in asEntityName, cVector3f avEulerAngles)
+{
+	cQuaternion rot = Entity_GetRotation(asEntityName);
+	rot = cMath_QuaternionMul(rot, cMath_QuaternionEuler(cVector3f(avEulerAngles.x, 0, 0), eEulerRotationOrder_XYZ));
+	rot = cMath_QuaternionMul(rot, cMath_QuaternionEuler(cVector3f(0, avEulerAngles.y, 0), eEulerRotationOrder_XYZ));
+	rot = cMath_QuaternionMul(rot, cMath_QuaternionEuler(cVector3f(0, 0, avEulerAngles.z), eEulerRotationOrder_XYZ));
+	Entity_SetRotation(asEntityName, rot);
+}
+ 
+/**
+ * Returns the rotation of an entity.
+ * 
+ * @param asEntityName, The name of the entity.
+ * @return cQuaternion, The rotation quaternion of an entity. 
+ **/
+cQuaternion Entity_GetRotation(const tString &in asEntityName)
+{
+	iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+	if (ent is null) return cQuaternion_Identity;
+ 
+	return cMath_QuaternionMatrix(ent.GetMatrix().GetRotation());
+}
+ 
+/**
+ * Sets the rotation of an entity.
+ * 
+ * @param asEntityName, The name of the entity.
+ * @param aRotation, The rotation to set the entity to.
+ **/
+void Entity_SetRotation(const tString &in asEntityName, cQuaternion aRotation)
+{
+	iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+	if (ent is null) return;
+ 
+	cMatrixf mTransform = ent.GetMatrix();
+	cMatrixf mRot = cMath_MatrixQuaternion(aRotation);
+	mTransform.SetRotation(mRot);
+	ent.SetMatrix(mTransform);
+}
+ 
+/**
+ * Adds the given rotation to the current rotation of an entity.
+ * 
+ * @param asEntityName, The name of the entity.
+ * @param aRotation, The rotation to add to the entity.
+ **/
+void Entity_Rotate(const tString &in asEntityName, cQuaternion aRotation)
+{
+	cQuaternion rot = Entity_GetRotation(asEntityName);
+	rot = cMath_QuaternionMul(rot, aRotation);
+	Entity_SetRotation(asEntityName, rot);
+}

@@ -1,0 +1,243 @@
+///////////////////////////////////////////////////////////
+// Math
+//{////////////////////////////////////////////////////////
+
+    float cMath_Vector3Length(cVector3f avV)
+    {
+        return cMath_Sqrt((avV.x * avV.x) + (avV.y * avV.y) + (avV.z * avV.z));
+    }
+
+    float cMath_Vector4Length(cVector4f avV)
+    {
+        return cMath_Sqrt((avV.x * avV.x) + (avV.y * avV.y) + (avV.z * avV.z) + (avV.w * avV.w));
+    }
+
+    cVector4f cMath_MatrixRow(cMatrixf amMatrix, int alRow)
+    {
+        return cVector4f(amMatrix.GetElement(0, alRow), 
+                         amMatrix.GetElement(1, alRow), 
+                         amMatrix.GetElement(2, alRow), 
+                         amMatrix.GetElement(3, alRow));
+    }
+
+    cVector3f cMath_MatrixRow3(cMatrixf amMatrix, int alRow)
+    {
+        return cVector3f(amMatrix.GetElement(0, alRow), 
+                         amMatrix.GetElement(1, alRow), 
+                         amMatrix.GetElement(2, alRow));
+    }
+
+    cVector4f cMath_MatrixColumn(cMatrixf amMatrix, int alColumn)
+    {
+        return cVector4f(amMatrix.GetElement(alColumn, 0), 
+                         amMatrix.GetElement(alColumn, 1), 
+                         amMatrix.GetElement(alColumn, 2), 
+                         amMatrix.GetElement(alColumn, 3));
+    }
+
+    cVector3f cMath_MatrixColumn3(cMatrixf amMatrix, int alColumn)
+    {
+        return cVector3f(amMatrix.GetElement(alColumn, 0), 
+                         amMatrix.GetElement(alColumn, 1), 
+                         amMatrix.GetElement(alColumn, 2));
+    }
+
+    void cMath_MatrixTransformationDecompose(cMatrixf amInput, cVector3f &out avTranslation, cVector3f &out amRotation, cVector3f &out avScale)
+    {
+        // Translation
+        avTranslation = cMath_MatrixColumn3(amInput, 3);
+
+        // Scale
+        avScale = cVector3f(cMath_Vector3Length(cMath_MatrixColumn3(amInput, 0)), 
+                            cMath_Vector3Length(cMath_MatrixColumn3(amInput, 1)), 
+                            cMath_Vector3Length(cMath_MatrixColumn3(amInput, 2)));
+        
+        // Rotation
+        cMatrixf mRotationMatrix = cMatrixf(
+            amInput.GetElement(0, 0) / avScale.x, amInput.GetElement(1, 0) / avScale.y, amInput.GetElement(2, 0) / avScale.z, 0,
+            amInput.GetElement(0, 1) / avScale.x, amInput.GetElement(1, 1) / avScale.y, amInput.GetElement(2, 1) / avScale.z, 0,
+            amInput.GetElement(0, 2) / avScale.x, amInput.GetElement(1, 2) / avScale.y, amInput.GetElement(2, 2) / avScale.z, 0,
+            0,                                    0,                                    0,                                    1
+        );
+        amRotation = cVector3f(
+            cMath_ATan2(mRotationMatrix.GetElement(2, 3), mRotationMatrix.GetElement(3, 3)),
+            cMath_ATan2(-mRotationMatrix.GetElement(1, 3), cMath_Sqrt((mRotationMatrix.GetElement(2, 3)*mRotationMatrix.GetElement(2, 3)) + (mRotationMatrix.GetElement(3, 3)*mRotationMatrix.GetElement(3, 3)))),
+            cMath_ATan2(mRotationMatrix.GetElement(1, 2), mRotationMatrix.GetElement(1, 1))
+        );
+    }
+
+    cMatrixf cMath_MatrixShear(float afXY, float afYX, float afXZ, float afZX, float afYZ, float afZY) 
+    {
+        return cMatrixf(
+            1,    afYX, afZX, 0,
+            afXY, 1,    afZY, 0,
+            afXZ, afYZ, 1,    0,
+            0,    0,    0,    1
+        );
+    }
+
+//}
+
+///////////////////////////////////////////////////////////
+// String
+//{////////////////////////////////////////////////////////
+    tString cString_Repeat(const tString &in asInput, int alCount)
+    {
+        if (alCount <= 0) return "";
+
+        tString sResult = asInput;
+        for (int i = 1; i < alCount; i++)
+            sResult += asInput;
+        
+        return sResult;
+    }
+//}
+
+///////////////////////////////////////////////////////////
+// Entity
+//{////////////////////////////////////////////////////////
+
+    cVector3f Entity_GetTranslation(const tString &in asEntityName)
+    {
+        iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+        if (ent is null) return cVector3f_Zero;
+
+        cMatrixf mMatrix = ent.GetMatrix();
+        return cVector3f(
+            mMatrix.GetElement(3, 0),
+            mMatrix.GetElement(3, 1),
+            mMatrix.GetElement(3, 2)
+        );
+    }
+
+    cVector3f Entity_GetRotation(const tString &in asEntityName)
+    {
+        iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+        if (ent is null) return cVector3f_Zero;
+
+        cMatrixf mMatrix = ent.GetMatrix();
+        return cVector3f(
+            cMath_ATan2(mMatrix.GetElement(2, 3), mMatrix.GetElement(3, 3)),
+            cMath_ATan2(-mMatrix.GetElement(1, 3), cMath_Sqrt((mMatrix.GetElement(2, 3)*mMatrix.GetElement(2, 3)) + (mMatrix.GetElement(3, 3)*mMatrix.GetElement(3, 3)))),
+            cMath_ATan2(mMatrix.GetElement(1, 2), mMatrix.GetElement(1, 1))
+        );
+    }
+
+    cVector3f Entity_GetScale(const tString &in asEntityName)
+    {
+        iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+        if (ent is null) return cVector3f_Zero;
+
+        cMatrixf mMatrix = ent.GetMatrix();
+        return cVector3f(cMath_Vector3Length(cMath_MatrixColumn3(mMatrix, 0)), 
+                         cMath_Vector3Length(cMath_MatrixColumn3(mMatrix, 1)), 
+                         cMath_Vector3Length(cMath_MatrixColumn3(mMatrix, 2))
+        );
+    }
+
+    void Entity_SetScale(const tString &in asEntityName, cVector3f avScale)
+    {
+        iLuxEntity @ent = cLux_GetCurrentMap().GetEntityByName(asEntityName);
+        if (ent is null) return;
+
+        cMatrixf mTranslation = cMath_MatrixTranslate(ent.GetPosition());
+        cMatrixf mRotation = ent.GetMatrix().GetRotation();
+        cMatrixf mScale = cMath_MatrixScale(avScale);
+        cMatrixf mTransform = cMath_MatrixMul(cMath_MatrixMul(mTranslation, mRotation), mScale);
+
+        ent.SetMatrix(mTransform);
+    }
+
+    void Entity_FadeScale(const tString &in asEntity, float afScale, float afTime) 
+    {
+        cLuxMap @map = cLux_GetCurrentMap();
+        if (map.GetEntityByName(asEntity) is null)
+        {
+            cLux_AddDebugMessage("ERROR: Entity " + asEntity + " not found.");
+            return;
+        }
+
+        if (afTime <= 0.0f) {
+
+        }
+        else {
+            map.AddTimer("__", 0.0f, "$_Entity_FadeScale_Timer");
+        }
+    }
+
+    void _Entity_FadeScale_Timer(const tString &in asTimer) 
+    {
+        cLuxMap @map = cLux_GetCurrentMap();
+        tString entity = map.GetTimerUserVarString(asTimer + "_EntityName");
+        float fRemainingTime = map.GetTimerUserVarFloat(asTimer + "_RemainingTime");
+        float fTotalTime = map.GetTimerUserVarFloat(asTimer + "_TotalTime");
+        float fStartScale = map.GetTimerUserVarFloat(asTimer + "_StartScale");
+        float fEndScale = map.GetTimerUserVarFloat(asTimer + "_EndScale");
+
+    }
+
+//}
+
+///////////////////////////////////////////////////////////
+// Debug
+//{////////////////////////////////////////////////////////
+
+    void cLux_AddDebugMessage()
+    {
+        cLux_AddDebugMessage("");
+    }
+
+    void cLux_AddDebugMessage(int alV)
+    {
+        cLux_AddDebugMessage("" + alV);
+    }
+
+    void cLux_AddDebugMessage(float afV)
+    {
+        cLux_AddDebugMessage("" + afV);
+    }
+
+    void cLux_AddDebugMessage(bool abV)
+    {
+        cLux_AddDebugMessage("" + abV);
+    }
+
+    void cLux_AddDebugMessage(const cColor &in aC)
+    {
+        cLux_AddDebugMessage("(" + aC.r + ", " + aC.g + ", " + aC.b + ", " + aC.a + ")");
+    }
+
+    void cLux_AddDebugMessage(const cVector2f &in avV)
+    {
+        cLux_AddDebugMessage("(" + avV.x + ", " + avV.y + ")");
+    }
+
+    void cLux_AddDebugMessage(const cVector2l &in avV)
+    {
+        cLux_AddDebugMessage("(" + avV.x + ", " + avV.y + ")");
+    }
+
+    void cLux_AddDebugMessage(const cVector3f &in avV)
+    {
+        cLux_AddDebugMessage("(" + avV.x + ", " + avV.y + ", " + avV.z + ")");
+    }
+
+    void cLux_AddDebugMessage(const cVector3l &in avV)
+    {
+        cLux_AddDebugMessage("(" + avV.x + ", " + avV.y + ")");
+    }
+
+    void cLux_AddDebugMessage(const cVector4f &in avV)
+    {
+        cLux_AddDebugMessage("(" + avV.x + ", " + avV.y + ", " + avV.z + ", " + avV.w + ")");
+    }
+
+    void cLux_AddDebugMessage(const cMatrixf &in avM)
+    {
+        cLux_AddDebugMessage("{  " + avM.GetElement(0, 0) + ", " + avM.GetElement(1, 0) + ", " + avM.GetElement(2, 0) + ", " + avM.GetElement(3, 0));
+        cLux_AddDebugMessage("   " + avM.GetElement(0, 1) + ", " + avM.GetElement(1, 1) + ", " + avM.GetElement(2, 1) + ", " + avM.GetElement(3, 1));
+        cLux_AddDebugMessage("   " + avM.GetElement(0, 2) + ", " + avM.GetElement(1, 2) + ", " + avM.GetElement(2, 2) + ", " + avM.GetElement(3, 2));
+        cLux_AddDebugMessage("   " + avM.GetElement(0, 3) + ", " + avM.GetElement(1, 3) + ", " + avM.GetElement(2, 3) + ", " + avM.GetElement(3, 3) + "  }");
+    }
+
+//}

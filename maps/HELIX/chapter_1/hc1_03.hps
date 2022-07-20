@@ -1,0 +1,1014 @@
+#include "interfaces/Map_Interface.hps"
+#include "base/Inputhandler_Types.hps"
+
+#include "helpers/helper_map.hps"
+#include "helpers/helper_props.hps"
+#include "helpers/helper_effects.hps"
+#include "helpers/helper_audio.hps"
+#include "helpers/helper_imgui.hps"
+#include "helpers/helper_sequences.hps"
+#include "helpers/helper_game.hps"
+#include "helpers/helper_modules.hps"
+#include "helpers/helper_ai.hps"
+
+#include "helper_imgui_station.hps"
+#include "helper_imgui_station_apps_common.hps"
+#include "helper_imgui_station_app_error.hps"
+#include "helper_imgui_station_app_numpad.hps"
+#include "helper_imgui_station_app_audioplayback.hps"
+#include "helper_imgui_station_app_mail.hps"
+#include "helper_imgui_station_app_photoviewer.hps"
+#include "helper_imgui_station_app_airlockpressure.hps"
+#include "helper_custom_depth.hps"
+#include "helper_custom_depth_ai.hps"
+
+//--------------------------------------------------
+ 
+enum eServiceStation_ControlTerminal
+{
+	eServiceStation_ControlTerminal_StartupMenu,
+	eServiceStation_ControlTerminal_MainMenu,
+	eServiceStation_ControlTerminal_SectionControl,
+	eServiceStation_ControlTerminal_CameraViewer,
+	eServiceStation_ControlTerminal_LockdownLifterMenu,
+	eServiceStation_ControlTerminal_LockdownLifterCode,
+	eServiceStation_ControlTerminal_Login
+}
+ 
+//--------------------------------------------------
+ 
+class cScrMap : iScrMap
+{
+	//--------------------------------------------
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN CALLBACKS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Preload Data
+	void PreloadData()
+	{
+		//Preload Derek
+		PlayerHands_PreloadHandModel_Human();
+		//Preload Keypad
+		Material_Preload("security_keypad_greenlamp");
+		Material_Preload("security_keypad_redlamp");
+		//Preload Terminals / ImGui
+		StationGui_PreloadDefault();
+		OmnitoolGui_Preload();
+		//Preload Particules
+		ParticleSystem_Preload("elec_spark_physics_oneshot.ps");
+		ParticleSystem_Preload("tutorial_machine_steam.ps");
+
+	}
+ 
+	////////////////////////////
+	// Set up map environment
+	void Setup()
+	{
+	
+	}
+	
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run first time starting map
+	void OnStart()
+	{
+		//Sound_CreateAtEntity("DiveSuitComputerBootup", "03_02_omicron_inside/SFX/diving_suit_computer/startup", "blastdoorterminal_a", 0.0f, false, 1.0f);
+		//Setup Player
+		Effect_Fade_Out(0);
+		//Setup Keypad
+		SetKeypadMaterial("keypad_1","security_keypad_redlamp");
+		Entity_SetEffectBaseColor("lock_light", cColor(1, 0, 0, 1));
+		Effect_Fade_In(2.0f);
+		Map_AddTimer("AirlockDoorsOpening",3,"AirlockDoorsOpening");
+		//Omnitool
+		CathTool_ResetScreen(eCathToolVariant_HelperJane);
+		Tool_PickUp("omnitool_configured",false,false);
+		//ScriptedFlesher1_Trigger();
+		//Light_SetBrightness("bridge_boxlightmain", 0);
+		//Prop_RotateToSpeed("computer_panel_medium_GUI_1", 2, -3, cVector3f_Up, true, "computer_panel_medium_GUI_1_2");
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when entering map
+	void OnEnter()
+	{	
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when leaving map
+	void OnLeave()
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// The player has died.
+	void OnPlayerKilled(int alRecentDeaths, const tString&in asSource)
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// To get when player makes input (mostly used for debug)
+	void OnAction(int alAction, bool abPressed) 
+	{
+		if(abPressed==false) return;
+		
+		if(alAction == eAction_Test1)
+		{
+		}
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// This only used for pure debug purposes when info needs to printed.
+	float DrawDebugOutput(cGuiSet @apSet,iFontData @apFont,float afY)
+	{
+		//afY = cLux_DrawDebugText("My Debug value:"+..., afY);
+		return afY;
+	}
+ 
+	//-------------------------------------------------------
+ 
+	//} END MAIN CALLBACKS
+ 
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN FUNCTIONS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+ 
+	tString gsKeypadCode = "221647";
+	bool mbDoorLocked = true;
+	bool mbUsingKeypad = false;
+	tString msPadCode = "";
+	float mfKeypadPulse = 0;
+	bool mbServiceStation_LoginStatus = false;
+	bool mbServiceStation_Booting = false;
+	bool mbServiceStation_Operational = false;
+ 
+	void audio_log_1_OnConnectionStateChange(const tString &in asEntity, int alState)
+	{
+		Voice_SetSource("Halford",asEntity,1,10,true,10);
+		Voice_SetSource("Unknown",asEntity,1,10,true,10);
+        if(alState==1)
+		{
+			Voice_Play("hc1_03_CodeReveal",-1,"",1);
+		}
+        else if(alState==-1)
+		{
+           Voice_Stop("AudioLogTerminal");
+		}
+        Sound_CreateAtEntity("ButtonPress","Entities_Urban/utility/fuse_box/button_on",asEntity,0,false);
+	}
+ 
+	//} END MAIN FUNCTIONS
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 1 *Arriving in Sector D's Maintenance Complex*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Airlock Doors Opening*
+		 //{//////////////////////////////////////
+	 
+		void AirlockDoorsOpening(const tString &in asName)
+		{
+			///Request StartElevatorPhase2() function
+			cLux_AddDebugMessage("Opening Airlock Doors");
+			SlideDoor_SetClosed("bigairlockdoor_2",false);
+		}
+	 
+		 //} END Event *Airlock Doors Opening*
+	 
+	 //} END SCENE X
+
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 2 *Heading Upstairs - Upper Areas Access*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Stairwell Music*
+		 //{//////////////////////////////////////
+		 bool stairsaccessmusic(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			if (alState == 1)
+			{
+				Entity_SetActive("StairwellMusic_Trigger", false);
+				Music_Play("01_02_enterreactorroom", 0.75f, false, eMusicPrio_BigEvent);
+			}
+			return false;
+		}
+	 
+		 //} END Event *Stairwell Music*
+
+		 /////////////////////////////////////////
+		 // Event *Section Control Station - Lights & Power Activation*
+		 //{//////////////////////////////////////
+
+		void substation_airlock_lever_1_OnConnectionStateChange(const tString &in asEntity, int alState)
+		{
+			if(alState == 1)
+			{
+				SequenceSCSActivation("");
+			}
+		}
+	 
+		cSequenceStatesData mAirLockSequence;
+		void SequenceSCSActivation(const tString &in asTimer)
+		{
+			Sequence_Begin("SequenceSCSActivation", mAirLockSequence);
+		
+			if (Sequence_DoStepAndWait(2.0f))
+			{
+				//System Warming Up
+				cLux_AddDebugMessage("Sequence initiated!");
+				Lamp_SetLit("theta_wall_small_1",false,false);
+				//Sound_CreateAtEntity("AirlockIdleEnd","Entities_Station/tech/scanner/scan_stop","Player",0.0f,false,1.0f);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Lights 1 Engaging02_05_theta/sweeteners/lights_on
+				Lamp_SetLit("sectionctrl_light_1",true,false);
+				Sound_CreateAtEntity("ServRoom_LightsActivation","02_05_theta/sweeteners/lights_on","Player",0.0f,false,1.0f);
+		
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Lights 3 Engaging
+				Lamp_SetLit("sectionctrl_light_3",true,false);
+				SlideDoor_SetClosed("slidedoor_medium_interlock_window_1",true);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Lights 4 Engaging
+				Lamp_SetLit("sectionctrl_light_4",true,false);
+		
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Lights 2 Engaging
+				Lamp_SetLit("sectionctrl_light_2",true,false);
+				Lamp_SetFlickerActive("sectionctrl_light_1",false);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Shutting Flickers from here
+				Lamp_SetFlickerActive("sectionctrl_light_3",false);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Shutting Flickers from here
+				Lamp_SetFlickerActive("sectionctrl_light_4",false);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				//Shutting Flickers from here
+				Lamp_SetFlickerActive("sectionctrl_light_2",false);
+			}
+			else if (Sequence_DoStepAndWait(1.5f))
+			{
+				//Waiting for phase 2...
+				Button_SetLocked("highsecurity_1", false);
+				Button_SetLocked("highsecurity_2", false);
+				Sound_CreateAtEntity("DoorUnlock", "Entities_Station/doors/theta_door/unlock_longfalloff", "slidedoor_medium_interlock_window_1", 0.0f, false, 1.0f);
+				Sound_CreateAtEntity("ButtonUnlock", "Entities_Station/doors/theta_door/button_longfalloff", "highsecurity_2", 0.0f, false, 1.0f);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				Terminal_SetGuiActive("computer_panel_small_GUI_1", true, 0);
+				Lamp_SetFlickerActive("secctrl_serv_*",false);
+				Lamp_SetLit("secctrl_serv_*",true,false);
+				Sound_CreateAtEntity("ServersActivationSound", "02_05_theta/sweeteners/server_beep/start_beep", "secctrl_serv_2");
+				Sound_CreateAtEntity("ServersActivationSound", "02_05_theta/sweeteners/cath_poweron/cath_computer_on", "secctrl_serv_2");
+
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				Lamp_SetLit("secctrl_serv_*",false,false);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				Lamp_SetLit("secctrl_serv_*",true,false);
+			}
+			else if (Sequence_DoStepAndWait(1.0f))
+			{
+				Lamp_SetLit("secctrl_serv_*",false,false);
+			}
+			else if (Sequence_DoStepAndWait(5.0f))
+			{
+				Lamp_SetFlickerActive("secctrl_serv_*",true);
+				Lamp_SetLit("secctrl_serv_*",true,false);
+				Sound_CreateAtEntity("ServersActivationSound", "02_05_theta/sweeteners/cath_poweron/cath_computer_stage1", "secctrl_serv_2");
+				Sound_CreateAtEntity("ServersActivationSound", "02_05_theta/sweeteners/cath_poweron/cath_computer_telemetry_1", "secctrl_serv_2");
+			}
+			else if (Sequence_DoStepAndWait(3.65f))
+			{
+				Lamp_SetLit("secctrl_serv_*",false,false);
+				Sound_CreateAtEntity("ServersActivationSound", "02_05_theta/sweeteners/cath_poweron/cath_computer_telemetry_2", "secctrl_serv_2");
+			}
+			else if (Sequence_DoStepAndWait(0.0f))
+			{
+				Lamp_SetLit("secctrl_serv_*",true,false);
+				Terminal_SetGuiActive("computer_panel_medium_GUI_1", true, 0.4);
+				Entity_SetActive("scs_lockedterm1",false);
+				Entity_SetActive("scs_lockedterm2",true);
+				mbServiceStation_Booting = true;
+				Sound_CreateAtEntity("ServersActivationSound", "02_05_theta/sweeteners/cath_poweron/cath_computer_telemetry_1", "computer_panel_medium_GUI_1");
+			}
+			Sequence_End();
+		}
+	 
+		 //} END Event *Section Control Station*
+
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE X *NAME OF SCENE*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE X *NAME OF SCENE*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+ 
+ 
+	 /////////////////////////////////////////
+	 // ==============
+	 // TERMINALS
+	 // ==============
+	 //{//////////////////////////////////////
+
+	 	// Pre-Setup
+		void DoDialogWindowEnd()
+		{
+			ImGui_DoWindowEnd();
+		}
+		void DoDialogWindowStart(const tString&in asCaption, const tString&in asText, const cVector2f &in avNrmSize = cVector2f(0.6, 0.2), float afZ=1.5f)
+			{
+			//////////////////////////////////
+			// Setup widget data
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiTextFrameData textData;
+			textData.mbUseBackgroundGfx = false;
+			textData.mFont.mvSize = cVector2f(24, 24);
+			textData.mFontAlign = eFontAlign_Center;
+			textData.mColorText = cColor(0.8, 1);
+		
+			///////////////////////////////////////
+			// Show message 
+			ImGui_DoWindowStart(asCaption, window, ImGui_NrmPosGroup(cVector3f((1.f-avNrmSize.x)*0.5, (1.f-avNrmSize.y)*0.5, afZ)), ImGui_NrmSizeGroup(avNrmSize));
+
+				ImGui_DoTextFrameExt(asText, ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, textData, 
+								  ImGui_NrmPosGroup(cVector3f(0.0, 0.1, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+		}
+		bool DoLoadingWindow(const tString &in asName, const tString &in asCaption, const tString &in asText, float afLoadTime, bool abReset, float afZ=1.5f,const tString &in asSoundFile="", const tString &in asSoundSource="", float afSoundFadeInTime=0, float afSoundFadeOutTime=0)
+		{		
+			if (asSoundFile != "" && !Depth_ImGui_LoadingInProgress(asName))
+				Sound_CreateAtEntity(ImGui_GetName()+asName+"LoadSound", asSoundFile, asSoundSource == "" ? ImGui_GetName() : asSoundSource, afSoundFadeInTime);
+
+				DoDialogWindowStart(asCaption, asText, cVector2f(0.6, 0.2), afZ);
+				bool bDone = Depth_ImGui_LoadingGauge(asName, afLoadTime, abReset, ImGui_NrmPosGroup(cVector3f(0.1, 0.5, 1)),ImGui_NrmSizeGroup(cVector2f(0.8, 0.3)), StationGui_CreateDefaultGaugeData());
+				DoDialogWindowEnd();
+
+				if (bDone && asSoundFile != "")
+					Sound_Stop(ImGui_GetName()+asName+"LoadSound", afSoundFadeOutTime);
+
+				return bDone;
+		}
+ 
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Airlock Status Terminal*
+		 //{//////////////////////////////////////
+	 
+		void bigairlock_infopanel_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+
+			StationGui_BigStatusMessage_Old("Transfer Airlock\nAwaiting Personnel...", gStationGuiColor_Warning, 0.875);
+		}
+	 
+		 //} END Terminal *Airlock Status Terminal*
+
+		 /////////////////////////////////////////
+		 // Terminal *Keypad GUI*
+		 //{//////////////////////////////////////
+		void Timer_KeypadEffectsOn(const tString &in asTimer)
+		{
+			Entity_SetEffectsActive(asTimer, true, false);
+			Light_FadeTo("Keypad_PointLight_1",cColor_Red,0.1,0);
+		}
+		void SetKeypadMaterial(const tString &in asEntity, const tString &in asMaterial)
+		{
+			iLuxEntity@ pEntity = cLux_GetCurrentMap().GetEntityByName(asEntity, eLuxEntityType_LastEnum, "");
+			cMaterial@ pMaterial = cResources_CreateMaterial(asMaterial);
+
+			pEntity.GetMeshEntity().GetSubMeshEntity(1).SetCustomMaterial(pMaterial, false);
+		}
+	    void Keypad_EnterDigit(tString asDigit)
+		{
+		
+			///////////////////////
+			// Append digit to code
+			msPadCode = msPadCode + asDigit; 
+			if (msPadCode != cString_Sub(gsKeypadCode, 0, msPadCode.length()))
+			{
+				tString sFirstCodeChar = cString_Sub(gsKeypadCode, 0, 1);
+				if (asDigit==sFirstCodeChar)
+					msPadCode = asDigit;
+				else
+					msPadCode = "";
+			}
+		
+			///////////////////////
+			// Keypad sound
+			Sound_CreateAtEntity("EnterDigit","Entities_Urban/tech/keypad/keypad_press_01","keypad_1",0.0,false);
+
+			//////////////////////
+			// Check complete code
+			if (msPadCode.length() < gsKeypadCode.length())
+			{
+				Entity_SetEffectsActive(ImGui_GetName(), false, false);
+				Map_AddTimer("keypad_1", 0.1, "Timer_KeypadEffectsOn"); //ImGui_GetName()
+				Light_FadeTo("Keypad_PointLight_1",0,0.1,0);
+				return;
+			}
+		
+			/////////////////////
+			// Unlock door on correct code
+			if (msPadCode==gsKeypadCode)
+			{
+				// Change to green light
+				SetKeypadMaterial("keypad_1","security_keypad_greenlamp");
+				Light_FadeTo("Keypad_PointLight_1",cColor_Green,0.1,0);
+
+				// Deactivate gui and return player to normal
+				//Terminal_SetGuiActive(ImGui_GetName(),false);	
+				Player_ChangeStateToNormal();
+				//SwingDoor_SetLocked("exit_waitroom",false,true);
+				//Entity_SetActive("DoorHandleTrigger_3", true);
+				//mbDoorLocked = false;
+				SlideDoor_SetClosed("slidedoor_medium_interlock_2",false);
+				// Sounds
+				Sound_CreateAtEntity("KeypdOpen","Entities_Urban/tech/keypad/keypad_correct","keypad_1",0.0,false);
+				//Map_AddTimer("UnlockMusic", 1.0f, "UnlockMusic");
+				Music_Play("00_00_locked", 0.75f, false, eMusicPrio_BigEvent);
+
+				// Comment if didn't look at hint
+				//if (!mbReadHint)
+				//{
+				//	Map_AddTimer("3_CodeWithoutHint",0.5f,"TimerVoicePlay");
+				//}
+			}
+		}
+
+
+		void keypad_1_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			////////////////////////
+			// Buttons are transparent
+			cImGuiButtonData button;
+			button.mvDefaultSize = cVector2f(10,10);
+			button.mColorBase = cColor(0.3,0.3,0.3,0);
+			button.mbUseInFocusGfx = mbUsingKeypad;
+			button.mGfxInFocus.SetFile("urban/keypad/keypad_Selected");
+
+			////////////////////////
+			// Position buttonspath
+			bool bNumPad1 = ImGui_DoButtonExt("ButtonKeypad1","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.33, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad2 = ImGui_DoButtonExt("ButtonKeypad2","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.33, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad3 = ImGui_DoButtonExt("ButtonKeypad3","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.33, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad4 = ImGui_DoButtonExt("ButtonKeypad4","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.43, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad5 = ImGui_DoButtonExt("ButtonKeypad5","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.43, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad6 = ImGui_DoButtonExt("ButtonKeypad6","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.43, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad7 = ImGui_DoButtonExt("ButtonKeypad7","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.53, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad8 = ImGui_DoButtonExt("ButtonKeypad8","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.53, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad9 = ImGui_DoButtonExt("ButtonKeypad9","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.53, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPadAst = ImGui_DoButtonExt("ButtonKeypadA","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.63, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad0 = ImGui_DoButtonExt("ButtonKeypad0","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.63, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPadHash = ImGui_DoButtonExt("ButtonKeypadH","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.63, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+
+			////////////////////////
+			// Enter key code
+			if (bNumPad1) 	{ Keypad_EnterDigit("1"); }
+			if (bNumPad2) 	{ Keypad_EnterDigit("2"); }
+			if (bNumPad3) 	{ Keypad_EnterDigit("3"); }
+			if (bNumPad4) 	{ Keypad_EnterDigit("4"); }
+			if (bNumPad5) 	{ Keypad_EnterDigit("5"); }
+			if (bNumPad6) 	{ Keypad_EnterDigit("6"); }
+			if (bNumPad7) 	{ Keypad_EnterDigit("7"); }
+			if (bNumPad8) 	{ Keypad_EnterDigit("8"); }
+			if (bNumPad9) 	{ Keypad_EnterDigit("9"); }
+			if (bNumPad0) 	{ Keypad_EnterDigit("0"); }
+			if (bNumPadAst)	{ Keypad_EnterDigit("*"); }
+			if (bNumPadHash){ Keypad_EnterDigit("#"); }
+
+		}
+	 
+		 //} END Terminal *Keypad GUI*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Keypad GUI Enter*
+		 //{//////////////////////////////////////
+	 
+		void keypad_1_GuiEnter(const tString&in asEntityName)
+		{
+			cLux_AddDebugMessage("Entered keypad GUI");
+			msPadCode = "";
+			mbUsingKeypad = true;
+		}
+	 
+		 //} END Terminal *Keypad GUI Enter*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Keypad GUI Leave*
+		 //{//////////////////////////////////////
+	 
+		void keypad_1_GuiLeave(const tString&in asEntityName)
+		{
+			cLux_AddDebugMessage("Left keypad GUI");
+			msPadCode = "";
+			mbUsingKeypad = false;
+			SetKeypadMaterial("keypad_1","security_keypad_redlamp");
+		}
+	 
+		 //} END Terminal *Keypad GUI Leave*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Service Station Server Status Terminal*
+		 //{//////////////////////////////////////
+	 
+		void servicestation_serverstatterm(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("ServiceStation_ServStatTerminal");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+			//Status Message Setup
+			cStationGui_BigStatusMessageSettings statusMessage;
+			statusMessage.mbBlinking = true;
+			statusMessage.mfBlinkTime = 1;
+			if(!mbServiceStation_Booting && !mbServiceStation_Operational) StationGui_BigStatusMessage("BootingStatus_1", statusMessage);
+			if(mbServiceStation_Booting) StationGui_BigStatusMessage("BootingStatus_2", statusMessage);
+			if(mbServiceStation_Operational) StationGui_BigStatusMessage_Old("BootingStatus_3", gStationGuiColor_Warning, 0.875);
+
+		}
+	 
+		 //} END Terminal *Service Station Server Status Terminal*
+
+		 //-------------------------------------------------------
+
+		 /////////////////////////////////////////
+		 // Terminal *Service Station Control Terminal*
+		 //{//////////////////////////////////////
+	 
+		void computer_panel_medium_GUI_1_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("ServiceStation_ControlTerminal");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Main Setup
+			int lActiveApp = StationGui_GetActiveApp();
+			int lBackState = eServiceStation_ControlTerminal_MainMenu;
+			int lMainMenuSelection = -1;
+			tString sStartupText = "Startup_Text"+1;
+			//Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+			//Defining login dialog boxes
+			cGuiDialogBoxSettings logindialog = StationGui_CreateDefaultDialogBox();
+			logindialog.mType = eGuiDialogBoxType_OK;
+			cImGuiTextFrameData logintext = ImGui_GetDefaultTextFrame();
+			logintext.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.0375);
+			logintext.mbUseBackgroundGfx = true;
+			//Main Menu Setup -- As a fun test
+			//cStationGui_MainMenuSettings SCS_ControlTerm_MainMenuSettings;
+			//SCS_ControlTerm_MainMenuSettings.msCustomSound = "Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_start";
+
+			if (StationGui_DrawAndCheckErrors())
+			{
+				StationGuiBG_Taskbar("");
+				StationGui_BackButton(false);
+
+				return;
+			}
+			//if (ImGui_IsFirstRun())
+			//{
+			//	StationGui_SetActiveApp(eServiceStation_ControlTerminal_MainMenu);
+			//}
+			if (mbServiceStation_Booting && !mbServiceStation_Operational)
+			{
+				StationGui_SetActiveApp(eServiceStation_ControlTerminal_StartupMenu);
+			}
+
+			switch(lActiveApp)
+			{
+				case eServiceStation_ControlTerminal_StartupMenu:
+					//if(DoLoadingWindow("ServTerminal_SystemLoad", "Startup_Title", sStartupText, 8, false, 3,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_panel_medium_GUI_1"))
+					//{
+					//	StationGui_SetActiveApp(eServiceStation_ControlTerminal_Login);
+					//	Sound_CreateAtEntity("ServTerm_StartSuccess", "Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_start", "computer_panel_medium_GUI_1");
+					//}
+					SCT_TerminalBootSequence(afTimeStep);
+				break;
+
+				case eServiceStation_ControlTerminal_Login:
+					StationGuiBG_Taskbar("");
+					if(!StationGui_DrawAndCheckErrors())
+					{
+						if (StationGui_Numpad("Login_SecCodeEnter", 5))
+						{
+							tString sCode = StationGui_GetNumpadInput();
+							if (sCode=="14862")
+							{
+								Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_omnitool_configured",1.0);
+								//Depth_Audio_Terminal_Confirm(ImGui_GetName());
+								StationGui_SetActiveApp(eServiceStation_ControlTerminal_MainMenu);
+								StationGui_SetNumpadInput("");
+								//return;
+							}
+							else
+							{	
+								//CameraAccessErrorBox();
+								//Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_ denied",1.0);
+								StationGui_SetError("AccessCode_Incorrect");
+								StationGui_SetNumpadInput("");
+								StationGui_DrawAndCheckErrors();
+							}
+						}
+					}
+					StationGui_BackButton(false);
+				break;
+
+				case eServiceStation_ControlTerminal_MainMenu:
+					StationGuiBG_Taskbar("");
+					StationGui_AddApp("App1",true,eServiceStation_ControlTerminal_SectionControl);
+					StationGui_AddApp("App2",true,eServiceStation_ControlTerminal_LockdownLifterMenu);
+					StationGui_AddApp("App3",true,eServiceStation_ControlTerminal_CameraViewer);
+					StationGui_AddApp("App4",true);
+
+					lMainMenuSelection = StationGui_MainMenu();
+
+					if(lMainMenuSelection==3 && !mbServiceStation_LoginStatus) 
+					{
+						cLux_AddDebugMessage("Logging Off");
+						StationGui_SetActiveApp(eServiceStation_ControlTerminal_Login);
+						return;
+					}
+
+
+					StationGui_BackButton(false);
+				break;
+			}
+		}
+
+	int mlBootCounter = 0;
+	tString sCalculationBar = "";
+	int mlSysMemCheck = 0;
+	float mfStartupTimer = 0.0f;
+
+	void SCT_TerminalBootSequence(float afTimeStep)
+	{
+		mfStartupTimer += afTimeStep;
+		
+		ImGui_SetTransCategory("");
+	
+		if (ImGui_GetStateInt("BootProcess", 0) == 0)
+		{
+			////////////////////////////////////
+			// Header
+			ImGui_DoLabel("---------------------------------------------------------------------------",ImGui_NrmPosGroup(cVector3f(0.05, -0.4, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			ImGui_DoLabel("HELIX RESEARCH FACILITY",ImGui_NrmPosGroup(cVector3f(0.05, -0.35, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			ImGui_DoLabel("SECTOR D - MAINTENANCE SECTION B MANAGEMENT TERMINAL",ImGui_NrmPosGroup(cVector3f(0.05, -0.3, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			ImGui_DoLabel("---------------------------------------------------------------------------",ImGui_NrmPosGroup(cVector3f(0.05, -0.25, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+		
+			////////////////////////////////////
+			// System Memory Check
+			ImGui_DoLabel("SYSTEM MEMORY CHECK : " + mlSysMemCheck + "GB OK",ImGui_NrmPosGroup(cVector3f(0.05, -0.2, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			
+			if (mfStartupTimer >= 4.265f)
+				mlSysMemCheck = 2048;
+				
+			if (mlSysMemCheck < 2048)
+			{
+				mlSysMemCheck += 8;	
+				return;
+			}
+			
+			ImGui_DoLabel("SYS MEM OK",ImGui_NrmPosGroup(cVector3f(0.05, -0.15, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			
+			////////////////////////////////////
+			// Storage Detection
+			if (mfStartupTimer < 12.0f) return;
+			ImGui_DoLabel("Verifying storage...",ImGui_NrmPosGroup(cVector3f(0.05, -0.1, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 13.0f) return;
+			ImGui_DoLabel("/dev/sda1 mounted",ImGui_NrmPosGroup(cVector3f(0.05, -0.05, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 15.0f) return;
+			ImGui_DoLabel("mount -o loop,encryption=aes management_term.img /media/main",ImGui_NrmPosGroup(cVector3f(0.05, -0.0, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 17.0f) return;		
+			ImGui_DoLabel("Decrypting Volume...",ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 19.0f) return;
+			
+			/////////////////////////////////////
+			// Boot up the system
+			ImGui_DoLabel("Decompressing image to memory...",ImGui_NrmPosGroup(cVector3f(0.05, 0.1, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 22.0f) return;
+			ImGui_DoLabel("Begin Startup",ImGui_NrmPosGroup(cVector3f(0.05, 0.15, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 25.0f) return;
+			ImGui_SetStateInt("BootProcess", 1);
+		}
+		else if (ImGui_GetStateInt("BootProcess", 0) == 1)
+		{
+			/* TEMP */
+			ImGui_DoLabel("---------------------------------------------------------------------------------------------------------",ImGui_NrmPosGroup(cVector3f(0.05, -0.4, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			ImGui_DoLabel("SYSTEM STARTUP",ImGui_NrmPosGroup(cVector3f(0.05, -0.35, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			ImGui_DoLabel("HELIX Bootstrap v.542-24",ImGui_NrmPosGroup(cVector3f(0.05, -0.325, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 28.0f) return;
+			ImGui_DoLabel("Verifying Image...",ImGui_NrmPosGroup(cVector3f(0.05, -0.3, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 30.0f) return;		
+			ImGui_DoLabel("VERIFIED! CHECKSUM OK!",ImGui_NrmPosGroup(cVector3f(0.05, -0.275, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 32.0f) return;
+			ImGui_DoLabel("Establishing Connection with Network...",ImGui_NrmPosGroup(cVector3f(0.05, -0.225, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 33.5f) return;
+			ImGui_DoLabel("ERROR 404: Cannot find 'nfs://HELIX_OSCom/Maintenance/maintenancewaulink.sh'",ImGui_NrmPosGroup(cVector3f(0.05, -0.2, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 34.0f) return;
+			ImGui_DoLabel("Connected to 'ssh://helixsyscont@systemlink.maintenance.helix'", ImGui_NrmPosGroup(cVector3f(0.05, -0.175, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 35.0f) return;
+			ImGui_DoLabel("Connected to 'ssh://helixsyscont@sectioncontrol.maintenance.helix/SectorD/SectionB.sectioncontrol'", ImGui_NrmPosGroup(cVector3f(0.05, -0.15, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 36.5f) return;
+			ImGui_DoLabel("ALL NETWORK LINKS OK!", ImGui_NrmPosGroup(cVector3f(0.05, -0.1, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 38.0f) return;
+			ImGui_DoLabel("Booting into HELIX.OS...",ImGui_NrmPosGroup(cVector3f(0.05, 0, 0)), ImGui_NrmSizeGroup(cVector2f(1,1)));
+			if (mfStartupTimer < 39.0f) return;
+			ImGui_SetStateInt("BootProcess",2);
+		}
+		else
+		{
+			if (DoLoadingWindow("LoadingSystem", "Loading", "Loading", 5.0f, false, 3, "level_amb_shared_machines/tech/HDD/underload_loop", "computer_panel_medium_GUI_1"))
+			{
+				mbServiceStation_Booting = false;
+				mbServiceStation_Operational = true;
+				StationGui_SetActiveApp(eServiceStation_ControlTerminal_Login);
+			}	
+		}
+		
+	}
+	 
+		 //} END Terminal *Service Station Control Terminal*
+
+		 //-------------------------------------------------------
+
+		  /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+	
+	//} END TERMINALS
+ 
+}

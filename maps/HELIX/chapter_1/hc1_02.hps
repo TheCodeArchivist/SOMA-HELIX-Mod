@@ -1,0 +1,1762 @@
+#include "interfaces/Map_Interface.hps"
+#include "base/Inputhandler_Types.hps"
+
+#include "helpers/helper_map.hps"
+#include "helpers/helper_props.hps"
+#include "helpers/helper_effects.hps"
+#include "helpers/helper_audio.hps"
+#include "helpers/helper_imgui.hps"
+#include "helpers/helper_sequences.hps"
+#include "helpers/helper_game.hps"
+#include "helpers/helper_modules.hps"
+#include "helpers/helper_ai.hps"
+
+#include "helper_imgui_station.hps"
+#include "helper_imgui_station_apps_common.hps"
+#include "helper_imgui_station_app_error.hps"
+#include "helper_imgui_station_app_numpad.hps"
+#include "helper_imgui_station_app_audioplayback.hps"
+#include "helper_imgui_station_app_mail.hps"
+#include "helper_imgui_station_app_photoviewer.hps"
+#include "helper_imgui_station_app_airlockpressure.hps"
+#include "helper_custom_depth.hps"
+#include "helper_custom_depth_ai.hps"
+
+//enum BlastdoorTerminalA
+enum eAirlock0603SecurityTerminal
+{
+	eAirlock0603SecurityMainMenu,
+	eAirlock0603SecurityLogin,
+	eAirlock0603SecuritySecNETMenu,
+	eAirlock0603SecurityAirlockMenu,
+	eAirlock0603SecurityAMAirlockStatus,
+	eAirlock0603SecurityAMAirlockControls,
+	eAirlock0603SecuritySNCaller,
+	eAirlock0603SecuritySNLockdownStatus
+}
+
+enum eSNCallerData
+{
+	eIntercomRoom_GabbyTharbesOffice = 3,
+	eIntercomRoom_Annex = 4,
+	eIntercomRoom_SectorDLobby = 6
+	//eIntercomRoom_Offline = 0
+}
+
+enum eMiscDataTerminal1
+{
+	eMiscDataTerminalMainMenu,
+	eMiscDataTerminalLoadingOS,
+	eMiscDataTerminalServInfo,
+	eMiscDataTerminalLoginLogs,
+	eMiscDataTerminalCommsLogs,
+	eMiscDataTerminalPublicDocuments
+}
+
+const tString gsKeypadCode = "**0007#1171";
+bool mbDoorLocked = true;
+bool mbUsingKeypad = false;
+bool mbAirlock0303Lockdown = true;
+bool mbAirlock0603Cycling = false;
+bool tbAirlock0603LoggedInMessage = false;
+bool mbTransferAirlockCyclingPhase1 = false;
+bool mbTransferAirlockCyclingPhase2 = false;
+bool tbMiscTerminalBoot = false;
+bool tbFirstTimeLoadingServerInfo = true;
+tString msPadCode = "";
+float mfKeypadPulse = 0;
+ 
+class cScrMap : iScrMap
+{
+	//--------------------------------------------
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN CALLBACKS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+ 
+	//-------------------------------------------------------
+	
+	////////////////////////////
+	// Preload Data
+	void PreloadData()
+	{
+		//Preload Derek Entities_Urban/utility/fuse_box/button_on
+		PlayerHands_PreloadHandModel_Human();
+		//Preload Keypad
+		Material_Preload("security_keypad_greenlamp");
+		Material_Preload("security_keypad_redlamp");
+		//Preload Terminals / ImGui
+		StationGui_PreloadDefault();
+		OmnitoolGui_Preload();
+		//Preload Particules
+		ParticleSystem_Preload("elec_spark_physics_oneshot.ps");
+		ParticleSystem_Preload("tutorial_machine_steam.ps");
+
+	}
+
+
+	////////////////////////////
+	// Set up map environment
+	void Setup()
+	{
+		mbDoorLocked = true;
+	}
+	
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run first time starting map
+	void OnStart()
+	{
+		//Sound_CreateAtEntity("DiveSuitComputerBootup", "03_02_omicron_inside/SFX/diving_suit_computer/startup", "blastdoorterminal_a", 0.0f, false, 1.0f);
+		//Setup Player
+		Effect_Fade_Out(0);
+		//Setup Keypad
+		SetKeypadMaterial("security_keypad_1","security_keypad_redlamp");
+		Entity_SetEffectBaseColor("lock_light", cColor(1, 0, 0, 1));
+		Effect_Fade_In(2.0f);
+		Map_AddTimer("ElevatorDoorsOpening1",3,"ElevatorDoorsOpening1");
+		//Roomba!
+		Roomba_StartMoving("roomba");
+		//Omnitool
+		CathTool_ResetScreen(eCathToolVariant_HelperJane);
+		Tool_PickUp("omnitool_configured",false,false);
+		//ScriptedFlesher1_Trigger();
+		//Light_SetBrightness("bridge_boxlightmain", 0);
+		AdjustWaitroomLight(0.0);
+
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when entering map
+	void OnEnter()
+	{
+		//SequenceAirLock("");
+		Prop_MoveLinearTo("01_01_awake_elevator_1","01_01_awake_elevator_2",11.0f,12.0f,0,true);
+		//Sound_CreateAtEntity("ElevCreaking1", "02_07_theta_exit_a/amb/spot/scaffolding_creak","01_01_awake_elevator_1",1.0f,false,30.0f);
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// Run when leaving map
+	void OnLeave()
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// The player has died.
+	void OnPlayerKilled(int alRecentDeaths, const tString&in asSource)
+	{
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// To get when player makes input (mostly used for debug)
+	void OnAction(int alAction, bool abPressed) 
+	{
+		if(abPressed==false) return;
+		
+		if(alAction == eAction_Test1)
+		{
+		}
+	}
+
+	//-------------------------------------------------------
+
+	////////////////////////////
+	// This only used for pure debug purposes when info needs to printed.
+	float DrawDebugOutput(cGuiSet @apSet,iFontData @apFont,float afY)
+	{
+		//afY = cLux_DrawDebugText("My Debug value:"+..., afY);
+		return afY;
+	}
+ 
+	//-------------------------------------------------------
+ 
+	//} END MAIN CALLBACKS
+ 
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// MAIN FUNCTIONS
+	// ==============
+	//{///////////////////////////////////////////////////////////////////////////////////////
+	bool bFirstTimeOmniLoad = false;
+	bool bOmnitoolConfigChipInserted = false;
+	bool bOmnitoolUpdateLevelC01 = false;
+	bool bOmnitoolInserted = false;
+	bool bOmnitoolDetachAllowed = false;
+
+	bool omnitool_configured_OnPickUp(const tString &in asTool)
+	{
+		//bOmnitoolInserted = false;
+		return true;
+	}
+
+	bool omnitool_configured_CanBeUsed(const tString &in asTool, const tString &in asEntity)
+	{
+		if(asEntity=="omnitool_panel_1") return true;
+		if(asEntity=="omnitool_panel_2") return true;
+		if(asEntity=="omnitool_panel_3") return true;
+		if(asEntity=="omnitool_panel_servelev_1") return true;
+		return false;
+	}
+	bool omnitool_configured_OnUse(const tString &in asTool, const tString &in asEntity)
+	{
+		if(asEntity=="omnitool_panel_1")
+		{
+			CathTool_UseOnPanel(asTool,asEntity);
+			return false;
+		}
+		if(asEntity=="omnitool_panel_2")
+		{
+			CathTool_UseOnPanel(asTool,asEntity);
+			return false;
+		}
+		if(asEntity=="omnitool_panel_3")
+		{
+			if(!bOmnitoolUpdateLevelC01)
+			{
+				CathTool_UseOnPanel(asTool,asEntity);
+				OmniPanel_AccessDenied(asEntity);
+				return false;
+			}
+			if(bOmnitoolUpdateLevelC01)
+			{
+				CathTool_UseOnPanel(asTool,asEntity);
+				return false;
+			}
+		}
+		if(asEntity=="omnitool_panel_servelev_1")
+		{
+			CathTool_UseOnPanel(asTool,asEntity);
+			OmniPanel_AccessDenied(asEntity);
+		}
+		return false;
+	}
+	
+	//} END MAIN FUNCTIONS
+ 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 1 *"Flood Protocols"*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Elevator Arrival*
+		 //{//////////////////////////////////////
+	 
+		void ElevatorDoorsOpening1(const tString &in asName)
+		{
+			///Request StartElevatorPhase2() function
+			cLux_AddTodoMessage("Opening Doors 1");
+			SlideDoor_SetClosed("slidedoor_theta_elevator_front_1",false);
+			Map_AddTimer("ElevatorDoorsOpening2",0.5,"ElevatorDoorsOpening2");
+		}
+		void ElevatorDoorsOpening2(const tString &in asName)
+		{
+			///Request StartElevatorPhase2() function
+			cLux_AddTodoMessage("Opening Doors 2");
+			SlideDoor_SetClosed("slidedoor_theta_elevator_rear_1",false);
+			SlideDoor_SetClosed("slidedoor_theta_elevator_rear_2",false);
+		}
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE 1
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 2 *Laboratory*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+
+		 /////////////////////////////////////////
+		 // Event *Flesher Passing Through*
+		 //{//////////////////////////////////////
+	 
+		bool ScriptedFlesher1_Trigger(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			//SlideDoor_SetClosed("slidedoor_theta_small_windowed_5",false);
+			//SlideDoor_SetClosed("slidedoor_theta_small_2",false);
+			Pathfinder_Track_Clear("AI_puppet_scripted_1");
+			//Pathfinder_Track_Add("AI_puppet_scripted_1", "PN_scriptedpath1_1", 0);
+			//Pathfinder_Track_Add("AI_puppet_scripted_1", "PN_scriptedpath1_3", 0);
+			//Pathfinder_Track_Add("AI_puppet_scripted_1", "PN_scriptedpath1_5", 0);
+			Pathfinder_Track_Add("AI_puppet_scripted_1", "PN_scriptedpath1_7", 0);
+			Pathfinder_Track_Start("AI_puppet_scripted_1",false,1.0f,"AI_puppet_scripted_1_Placeholder_1");
+			//Pathfinder_MoveToNode("AI_puppet_scripted_1", "PN_scriptedpath1_5", "ScriptedPupet1End", 0, true, "");
+			Entity_SetActive("AI_puppet_scripted_1", true);
+			BarkMachine_SetActive("AI_puppet_scripted_1", true);
+			//AttackMeter_SetAttackerTeleportPosition("AI_puppet_scripted_1_Start");
+			return false;
+		}
+		bool ScriptedFlesher1_TriggerDoor1(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			SlideDoor_SetClosed("slidedoor_theta_small_windowed_5",true);
+			SlideDoor_SetClosed("slidedoor_theta_small_2",true);
+			return false;
+		}
+		void AI_puppet_scripted_1_Placeholder_1(const tString& in asEntityName)
+		{
+			Entity_SetActive(asEntityName, false);
+		}
+	 
+		 //} END Event *Name Of Event*
+
+		 /////////////////////////////////////////
+		 // Event *Airlock 0603 Cycle*
+		 //{//////////////////////////////////////
+	 	
+		bool airlock0603engage(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			SequenceAirLock("");
+			Entity_SetActive("blastdoorshut1trigger", false);
+			return false;
+		}
+		cSequenceStatesData mAirLockSequence;
+		void SequenceAirLock(const tString &in asTimer)
+		{
+			Sequence_Begin("SequenceAirLock", mAirLockSequence);
+		
+			if (Sequence_DoStepAndWait(2.0f))
+			{
+				///////////////////////////////////
+				// Close the door the player entered from
+				//Button_SetSwitchedOn("biomech_airlockdooroutside_panel*",false, true);
+				//Button_SetSwitchedOn("biomech_airlockdoorinside_panel*",false, true);
+				//Entity_SetActive("blockbox_airlock_*",true);
+				SlideDoor_SetClosed("airlock_1_inside",true);
+			}
+			else if (Sequence_DoStepAndWait(3.0f))
+			{
+				mbAirlock0603Cycling = true;
+				//////////////////////////////////
+				// Activate Light
+				Light_FadeTo("BiomechAirlockLight",cColor(0.569,1,0.941,1),3,3.0);
+
+				//////////////////////////////////////////////
+				// Light scanners
+				Lamp_SetLit("airlock_1_scanner_left",true,true);
+				Lamp_SetLit("airlock_1_scanner_right",true,true);
+			
+				//////////////////////////////////////////////
+				//Airlock idle sound
+				Sound_CreateAtEntity("AirlockIdle", "Entities_Station/tech/scanner/scan_idle","Player",0.0f,false,1.0f);
+			
+				//////////////////////////////////////////////
+				//Disable crouch
+				Player_SetCrouchDisabled(true);
+		
+			}
+			else if (Sequence_DoStepAndWait(4.0f))
+			{    
+				
+				//////////////////////////////////////////////
+				// Scanner Sound
+				Sound_CreateAtEntity("AirlockScan","Entities_Station/tech/scanner/scan_sequence","Player",0.0f,false,1.0f);
+			
+		
+				/////////////////////////////////////////////
+				// Move Scanners
+				Prop_MoveLinearTo("airlock_1_scanner_left","airlock_1_scanner_left_end",1.0f,1.0f,0.1f,true);
+				Prop_MoveLinearTo("airlock_1_scanner_right","airlock_1_scanner_right_end",1.0f,1.0f,0.1f,true);
+			}
+			else if (Sequence_DoStepAndWait(4.0f))
+			{
+				//ParticleSystem_Destroy("airlock_steam_*");
+
+				/////////////////////////////////////////////
+				// Move Scanners
+				Prop_MoveLinearTo("airlock_1_scanner_left","airlock_1_scanner_left_start",1.0f,1.0f,0.1f,true);
+				Prop_MoveLinearTo("airlock_1_scanner_right","airlock_1_scanner_right_start",1.0f,1.0f,0.1f,true);
+			}
+			else if (Sequence_DoStepAndWait(3.0f))
+			{
+			
+				///////////////////////////////////
+				//End audio
+				Sound_Stop("AirlockIdle", 0.1f);
+				Sound_CreateAtEntity("AirlockIdleEnd","Entities_Station/tech/scanner/scan_stop","Player",0.0f,false,1.0f);
+			
+				///////////////////////////////////
+				// Give the player control back
+				Player_SetMoveSpeedMul(1.0);
+			
+				//////////////////////////////////////////////
+				//Enable crouch
+				Player_SetCrouchDisabled(false);
+			
+				///////////////////////////////////
+				// Open the appropriate door for player to leave air lock
+				//Button_SetSwitchedOn(msBiomechExitPanel,true, true);
+				//Entity_SetActive("blockbox_airlock_*",false);
+			
+				///////////////////////////////////
+				// Fade airlock lights
+				//Light_FadeTo("BiomechAirlockLight",cColor(0,0,0,0),3,3.0);
+			
+				///////////////////////////////////
+				// Enable airlock exit triggers
+				//Entity_SetActive("TriggerBiomechAirlockExit*",true);
+			
+				///////////////////////////////////
+				// Turn off scanner effects
+				Lamp_SetLit("airlock_1_scanner_left",false,true);
+				Lamp_SetLit("airlock_1_scanner_right",false,true);
+
+				SlideDoor_SetClosed("airlock_1_outside",false);
+				mbAirlock0603Cycling = false;
+			
+			}
+			Sequence_End();
+		}
+	 
+		 //} END Event *Airlock 0603 Cycle*
+	 
+	 //} END SCENE 2
+
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE 3 *Bridge Access*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		float mfBridgeBright = 0.0f;
+
+		void AdjustWaitroomLight(float afValue)
+		{
+			cLux_AddDebugMessage("Bridge L. Multiplier:"+afValue);
+
+			float fMin = 0.0f;
+			float fMax = 1.5f;
+		
+			////////////////////////////////
+			// Nudge accumulated brightness
+			mfBridgeBright += afValue;
+
+			///////////////////////////////////////////////////
+			// Ensure boxlight cannot exceed a given brightness
+			float fBright = cMath_Clamp(mfBridgeBright,fMin,fMax);
+		
+			/////////////////////////////////
+			// Set brightness of the boxlight
+			iLight@ pBoxLight = cLux_GetCurrentMap().GetWorld().GetLight("bridge_boxlightmain");
+			pBoxLight.FadeTo(pBoxLight.GetDefaultDiffuseColor()*fBright, 1, 0.5f);
+
+			cLux_AddDebugMessage("Adapting Bridge L. Brightness: " + fBright);
+		}
+		
+		//} END General
+
+		 /////////////////////////////////////////
+		 // Event *Misc Data Server Activation*
+		 //{//////////////////////////////////////
+	 
+		void miscterminal_activationlever_OnConnectionStateChange(const tString &in asEntity, int alState)
+		{
+			if(alState == -1)
+			{
+				Sound_CreateAtEntity("LeverNowStuck", "Entities_Station/gameplay/retention_mechanism/lever_stop", "miscterminal_activationlever");
+				Sound_CreateAtEntity("MiscTerminalActivationSound", "02_05_theta/sweeteners/server_beep/start_beep", "miscinfoterminal1");
+				Sound_CreateAtEntity("MiscTerminalActivationSound", "02_05_theta/sweeteners/cath_poweron/cath_computer_on", "miscinfoterminal1");
+				Lamp_SetLit("miscterminal_waitinglight",false,true);
+				Terminal_SetGuiActive("miscinfoterminal1", true, 0.4);
+				ImGui_SetStateBool("MiscTerminalBoot", true);
+				tbMiscTerminalBoot == true;
+			}
+		}
+	 
+		 //} END Event *Misc Data Server Activation*
+
+		/////////////////////////////////////////
+		 // Event *Cable Falls Off*
+		 //{//////////////////////////////////////
+	 	bool prebridge_scare(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			Entity_SetActive("Pre-BridgeScareTrigger", false);
+			Sound_CreateAtEntity("PreBridge_ScareParticleSound", "01_02_upsilon_inside_02/sfx/carl_torture_event/electricity_start", "electricparticleactiv");
+			ParticleSystem_CreateAtEntityExt("PreBridge_ScareParticle", "elec_spark_physics_oneshot.ps", "electricparticleactiv", true, cColor(255, 255, 255, 1), 0.1f, false, 0.5);
+			Prop_SetStaticPhysics("power_cable_dirty_full_interact_1",  false);
+			return false;
+		}
+	 
+		 //} END Event *Name Of Event*	
+
+		/////////////////////////////////////////
+		 // Event *Bridge Lights Activation*
+		 //{//////////////////////////////////////
+
+		bool bridge_lightsactivation(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			SequenceBridgeLights("");
+			Entity_SetActive("bridge_lightsactivationtrigger", false);
+			return false;
+		}
+		cSequenceStatesData mBridgeLightsSequence;
+		void SequenceBridgeLights(const tString &in asTimer)
+		{
+			Sequence_Begin("SequenceBridgeLights", mBridgeLightsSequence);
+		
+			if (Sequence_DoStepAndWait(2.0f))
+			{
+				Sound_CreateAtEntity("LightsOnAlarm", "02_05_theta/sfx/dunbat_lights_on", "bridge_soundsactivation_1");
+				Lamp_SetLit("bridge_lightsection1_*",true,false);
+				AdjustWaitroomLight(0.050);
+			}
+			else if (Sequence_DoStepAndWait(2.0f))
+			{
+				Sound_CreateAtEntity("LightsOnAlarm", "02_05_theta/sfx/dunbat_lights_on", "bridge_soundsactivation_2");
+				Lamp_SetLit("bridge_lightsection2_*",true,false);
+				Lamp_SetFlickerActive("bridge_lightsection1_*",false);
+				AdjustWaitroomLight(0.250);
+				//Security Cameras
+				Lamp_SetLit("bridgecam_*",true,false);
+				Sound_CreateAtEntity("OnlineCamSound","02_05_theta/sfx/dunbat/beeps/dunbat_panel_beep","bridgecam_1",0,false);
+				Sound_CreateAtEntity("OnlineCamSound","02_05_theta/sfx/dunbat/beeps/dunbat_panel_beep","bridgecam_2",0,false);
+			}
+			else if (Sequence_DoStepAndWait(2.0f))
+			{
+				Sound_CreateAtEntity("LightsOnAlarm", "02_05_theta/sfx/dunbat_lights_on", "bridge_soundsactivation_3");
+				Lamp_SetLit("bridge_lightsection3_*",true,false);
+				Lamp_SetFlickerActive("bridge_lightsection2_*",false);
+				Voice_Play("hc1_02_bridge_activationannouncement");
+				AdjustWaitroomLight(0.450);
+			}
+			else if (Sequence_DoStepAndWait(2.0f))
+			{
+				Sound_CreateAtEntity("LightsOnAlarm", "02_05_theta/sfx/dunbat_lights_on", "bridge_soundsactivation_4");
+				Lamp_SetLit("bridge_lightsection4_*",true,false);
+				Lamp_SetFlickerActive("bridge_lightsection3_*",false);
+				AdjustWaitroomLight(0.750);
+			}
+			else if (Sequence_DoStepAndWait(2.0f))
+			{
+				Lamp_SetFlickerActive("bridge_lightsection4_*",false);
+			}
+			Sequence_End();
+		}
+	 
+		 //} END Event *Bridge Lights Activation*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Event *TRANSFER AIRLOCK ACTIVATION*
+		 //{//////////////////////////////////////
+	 
+		bool bigairlock_activate(const tString &in asParent, const tString &in asChild, int alState)
+		{
+			SequenceBigAirLock("");
+			Entity_SetActive("bigairlock_activationtrigger", false);
+
+			return false;
+		}
+		cSequenceStatesData mBigAirLockSequence;
+		void SequenceBigAirLock(const tString &in asTimer)
+		{
+			Sequence_Begin("SequenceBigAirLock", mBigAirLockSequence);
+		
+			if (Sequence_DoStepAndWait(6.0f))
+			{
+				///////////////////////////////////
+				// Close the door the player entered from
+				//Button_SetSwitchedOn("biomech_airlockdooroutside_panel*",false, true);
+				//Button_SetSwitchedOn("biomech_airlockdoorinside_panel*",false, true);
+				//Entity_SetActive("blockbox_airlock_*",true);
+				SlideDoor_SetClosed("bigairlockdoor_1",true);
+				Lamp_SetLit("bigairlock_cctv",true,false);
+				Sound_CreateAtEntity("OnlineCamSound","02_05_theta/sfx/dunbat/beeps/dunbat_panel_beep","bigairlock_cctv",0,false);
+				Sound_CreateAtEntity("AirlockActivationAlarm","02_07_theta_exit_a/SFX/flood_sequence/flush_valve_klaxon","speaker_wall_mount_lamp_8",0,false);
+			}
+			else if(Sequence_DoStepAndWait(3.0f))
+			{
+				Sound_Stop("AirlockActivationAlarm", 3);
+			}
+			else if (Sequence_DoStepAndWait(5.0f))
+			{
+				mbTransferAirlockCyclingPhase1 = true;
+				cLux_AddDebugMessage("Activation of Terminal Pressure Gauges");
+				Entity_SetVarString("bigairlock_infopanel_1", "State", "inprogress");
+				Entity_SetVarString("bigairlock_infopanel_2", "State", "inprogress");
+				cLux_AddDebugMessage("Particle system start");
+				for(int i = 1; i <= 4; i++)
+				{
+					ParticleSystem_CreateAtEntityExt("bigairlock_steamparticle_"+i, "tutorial_machine_steam.ps", "bigairlock_steam"+i, true, cColor(0.905, 1, 0.658, 0.5), 0.1f, false, 0.5);
+					Sound_CreateAtEntity("Hum", "level_amb_shared_machines/turbine/hum", "bair_humarea_"+i);
+					Sound_CreateAtEntity("Start", "level_amb_shared_machines/train_door/train_close_loop", "bigairlock_steam_"+i);
+					Sound_CreateAtEntity("Decompress", "03_02_omicron_inside/SFX/decompression_sequence/machine_decomp", "bair_slowarea_"+i);
+				}
+				Effect_Rumble_Start(0.15f, 3.2f, 0.3f, 0.3f);
+				Effect_Shake_Start(0.05f, 3.2f, 0.3f, 0.3f, cVector3f(0.25f, 0.15f, 0.25f));
+
+				for(int k = 1; k <= 4; ++k)
+				{
+					Sound_CreateAtEntity("Slow_"+k, "level_amb_shared_interior/amb/spot/steam/slow", "bair_slowarea_"+k, 0, false, 0.3f);
+				}
+				
+				for(int l = 1; l <= 4; ++l)
+				{
+					//Sound_CreateAtEntity("High_"+l, "level_amb_shared_interior/amb/spot/steam/hi_pressure", "bigairlock_steam_"+l, 0, false, 0.3f);
+					Sound_CreateAtEntity("High_Sounds", "level_amb_shared_interior/amb/spot/steam/hi_pressure", "bigairlock_steam_"+l, 0, false, 0.3f);
+				}
+				Terminal_FadeImGuiStateFloat("bigairlock_infopanel_1", "PressureMul", 1, 5);
+				Terminal_FadeImGuiStateFloat("bigairlock_infopanel_2", "PressureMul", 1, 5);
+		
+			}
+			else if (Sequence_DoStepAndWait(1.2f))
+			{
+				Entity_SetVarString("bigairlock_infopanel_1", "State", "done");
+				Entity_SetVarString("bigairlock_infopanel_2", "State", "done");
+				cLux_AddDebugMessage("Particle system end");
+				
+				for(int i = 1; ParticleSystem_Exists("bigairlock_steamparticle_" + i); i++)
+				{
+					ParticleSystem_Destroy("bigairlock_steamparticle_"+i);
+				}
+				
+				cLux_AddDebugMessage("Killing Sounds");
+				for(int j = 1; j <= 4; j++)
+				{
+					Sound_Stop("Slow_"+j, 3);
+				}
+				Sound_Stop("High_Sounds",3);
+			}
+			else if (Sequence_DoStepAndWait(3.0f))
+			{
+				mbTransferAirlockCyclingPhase1 = false;
+				mbTransferAirlockCyclingPhase2 = true;
+				//////////////////////////////////
+				// Activate Light
+				//Light_FadeTo("BiomechAirlockLight",cColor(0.569,1,0.941,1),3,3.0);
+
+				//////////////////////////////////////////////
+				// Light scanners
+				Lamp_SetLit("bigairlock_l_start1",true,true);
+				Lamp_SetLit("bigairlock_l_start2",true,true);
+				Lamp_SetLit("bigairlock_r_start1",true,true);
+				Lamp_SetLit("bigairlock_r_start2",true,true);
+			
+				//////////////////////////////////////////////
+				//Airlock idle sound
+				Sound_CreateAtEntity("AirlockIdle", "Entities_Station/tech/scanner/scan_idle","Player",0.0f,false,1.0f);
+			
+				//////////////////////////////////////////////
+				//Disable crouch
+				Player_SetCrouchDisabled(true);
+			}
+			else if (Sequence_DoStepAndWait(4.0f))
+			{    
+				
+				//////////////////////////////////////////////
+				// Scanner Sound
+				Sound_CreateAtEntity("AirlockScan","Entities_Station/tech/scanner/scan_sequence","Player",0.0f,false,1.0f);
+			
+		
+				/////////////////////////////////////////////
+				// Move Scanners
+				Prop_MoveLinearTo("bigairlock_l_start1","bigairlock_l_end1",5.0f,8.0f,5.0f,true);
+				Prop_MoveLinearTo("bigairlock_l_start2","bigairlock_l_end2",5.0f,8.0f,5.0f,true);
+				Prop_MoveLinearTo("bigairlock_r_start1","bigairlock_r_end1",5.0f,8.0f,5.0f,true);
+				Prop_MoveLinearTo("bigairlock_r_start2","bigairlock_r_end2",5.0f,8.0f,5.0f,true);
+
+				//State Float
+				
+			}
+			else if (Sequence_DoStepAndWait(4.0f))
+			{
+				//ParticleSystem_Destroy("airlock_steam_*");
+
+				/////////////////////////////////////////////
+				// Move Scanners
+				Prop_MoveLinearTo("bigairlock_l_start1","bigairlock_l_start1_1",5.0f,8.0f,5.0f,true);
+				Prop_MoveLinearTo("bigairlock_l_start2","bigairlock_l_start2_1",5.0f,8.0f,5.0f,true);
+				Prop_MoveLinearTo("bigairlock_r_start1","bigairlock_r_start1_1",5.0f,8.0f,5.0f,true);
+				Prop_MoveLinearTo("bigairlock_r_start2","bigairlock_r_start2_1",5.0f,8.0f,5.0f,true);
+			}
+			else if (Sequence_DoStepAndWait(8.0f))
+			{
+			
+				///////////////////////////////////
+				//End audio
+				Sound_Stop("AirlockIdle", 0.1f);
+				Sound_CreateAtEntity("AirlockIdleEnd","Entities_Station/tech/scanner/scan_stop","Player",0.0f,false,1.0f);
+			
+				///////////////////////////////////
+				// Give the player control back
+				Player_SetMoveSpeedMul(1.0);
+			
+				//////////////////////////////////////////////
+				//Enable crouch
+				Player_SetCrouchDisabled(false);
+			
+				///////////////////////////////////
+				// Open the appropriate door for player to leave air lock
+				//Button_SetSwitchedOn(msBiomechExitPanel,true, true);
+				//Entity_SetActive("blockbox_airlock_*",false);
+			
+				///////////////////////////////////
+				// Fade airlock lights
+				//Light_FadeTo("BiomechAirlockLight",cColor(0,0,0,0),3,3.0);
+			
+				///////////////////////////////////
+				// Enable airlock exit triggers
+				//Entity_SetActive("TriggerBiomechAirlockExit*",true);
+			
+				///////////////////////////////////
+				// Turn off scanner effects
+				Lamp_SetLit("bigairlock_l_start1",false,true);
+				Lamp_SetLit("bigairlock_l_start2",false,true);
+				Lamp_SetLit("bigairlock_r_start1",false,true);
+				Lamp_SetLit("bigairlock_r_start2",false,true);
+
+				Effect_Fade_Out(5.0f);
+				mbTransferAirlockCyclingPhase2 = false;
+			}
+			else if (Sequence_DoStepAndWait(0.0f))
+			{
+				Map_ChangeMap("hc1_03.hpm", "AirlockStart", "", "", "");
+			}
+			Sequence_End();
+		}
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE X *Sector Transfer Section*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *TRANSFER AIRLOCK ACTIVATION*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *TRANSFER AIRLOCK*
+	 
+	 //} END SCENE X
+
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	// ==============
+	// SCENE X *NAME OF SCENE*
+	// ==============
+	//{//////////////////////////////////////////////////////////////////////////////////////
+ 
+		 /////////////////////////////////////////
+		 // General
+		 //{//////////////////////////////////////
+		 
+		//-------------------------------------------------------
+	 
+		/*Put any variables that are used by many events in Scene X here.*/
+	 
+		//-------------------------------------------------------
+	 
+		/*Put any functions that are used in more than one event in Scene X here.*/
+	 
+		//-------------------------------------------------------
+		
+		//} END General	
+	 
+		 /////////////////////////////////////////
+		 // Event *Name Of Event*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functionsthat are only used in Scene X, Event X here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Event *Name Of Event*
+	 
+	 //} END SCENE X
+ 
+ 
+	 /////////////////////////////////////////
+	 // ==============
+	 // TERMINALS
+	 // ==============
+	 //{//////////////////////////////////////
+
+	 //Main Setup
+
+	void DoDialogWindowEnd()
+	{
+		ImGui_DoWindowEnd();
+	}
+	void DoDialogWindowStart(const tString&in asCaption, const tString&in asText, const cVector2f &in avNrmSize = cVector2f(0.6, 0.2), float afZ=1.5f)
+	{
+		//////////////////////////////////
+		// Setup widget data
+		cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+		cImGuiTextFrameData textData;
+		textData.mbUseBackgroundGfx = false;
+		textData.mFont.mvSize = cVector2f(24, 24);
+		textData.mFontAlign = eFontAlign_Center;
+		textData.mColorText = cColor(0.8, 1);
+		
+		///////////////////////////////////////
+		// Show message 
+		ImGui_DoWindowStart(asCaption, window, ImGui_NrmPosGroup(cVector3f((1.f-avNrmSize.x)*0.5, (1.f-avNrmSize.y)*0.5, afZ)), ImGui_NrmSizeGroup(avNrmSize));
+			
+			ImGui_DoTextFrameExt(asText, ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, textData, 
+							  ImGui_NrmPosGroup(cVector3f(0.0, 0.1, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+	}
+	bool DoLoadingWindow(const tString &in asName, const tString &in asCaption, const tString &in asText, float afLoadTime, bool abReset, float afZ=1.5f,const tString &in asSoundFile="", const tString &in asSoundSource="", float afSoundFadeInTime=0, float afSoundFadeOutTime=0)
+	{		
+		if (asSoundFile != "" && !Depth_ImGui_LoadingInProgress(asName))
+			Sound_CreateAtEntity(ImGui_GetName()+asName+"LoadSound", asSoundFile, asSoundSource == "" ? ImGui_GetName() : asSoundSource, afSoundFadeInTime);
+
+			DoDialogWindowStart(asCaption, asText, cVector2f(0.6, 0.2), afZ);
+			bool bDone = Depth_ImGui_LoadingGauge(asName, afLoadTime, abReset, ImGui_NrmPosGroup(cVector3f(0.1, 0.5, 1)),ImGui_NrmSizeGroup(cVector2f(0.8, 0.3)), StationGui_CreateDefaultGaugeData());
+			DoDialogWindowEnd();
+
+			if (bDone && asSoundFile != "")
+				Sound_Stop(ImGui_GetName()+asName+"LoadSound", afSoundFadeOutTime);
+
+			return bDone;
+	}
+
+	//Main Setup Done
+ 
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Keypad GUI*
+		 //{//////////////////////////////////////
+		void Timer_KeypadEffectsOn(const tString &in asTimer)
+		{
+			Entity_SetEffectsActive(asTimer, true, false);
+			Light_FadeTo("Keypad_PointLight_1",cColor_Red,0.1,0);
+		}
+		void SetKeypadMaterial(const tString &in asEntity, const tString &in asMaterial)
+		{
+			iLuxEntity@ pEntity = cLux_GetCurrentMap().GetEntityByName(asEntity, eLuxEntityType_LastEnum, "");
+			cMaterial@ pMaterial = cResources_CreateMaterial(asMaterial);
+
+			pEntity.GetMeshEntity().GetSubMeshEntity(1).SetCustomMaterial(pMaterial, false);
+		}
+	    void Keypad_EnterDigit(tString asDigit)
+		{
+		
+			///////////////////////
+			// Append digit to code
+			msPadCode = msPadCode + asDigit; 
+			if (msPadCode != cString_Sub(gsKeypadCode, 0, msPadCode.length()))
+			{
+				tString sFirstCodeChar = cString_Sub(gsKeypadCode, 0, 1);
+				if (asDigit==sFirstCodeChar)
+					msPadCode = asDigit;
+				else
+					msPadCode = "";
+			}
+		
+			///////////////////////
+			// Keypad sound
+			Sound_CreateAtEntity("EnterDigit","Entities_Urban/tech/keypad/keypad_press_01","security_keypad_1",0.0,false);
+
+			//////////////////////
+			// Check complete code
+			if (msPadCode.length() < gsKeypadCode.length())
+			{
+				Entity_SetEffectsActive(ImGui_GetName(), false, false);
+				Map_AddTimer("security_keypad_1", 0.1, "Timer_KeypadEffectsOn"); //ImGui_GetName()
+				Light_FadeTo("Keypad_PointLight_1",0,0.1,0);
+				return;
+			}
+		
+			/////////////////////
+			// Unlock door on correct code
+			if (msPadCode==gsKeypadCode)
+			{
+				// Change to green light
+				SetKeypadMaterial("security_keypad_1","security_keypad_greenlamp");
+				Light_FadeTo("Keypad_PointLight_1",cColor_Green,0.1,0);
+
+				// Deactivate gui and return player to normal
+				Terminal_SetGuiActive(ImGui_GetName(),false);	
+				Player_ChangeStateToNormal();
+				SwingDoor_SetLocked("exit_waitroom",false,true);
+				Entity_SetActive("DoorHandleTrigger_3", true);
+				mbDoorLocked = false;
+				SlideDoor_SetClosed("slidedoor_large_bulkhead_vertical_1",false);
+				// Sounds
+				Sound_CreateAtEntity("KeypdOpen","Entities_Urban/tech/keypad/keypad_correct","security_keypad_1",0.0,false);
+				//Map_AddTimer("UnlockMusic", 1.0f, "UnlockMusic");
+				Music_Play("00_00_locked", 0.75f, false, eMusicPrio_BigEvent);
+
+				// Comment if didn't look at hint
+				//if (!mbReadHint)
+				//{
+				//	Map_AddTimer("3_CodeWithoutHint",0.5f,"TimerVoicePlay");
+				//}
+			}
+		}
+
+
+		void keypad_1_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			////////////////////////
+			// Buttons are transparent
+			cImGuiButtonData button;
+			button.mvDefaultSize = cVector2f(10,10);
+			button.mColorBase = cColor(0.3,0.3,0.3,0);
+			button.mbUseInFocusGfx = mbUsingKeypad;
+			button.mGfxInFocus.SetFile("urban/keypad/keypad_Selected");
+
+			////////////////////////
+			// Position buttonspath
+			bool bNumPad1 = ImGui_DoButtonExt("ButtonKeypad1","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.33, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad2 = ImGui_DoButtonExt("ButtonKeypad2","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.33, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad3 = ImGui_DoButtonExt("ButtonKeypad3","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.33, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad4 = ImGui_DoButtonExt("ButtonKeypad4","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.43, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad5 = ImGui_DoButtonExt("ButtonKeypad5","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.43, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad6 = ImGui_DoButtonExt("ButtonKeypad6","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.43, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad7 = ImGui_DoButtonExt("ButtonKeypad7","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.53, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad8 = ImGui_DoButtonExt("ButtonKeypad8","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.53, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad9 = ImGui_DoButtonExt("ButtonKeypad9","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.53, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPadAst = ImGui_DoButtonExt("ButtonKeypadA","",button, ImGui_NrmPosGroup(cVector3f(0.27, 0.63, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPad0 = ImGui_DoButtonExt("ButtonKeypad0","",button, ImGui_NrmPosGroup(cVector3f(0.38, 0.63, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+			bool bNumPadHash = ImGui_DoButtonExt("ButtonKeypadH","",button, ImGui_NrmPosGroup(cVector3f(0.48, 0.63, 0)), ImGui_NrmSizeGroup(cVector2f(0.07, 0.07)));
+
+			////////////////////////
+			// Enter key code
+			if (bNumPad1) 	{ Keypad_EnterDigit("1"); }
+			if (bNumPad2) 	{ Keypad_EnterDigit("2"); }
+			if (bNumPad3) 	{ Keypad_EnterDigit("3"); }
+			if (bNumPad4) 	{ Keypad_EnterDigit("4"); }
+			if (bNumPad5) 	{ Keypad_EnterDigit("5"); }
+			if (bNumPad6) 	{ Keypad_EnterDigit("6"); }
+			if (bNumPad7) 	{ Keypad_EnterDigit("7"); }
+			if (bNumPad8) 	{ Keypad_EnterDigit("8"); }
+			if (bNumPad9) 	{ Keypad_EnterDigit("9"); }
+			if (bNumPad0) 	{ Keypad_EnterDigit("0"); }
+			if (bNumPadAst)	{ Keypad_EnterDigit("*"); }
+			if (bNumPadHash){ Keypad_EnterDigit("#"); }
+
+		}
+	 
+		 //} END Terminal *Keypad GUI*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Keypad GUI Enter*
+		 //{//////////////////////////////////////
+	 
+		void keypad_1_GuiEnter(const tString&in asEntityName)
+		{
+			cLux_AddDebugMessage("Entered keypad GUI");
+			msPadCode = "";
+			mbUsingKeypad = true;
+		}
+	 
+		 //} END Terminal *Keypad GUI Enter*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Keypad GUI Leave*
+		 //{//////////////////////////////////////
+	 
+		void keypad_1_GuiLeave(const tString&in asEntityName)
+		{
+			cLux_AddDebugMessage("Left keypad GUI");
+			msPadCode = "";
+			mbUsingKeypad = false;
+		}
+	 
+		 //} END Terminal *Keypad GUI Leave*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Blastdoor Terminal A*
+		 //{//////////////////////////////////////
+	    void blastdoorterminal_a_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			bool mbEasterEgg = false;
+			ImGui_SetTransCategory("");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+
+			//Special: Lockdown settings
+			cImGuiWindowData sdwindow = StationGui_CreateDefaultWindowData();
+			sdwindow.mColorBase = ImGui_FadeOscillateColor("ShutDownColor", gStationGuiColor_Warning, gStationGuiColor_Warning*0.8, 0.3);
+			sdwindow.mfCaptionSizeMul = 1.2;
+
+			cImGuiTextFrameData sdtextData;
+			sdtextData.mbUseBackgroundGfx = false;
+			sdtextData.mFont.mvSize = cVector2f(28, 28);
+			sdtextData.mFontAlign = eFontAlign_Center;
+			sdtextData.mColorText = cColor(0.8, 1);
+
+			//Special: Non-generic loading window settings
+			cImGuiWindowData nglwindow = StationGui_CreateDefaultWindowData();
+			nglwindow.mColorBase = ImGui_FadeOscillateColor("NGLoadingColor", gStationGuiColor_Warning*1.8, gStationGuiColor_Warning*1.2, 0.3);
+			nglwindow.mfCaptionSizeMul = 1.2;
+
+			cImGuiTextFrameData ngltextData;
+			ngltextData.mbUseBackgroundGfx = false;
+			ngltextData.mFont.mvSize = cVector2f(28, 28);
+			ngltextData.mFontAlign = eFontAlign_Center;
+			ngltextData.mColorText = cColor(0.8, 1);
+
+			//Operations
+				//StationGuiBG_Taskbar("");
+				//ImGui_DoWindowStart("Emergency Lockdown", window, ImGui_NrmPosGroup(0.05, 0.02, 1), ImGui_NrmSizeGroup(0.9, 0.775));
+				//ImGui_DoTextFrameExt("CAUTION\nEMERGENCY LOCKDOWN IN EFFECT", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
+			
+			if(mbDoorLocked==true)
+			{
+				ImGui_DoWindowStart("LOCKDOWN 22-7-A", sdwindow, ImGui_NrmPosGroup(cVector3f((1.f-0.6)*0.5, (1.f-0.2)*0.5, 1.5)), ImGui_NrmSizeGroup(cVector2f(0.6, 0.2)));
+
+				ImGui_DoTextFrameExt("Lockdown E-44 Initiated\nReason: WAU Triggered Lockdown", ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, sdtextData, ImGui_NrmPosGroup(cVector3f(0.0, 0.25, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+				ImGui_DoWindowEnd();
+			} else {
+				ImGui_DoWindowStart("LOCKDOWN 22-7-A", sdwindow, ImGui_NrmPosGroup(cVector3f((1.f-0.6)*0.5, (1.f-0.2)*0.5, 1.5)), ImGui_NrmSizeGroup(cVector2f(0.6, 0.2)));
+
+				ImGui_DoTextFrameExt("Lockdown E-44 17% Overrided\nPlease reach room 1471 for further info.", ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, sdtextData, ImGui_NrmPosGroup(cVector3f(0.0, 0.25, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+				ImGui_DoWindowEnd();
+			}
+
+			if(mbEasterEgg)
+			{
+				ImGui_DoWindowStart("EASTER EGG", sdwindow, ImGui_NrmPosGroup(cVector3f((1.f-0.6)*0.5, (1.f-0.2)*0.5, 1.5)), ImGui_NrmSizeGroup(cVector2f(0.6, 0.2)));
+
+				ImGui_DoTextFrameExt("Die.", ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, sdtextData, ImGui_NrmPosGroup(cVector3f(0.0, 0.25, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+				ImGui_DoWindowEnd();
+			}
+			
+		}
+	 
+		 //} END Terminal *Blastdoor Terminal A*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Elevator Terminal*
+		 //{//////////////////////////////////////
+	    void elevatorpad1_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("");
+			cStationGui_BigStatusMessageSettings statusMessage;
+			statusMessage.mbBlinking = true;
+			statusMessage.mfBlinkTime = 1;
+			StationGui_BigStatusMessage("Elevator Override", statusMessage);
+		}
+	 
+		 //} END Terminal *Elevator Terminal*
+		 
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	    bool mbRestoredFilesSound = false;
+		void blastdoorterminal_b_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("SPECIAL_CommsLoggs1");
+			StationGuiBG_Backdrop();
+		
+			cStationGui_DataRestorationSettings restorationSettings;
+			restorationSettings.mbUseSuccessSound = false;
+		
+			int lRestoredFiles = 0;
+			if (StationGui_DataRestoration(5, 3.2, lRestoredFiles, restorationSettings) == false)
+			{
+				if(mbRestoredFilesSound==false && lRestoredFiles==1)
+				{
+					mbRestoredFilesSound = true;
+					Sound_CreateAtEntity("RestoringRecordings", "Entities_Station/tech/terminal_beeps/upsilon_commroom_terminal/dome_comp_audio_restore", "blastdoorterminal_b");
+				}
+
+				ImGui_SetModColorMul(cColor(1, 0.5));
+				ImGui_SetModUseInput(false);
+			}
+			for (int i = 1; i <= 5; i++)
+				if (lRestoredFiles >= i) Depth_ImGui_AddAudioFile_Voice("rf_"+i, "hc1_02_CL_"+i);
+			StationGui_AudioPlaybackApp();
+		}
+	 
+		 //} END Terminal *Name Of Terminal*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Airlock 0603 Info Terminal*
+		 //{//////////////////////////////////////
+	 
+		void airlock060infopanel_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+
+			if(!mbAirlock0303Lockdown)
+			{
+				StationGui_BigStatusMessage_Old("LOCKDOWN 22-7-A\nAirlock Locked!", gStationGuiColor_Warning, 0.875);
+			}
+			if(mbAirlock0603Cycling) {
+				StationGui_BigStatusMessage_Old("Airlock 0603\nScanning Individual", gStationGuiColor_Warning, 0.875);
+			} else {
+				StationGui_BigStatusMessage_Old("Airlock 0603\nAwaiting Personnel...", gStationGuiColor_Warning, 0.875);
+			}
+		}
+	 
+		 //} END Terminal *Airlock 0603 Info Terminal*
+
+		 //-------------------------------------------------------
+
+		 /////////////////////////////////////////
+		 // Terminal *Transfer Airlock Info Terminal*
+		 //{//////////////////////////////////////
+	 
+		void bigairlock_infopanel_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("terminal_transferairlockstatus");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+
+			if(!mbAirlock0303Lockdown)
+			{
+				StationGui_BigStatusMessage_Old("lockdown", gStationGuiColor_Warning, 0.875);
+			}
+			if(mbTransferAirlockCyclingPhase1) {
+				tString sState = Entity_GetVarString(ImGui_GetName(), "State");
+				StationGui_AirlockPressure("TrnsfAirlckStat_"+sState, ImGui_GetStateFloat("PressureMul", 0), sState=="inprogress");
+			} else if (mbTransferAirlockCyclingPhase2) 
+			{
+				DoLoadingWindow("BigAirlockCycleLoad", "BigAirlockCycleLoad_title", "BigAirlockCycleLoad_text", 10, false, 3,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_case_1");
+			} else {
+				StationGui_BigStatusMessage_Old("BigAirlockIdle", gStationGuiColor_Warning, 0.875);
+			}
+		}
+	 
+		 //} END Terminal *Transfer Airlock Info Terminal*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Airlock 0603 Security Terminal*
+		 //{//////////////////////////////////////
+	 
+		void airlock060secpanel_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("terminal_airlock0603control");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Main Setup
+			int lActiveApp = StationGui_GetActiveApp();
+			int lBackState = eAirlock0603SecurityMainMenu;
+			bool bBackButtonEnabled = true;
+			int lMainMenuSelection = -1;
+			int lSecNETMenuSelection = -1;
+			int lAirlockMenuSelection = -1;
+			//Normal Label + Window Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+			//Logstatus Label
+			cImGuiLabelData logstatuslabel = ImGui_GetDefaultLabel();
+			logstatuslabel.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.0375);
+			logstatuslabel.mFontAlign = eFontAlign_Left;
+			//Defining login dialog boxes
+			cGuiDialogBoxSettings logindialog = StationGui_CreateDefaultDialogBox();
+			logindialog.mType = eGuiDialogBoxType_OK;
+			cImGuiTextFrameData logintext = ImGui_GetDefaultTextFrame();
+			logintext.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.0375);
+			logintext.mbUseBackgroundGfx = true;
+
+			if (StationGui_DrawAndCheckErrors())
+			{
+				StationGuiBG_Taskbar("");
+				StationGui_BackButton(false);
+
+				return;
+			}
+			if (ImGui_IsFirstRun())
+			{
+				StationGui_SetActiveApp(eAirlock0603SecurityMainMenu);
+				ImGui_SetStateBool("0603ControlLoggedIn", false);
+				ImGui_SetStateBool("0603ControlLogMessage", false);
+				tbAirlock0603LoggedInMessage = false;
+			}
+			if (ImGui_GetStateBool("0603ControlLogMessage", true)) //tbAirlock0603LoggedInMessage == true)
+			{
+				//ImGui_SetStateBool("BdoorLoggedIn", false);
+				eGuiDialogCode returnCode = Depth_ImGui_DialogBox("Login0603DialogBoxTitle", "Login0603DialogBoxText", logindialog);
+				if (returnCode == eGuiDialogCode_OK)
+				{
+					Depth_Audio_Terminal_Forward(ImGui_GetName());
+					StationGui_SetActiveApp(eAirlock0603SecurityMainMenu);
+					ImGui_SetStateBool("0603ControlLoggedIn", true);
+					ImGui_SetStateBool("0603ControlLogMessage", false);
+				}
+				return;
+			}
+
+			switch(lActiveApp)
+			{
+				case eAirlock0603SecurityMainMenu:
+					ImGui_DoLabelExt("LoginLabel", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
+					StationGuiBG_Taskbar("");
+					//bBackButton = true;
+					StationGui_AddApp("SecNET",ImGui_GetStateBool("0603ControlLoggedIn", true),eAirlock0603SecuritySecNETMenu);
+					StationGui_AddApp("AirlockMenu",ImGui_GetStateBool("0603ControlLoggedIn", true),eAirlock0603SecurityAirlockMenu);
+					if (ImGui_GetStateBool("0603ControlLoggedIn", true))
+					{
+						StationGui_AddApp("Logout",true);
+					} else {
+						StationGui_AddApp("Login",true,eAirlock0603SecurityLogin);
+					}
+					lMainMenuSelection = StationGui_MainMenu();
+
+					//bBackButtonEnabled = false;
+					if (lMainMenuSelection==2)
+					{
+						cLux_AddTodoMessage("Selection = 2!");
+						if(ImGui_GetStateBool("0603ControlLoggedIn", true))
+						{
+							ImGui_SetStateBool("0603ControlLoggedIn", false);
+							StationGui_SetActiveApp(eAirlock0603SecurityMainMenu);
+						}
+					}
+					StationGui_BackButton(false);
+				break;
+				case eAirlock0603SecurityLogin:
+					StationGuiBG_Taskbar("");
+					StationGui_BackButton(true);
+					//SOMATerminalStart();
+					//CameraTerminalLoadingSequence();
+					if(!StationGui_DrawAndCheckErrors())
+					{
+						if (StationGui_Numpad("Enter Security Code", 8))
+						{
+							tString sCode = StationGui_GetNumpadInput();
+							if (sCode=="28965579")
+							{
+								Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_omnitool_configured",1.0);
+								//Depth_Audio_Terminal_Confirm(ImGui_GetName());
+								//StationGui_SetActiveApp(ElevatorBlastdoorTerminalLoginInProgress);
+								ImGui_SetStateBool("0603ControlLogMessage", true);
+								Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_omnitool_configured",1.0);
+								StationGui_SetNumpadInput("");
+								//return;
+							}
+							else
+							{	
+								//CameraAccessErrorBox();
+								//Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_ denied",1.0);
+								StationGui_SetError("PathOSErr3");
+								StationGui_SetNumpadInput("");
+								StationGui_DrawAndCheckErrors();
+							}
+						}
+					}
+					//if(StationGui_DrawAndCheckErrors())
+					//{
+					//	return;
+					//}
+					
+					if(StationGui_BackButton(true)) StationGui_SetActiveApp(eAirlock0603SecurityMainMenu);
+				break;
+				case eAirlock0603SecuritySecNETMenu:
+					ImGui_DoLabelExt("LoginLabel", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
+					StationGuiBG_Taskbar("");
+					//bBackButton = true;
+					StationGui_AddApp("SNCaller",true,eAirlock0603SecuritySNCaller);
+					StationGui_AddApp("LckStat",true,eAirlock0603SecuritySNLockdownStatus);
+					StationGui_AddApp("Cams",true);
+					lSecNETMenuSelection = StationGui_MainMenu();
+
+					if (lSecNETMenuSelection==2)
+					{
+						cLux_AddTodoMessage("Selection = 2!");
+						if(mbAirlock0303Lockdown == false)
+						{
+							cLux_AddDebugMessage("CAM Access Authorized");
+							StationGui_SetActiveApp(eAirlock0603SecuritySecNETMenu);
+						} else {
+							StationGui_SetError("PathOSErr4");
+							StationGui_SetActiveApp(eAirlock0603SecuritySecNETMenu);
+						}
+					}
+
+					StationGui_BackButton(true);
+					if(StationGui_BackButton(true)) StationGui_SetActiveApp(eAirlock0603SecurityMainMenu);
+				break;
+				case eAirlock0603SecurityAirlockMenu:
+					ImGui_DoLabelExt("LoginLabel", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
+					StationGuiBG_Taskbar("");
+					//bBackButton = true;
+					StationGui_AddApp("AirlockStat",false);
+					StationGui_AddApp("AirlockCont",true);
+					StationGui_AddApp("AirlockCam", true);
+					lAirlockMenuSelection = StationGui_MainMenu();
+
+					//bBackButtonEnabled = false;
+					if (lAirlockMenuSelection==2)
+					{
+						cLux_AddTodoMessage("Selection = 2!");
+						StationGui_SetError("PathOSErr2");
+						StationGui_SetActiveApp(eAirlock0603SecurityAirlockMenu);
+					}
+					StationGui_BackButton(true);
+					if(StationGui_BackButton(true)) StationGui_SetActiveApp(eAirlock0603SecurityMainMenu);
+				break;
+				case eAirlock0603SecuritySNCaller:
+					CallerApp();
+					StationGui_BackButton(true);
+					if(StationGui_BackButton(true)) StationGui_SetActiveApp(eAirlock0603SecuritySecNETMenu);
+				break;
+			}
+		}
+		void CallerApp()
+		{
+			StationGuiBG_Taskbar("");
+			cImGuiWindowData sncallerwindowData = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData sncallerbutton = StationGui_CreateToggleButtonData();
+			sncallerbutton.mFont.mvSize = ImGui_NrmSizeGroupKeepRatio(0.05);
+			cImGuiLabelData sncallerlabel = ImGui_GetDefaultLabel();
+			sncallerlabel.mFont.SetFile(Helper_Font_GetFontName(eLuxFontType_Sansation_Large_Bold));
+			sncallerlabel.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.0625);
+			sncallerlabel.mFontAlign = eFontAlign_Center;
+			bool bContactActive = ImGui_GetStateBool("ContactActive", false);
+			/////////////////////////
+			// Room listing
+			ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(0.025, 0.025, 1)), ImGui_NrmSizeGroup(cVector2f(0.95, 0.8)));
+				
+				ImGui_SetModUseInput(bContactActive==false);
+				ImGui_DoWindowStart("IntercomApp_Label", sncallerwindowData, ImGui_NrmPosGroup(cVector3f(0, 0, 0)), ImGui_NrmSizeGroup(cVector2f(0.35, 1)));
+					for (int i = 1; i <= 6; i++)
+					{
+						ImGui_AddItemString("IntercomApp_Room_"+i);
+					}
+					int lSelectedFile = ImGui_DoMultiToggleExt("FileSelection", -1, 1, ImGui_NrmSizeGroup(cVector2f(0, 0.02)), sncallerbutton, ImGui_NrmPosGroup(cVector3f(0.05, 0.025, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, cMath_Min(1.f, 0.135*5))));
+					lSelectedFile++;
+				ImGui_DoWindowEnd();
+				ImGui_SetModUseInput(true);
+		
+				ImGui_DoWindowStart("", sncallerwindowData, ImGui_NrmPosGroup(cVector3f(0.45, 0.0, 3)), ImGui_NrmSizeGroup(cVector2f(0.55, 0.50)));
+					
+					if (lSelectedFile > 0)
+					{
+						ImGui_DoLabelExt("IntercomApp_Room_"+lSelectedFile, sncallerlabel, ImGui_NrmPosGroup(cVector3f(0.0, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(1, -1)), 1);
+						bool bRoomOnline = lSelectedFile == eIntercomRoom_GabbyTharbesOffice || lSelectedFile == eIntercomRoom_Annex || lSelectedFile == eIntercomRoom_SectorDLobby;
+						ImGui_SetModColorMul(bRoomOnline ? gStationGuiColor_Highlight : gStationGuiColor_Warning);
+						tString sStatusText = bRoomOnline ? "CallerTerminal_Online" : "CallerTerminal_Offline";
+						if (ImGui_GetStateInt("CurrentRoom", -1) == lSelectedFile) sStatusText = "ReactorControlTerminal_NA";
+						ImGui_DoLabelExt(sStatusText, sncallerlabel, ImGui_NrmPosGroup(cVector3f(0.0, 0.3, 1)), ImGui_NrmSizeGroup(cVector2f(1, -1)), 1);
+						ImGui_SetModColorMul(cColor_White);
+					}
+		
+					ImGui_SetModUISizeVertExpansion(1.5, 2.5);
+					ImGui_SetModUseInput(lSelectedFile > 0 && ImGui_GetStateInt("CurrentRoom", -1) != lSelectedFile);
+					if (ImGui_DoButtonExt("CallHangupIntercom", bContactActive ? "IntercomApp_Hangup" : "IntercomApp_Call", sncallerbutton, ImGui_NrmPosGroup(cVector3f(0.25, 0.575, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 0.25))))
+					{	
+						if (bContactActive)
+						{
+							if (Sound_Exists(ImGui_GetName()+"IntercomDialTone")) Sound_Stop(ImGui_GetName()+"IntercomDialTone", 0.5);
+							ImGui_SetStateBool("ContactActive", false);
+									
+							IntercomHangUp(lSelectedFile, ImGui_GetName());
+						}
+						else
+						{							
+							IntercomCallMade(lSelectedFile);
+							ImGui_SetStateBool("ContactActive", true);
+						}
+					}
+					ImGui_SetModUseInput(true);
+					ImGui_SetModUISizeVertExpansion(0, 0);
+			
+					// Have to find a neat way of moving this out of this function if the Intercom app should be reusable
+					//if (ImGui_GetStateBool("ContactActive", false) && Voice_SceneIsActive("Lindwall")==false && Sound_Exists(ImGui_GetName()+"IntercomDialTone")==false)
+					//{
+					//}
+				ImGui_DoWindowEnd();
+				
+			ImGui_GroupEnd();
+		}
+		void IntercomHangUp(int alRoomCalled, const tString &in asTerminal)
+		{
+			if (Voice_SceneIsActive("Lindwall")) Voice_Stop("Lindwall");
+			Voice_SetSource("Lindwall", "Lindwall", 2, 50, true);
+			Depth_Audio_Terminal_Back("airlock060secpanel");
+			
+			TauDiallerRoomSoundStop(asTerminal, true);
+		}
+		void IntercomCallMade(int alRoomCalled)
+		{
+			Depth_Audio_Terminal_Forward(ImGui_GetName());
+			if (alRoomCalled == eIntercomRoom_GabbyTharbesOffice)
+			{
+				//Map_AddTimer(ImGui_GetName(), 5, "TimerIntercomCallLastHuman");
+			}
+			else if (alRoomCalled == eIntercomRoom_GabbyTharbesOffice)
+			{
+				Depth_Audio_Terminal_Back(ImGui_GetName());
+			}
+			TauDiallerRoomSound(ImGui_GetName());
+		}
+		bool mbTauDiallerRoomSoundActive = false;		
+		void TauDiallerRoomSound(const tString asEntity)
+		{
+			if(Sound_Exists("TauDialler_Loop_"+asEntity)==false)
+			{
+				Sound_CreateAtEntity("TauDialler_Start_"+asEntity, "Entities_Station/tech/terminal_beeps/tau_station_dialler/rooms/tau_dial_rooms_start", asEntity);
+				
+				Map_AddTimer(asEntity, 0.025f, "DiallerLoopSound");
+				mbTauDiallerRoomSoundActive = true;
+			}
+		}
+		
+		void TauDiallerRoomSoundStop(const tString asEntity, bool abDisconnectSound)
+		{
+			Map_RemoveTimer(asEntity);
+			if(Sound_Exists("TauDialler_Loop_"+asEntity))
+			{
+				Sound_Stop("TauDialler_Loop_"+asEntity, 0.25f);
+			}
+			
+			if(Sound_Exists("TauDialler_Start_"+asEntity))
+			{
+				Sound_Stop("TauDialler_Start_"+asEntity, 0.25f);
+			}
+			
+			//Disconnect sound			
+			if(abDisconnectSound)
+			{
+				Sound_CreateAtEntity("TauDialler_Disconnect_"+asEntity, "Entities_Station/tech/terminal_beeps/tau_station_dialler/rooms/tau_dial_rooms_disconnect", asEntity);
+			}
+		}
+		
+		void DiallerLoopSound(const tString &in asTimer)
+		{
+			Sound_CreateAtEntity("TauDialler_Loop_"+asTimer, "Entities_Station/tech/terminal_beeps/tau_station_dialler/rooms/tau_dial_rooms_loop", asTimer);
+		}
+	 
+		 //} END Terminal *Airlock 0603 Security Terminal*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Door Info Panel*
+		 //{//////////////////////////////////////
+	 
+		void DoorInfoPanel(const tString &in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("");
+			
+			//////////////////////////////
+			// Window data
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			window.mColorBase = gStationGuiColor_Normal;
+			
+			////////////////////////////
+			// Text
+			cImGuiTextFrameData textData = StationGui_CreateDefaultTextFrameData();
+			textData.mFont.SetFile(Helper_Font_GetFontName(eLuxFontType_Sansation_Large));
+			textData.mbUseBackgroundGfx = false;
+			textData.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.125);
+			textData.mFontAlign = eFontAlign_Center;
+			
+			/////////////////////////////////
+			// Backdrop
+			StationGuiBG_Scanlines();
+
+			tString sName = Entity_GetVarString(asEntityName, "");
+			
+			ImGui_DoWindowStart("", window, ImGui_NrmPosGroup(cVector3f(0.1,0.1, 1)), ImGui_NrmSizeGroup(cVector2f(0.8, 0.8)));	
+				// Resize for translations
+				array<tWString> vRows;
+				float fMaxWidth = ImGui_GetCurrentGroupSize().x*0.9;
+				GetFontWordWrapRows(textData.mFont, 1, sName, fMaxWidth, vRows);
+				if (vRows.length() > 5) textData.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.1);
+				for(int i = 0; i < vRows.length(); i++)
+					ImGui_ResizeFontToFit(vRows[i], textData.mFont, fMaxWidth);
+			
+				cVector2f vSize = ImGui_NrmSizeGroup(0.95, 1);
+				vSize.y = textData.mFont.mvSize.y*float(vRows.length());
+				cVector3f vPos = ImGui_NrmPosGroup(0, 0.5, 1);
+				vPos.y -= vSize.y*0.5;
+				ImGui_SetAlignment(eImGuiAlign_CenterCenter);
+				ImGui_DoTextFrameExt(sName, ImGui_NrmSizeGroup(cVector2f(0, 0.0)), 0, 0, textData, vPos, vSize);
+				ImGui_SetAlignment(eImGuiAlign_TopLeft);
+			ImGui_DoWindowEnd();
+		}
+	 
+		 //} END Terminal *Door Info Panel*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Misc Info Terminal 1*
+		 //{//////////////////////////////////////
+	 
+		void miscinfoterminal1_OnGui(const tString&in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("terminal_miscdata1");
+			StationGuiBG_Backdrop("background/helix_sector_d_logo_terminal_v3", cVector2f(0.20, -0.1), 0.75);
+			//Main Setup
+			int lActiveApp = StationGui_GetActiveApp();
+			int lBackState = eAirlock0603SecurityMainMenu;
+			//bool bBackButtonEnabled = true;
+			int lMiscDataMainMenuSelection = -1;
+			//Normal Label + Window Setup
+			cImGuiLabelData label = ImGui_GetDefaultLabel();
+			label.mFont.mvSize = cVector2f(60,60);
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			cImGuiButtonData buttonData = StationGui_CreateDefaultButtonData();
+			ImGui_SetDefaultButton(buttonData);
+			cImGuiTextFrameData frame = StationGui_CreateDefaultTextFrameData();
+			//Text Reader
+			cStationGui_TextReaderSettings settings;
+			settings.msCustomHeader = "PublicDocuments";
+			settings.mbDrawAppIcon = false;
+			settings.mfFileListButtonHeight = 0.125;
+
+			if (StationGui_DrawAndCheckErrors())
+			{
+				StationGuiBG_Taskbar("");
+				StationGui_BackButton(false);
+
+				return;
+			}
+			if (ImGui_GetStateBool("MiscTerminalBoot", true))
+			{
+				cLux_AddDebugMessage("Loading Terminal 1");
+				StationGui_SetActiveApp(eMiscDataTerminalLoadingOS);
+				tbMiscTerminalBoot == false;
+				ImGui_SetStateBool("MiscTerminalBoot", false);
+			}
+			if (ImGui_IsFirstRun())
+			{
+				tbFirstTimeLoadingServerInfo = true;
+			}
+
+			switch(lActiveApp)
+			{
+				case eMiscDataTerminalLoadingOS:
+					if(DoLoadingWindow("MiscTerminal_SystemLoad", "SysteamLoad_Title", "SysteamLoad_Text", 8, false, 3,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_case_1"))
+					{
+						StationGui_SetError("BrutalSysRestart");
+						StationGui_SetActiveApp(eMiscDataTerminalMainMenu);
+						Sound_CreateAtEntity("MiscTerm_StartSuccess", "Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_start", "miscinfoterminal1");
+					}
+				break;
+				case eMiscDataTerminalMainMenu:
+					StationGuiBG_Taskbar("");
+					StationGui_AddApp("App1",true,eMiscDataTerminalServInfo);
+					StationGui_AddApp("App2",true,eMiscDataTerminalLoginLogs);
+					StationGui_AddApp("App3",true,eMiscDataTerminalCommsLogs);
+					StationGui_AddApp("App4",true,eMiscDataTerminalPublicDocuments);
+					lMiscDataMainMenuSelection = StationGui_MainMenu();
+					if(lMiscDataMainMenuSelection==0 && tbFirstTimeLoadingServerInfo) 
+					{
+						StationGui_SetError("WAULinkErr");
+						tbFirstTimeLoadingServerInfo = false;
+					}
+
+					StationGui_BackButton(false);
+				break;
+				case eMiscDataTerminalServInfo:
+					StationGuiBG_Taskbar("");
+					StationGui_BackButton(true);
+					StationGui_TextReaderSingle("ServInfo_1_1", "ServInfo_1_2", cStationGui_TextReaderSettings(), cVector3f(0.075, 0.05, 0), cVector2f(0.60, 0.5));
+					StationGui_TextReaderSingle("ServInfo_2_1", "ServInfo_2_2", cStationGui_TextReaderSettings(), cVector3f(0.68, 0.05, 0), cVector2f(0.3, 0.8));
+					StationGui_TextReaderSingle("ServInfo_3_1", "ServInfo_3_2", cStationGui_TextReaderSettings(), cVector3f(0.075, 0.6, 0), cVector2f(0.3, 0.2));
+					if(StationGui_BackButton(true))
+					{
+						StationGui_SetActiveApp(eMiscDataTerminalMainMenu);
+					}
+				break;
+				case eMiscDataTerminalLoginLogs:
+					StationGuiBG_Taskbar("");
+					StationGui_BackButton(true);
+					StationGui_TextReaderSingle("LoginLogs_Title", "LoginLogs_Text", cStationGui_TextReaderSettings(), cVector3f(0.05, 0.05, 0), cVector2f(0.90, 0.8));
+					if(StationGui_BackButton(true))
+					{
+						StationGui_SetActiveApp(eMiscDataTerminalMainMenu);
+					}
+				break;
+				case eMiscDataTerminalCommsLogs:
+					StationGuiBG_Taskbar("");
+					StationGui_BackButton(true);
+					StationGui_TextReaderSingle("CommsLogs_Title", "CommsLogs_Text", cStationGui_TextReaderSettings(), cVector3f(0.05, 0.05, 0), cVector2f(0.90, 0.8));
+					if(StationGui_BackButton(true))
+					{
+						StationGui_SetActiveApp(eMiscDataTerminalMainMenu);
+					}
+				break;
+				case eMiscDataTerminalPublicDocuments:
+				StationGuiBG_Taskbar("");
+				StationGui_BackButton(true);
+				for (int i = 1; i <= 4; i++)
+				{
+					Depth_ImGui_AddTextFile("PublicDocuments_Title_"+i, "PublicDocuments_Text_"+i);
+				}
+				StationGui_TextReaderMulti(settings);
+				if(StationGui_BackButton(true))
+				{
+					StationGui_SetActiveApp(eMiscDataTerminalMainMenu);
+				}
+				break;
+				
+			}
+
+		}
+	 
+		 //} END Terminal *Misc Info Terminal 1*
+
+		 //-------------------------------------------------------
+	 
+		 /////////////////////////////////////////
+		 // Terminal *Name Of Terminal*
+		 //{//////////////////////////////////////
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any variables that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 /*Put any functions that are only used Terminal here.*/
+	 
+		 //-------------------------------------------------------
+	 
+		 //} END Terminal *Name Of Terminal*
+	
+	//} END TERMINALS
+ 
+}

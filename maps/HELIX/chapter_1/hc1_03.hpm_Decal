@@ -1,0 +1,212 @@
+<HPLMapTrack_Decal ID="BE55B144109F3AE1F653B6ABE998EA625FF70FA6" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <FileIndex_Decals NumOfFiles="42">
+            <File Id="0" Path="textures/decals/station/theta_area_maintenance.mat" />
+            <File Id="1" Path="mods/SOMA HELIX/textures/decals/helix_logos/helixlogoalpha.mat" />
+            <File Id="2" Path="mods/SOMA HELIX/textures/decals/helix_logos/helixlogodelta.mat" />
+            <File Id="3" Path="textures/decals/dirt/dirt_stain01-04_gray.mat" />
+            <File Id="4" Path="textures/decals/dirt/dustcoat_dirt02.mat" />
+            <File Id="5" Path="textures/decals/signs/wau_logo_white.mat" />
+            <File Id="6" Path="textures/decals/signs/wau_logo.mat" />
+            <File Id="7" Path="textures/decals/signs/floor_stripes01-04_solid.mat" />
+            <File Id="8" Path="textures/decals/signs/theta_robot_control_sign.mat" />
+            <File Id="9" Path="textures/decals/signs/02_01_lambda_welcomeposter.mat" />
+            <File Id="10" Path="textures/decals/signs/power_relay_05.mat" />
+            <File Id="11" Path="textures/decals/signs/02_07_pillar_markers.mat" />
+            <File Id="12" Path="textures/decals/signs/iadp_large.mat" />
+            <File Id="13" Path="textures/decals/signs/floor_stripes01-04.mat" />
+            <File Id="14" Path="textures/decals/dirt/dirt_stain01-04.mat" />
+            <File Id="15" Path="textures/decals/decals_signs_solid.mat" />
+            <File Id="16" Path="textures/decals/decals_signs.mat" />
+            <File Id="17" Path="textures/decals/marble_floor_concave.mat" />
+            <File Id="18" Path="textures/decals/toilet_tap_puddle.mat" />
+            <File Id="19" Path="textures/decals/signs/02_01_curie_warningsigns.mat" />
+            <File Id="20" Path="textures/decals/signs/02_02_corridors_curie.mat" />
+            <File Id="21" Path="textures/decals/signs/02_03_coralsign_big02.mat" />
+            <File Id="22" Path="textures/decals/signs/02_03_coralsign_big01.mat" />
+            <File Id="23" Path="textures/decals/signs/02_05_graffity_puppets.mat" />
+            <File Id="24" Path="textures/decals/signs/02_06_elevator_ark_lab.mat" />
+            <File Id="25" Path="textures/decals/signs/04_03_barcode.mat" />
+            <File Id="26" Path="textures/decals/signs/enter_stripes.mat" />
+            <File Id="27" Path="textures/decals/station/theta_area_descriptions01.mat" />
+            <File Id="28" Path="textures/decals/signs/keep_area_clear.mat" />
+            <File Id="29" Path="textures/decals/signs/tutorial_signs.mat" />
+            <File Id="30" Path="textures/decals/signs/02_07_aux_access.mat" />
+            <File Id="31" Path="textures/decals/station/dive_preparation_airlock.mat" />
+            <File Id="32" Path="textures/decals/station/atlantic_station_map.mat" />
+            <File Id="33" Path="textures/decals/station/theta_numbers01.mat" />
+            <File Id="34" Path="textures/decals/station/theta_area_descriptions02.mat" />
+            <File Id="35" Path="textures/decals/signs/04_03_hazard.mat" />
+            <File Id="36" Path="textures/decals/signs/floor_stripes_cross_solid.mat" />
+            <File Id="37" Path="textures/decals/signs/floor_stripes_red01-04_solid.mat" />
+            <File Id="38" Path="textures/decals/signs/mind_your_step.mat" />
+            <File Id="39" Path="textures/decals/signs/02_06_no_contaminents.mat" />
+            <File Id="40" Path="mods/SOMA HELIX/textures/decals/helix_logos/helixstbd-03_alpha.mat" />
+            <File Id="41" Path="textures/decals/signs/cargo_sign.mat" />
+        </FileIndex_Decals>
+        <Objects>
+            <Decal ID="268441547" Name="floor_stripes_red01-04_solid_1" CreStamp="1651930756" ModStamp="1651930839" WorldPos="-90.25 8 -65.25" Rotation="0 0 0" Scale="0.5 1 4" CurrentSubDiv="2" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="37" UID="16 2088 268441547">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-90 8.01 -67.25 1 -90 8.01 -63.25 1 -90.5 8.01 -63.25 1 -90.5 8.01 -67.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="0.25 1 0 0.25 0 0 0.5 0 0 0.5 1 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441550" Name="floor_stripes_red01-04_solid_2" CreStamp="1651930810" ModStamp="1651930839" WorldPos="-90.25 8 -69.25" Rotation="0 0 0" Scale="0.5 1 4" CurrentSubDiv="2" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="37" UID="16 2089 268441550">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-90 8.01 -71.25 1 -90 8.01 -67.25 1 -90.5 8.01 -67.25 1 -90.5 8.01 -71.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="0.25 1 0 0.25 0 0 0.5 0 0 0.5 1 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441551" Name="floor_stripes_red01-04_solid_3" CreStamp="1651930814" ModStamp="1651930839" WorldPos="-90.25 8 -61.25" Rotation="0 0 0" Scale="0.5 1 4" CurrentSubDiv="2" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="37" UID="16 2091 268441551">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-90 8.01 -63.25 1 -90 8.01 -61.646 1 -90.5 8.01 -60.848 1 -90.5 8.01 -63.25 1 -90.5 8.01 -59.25 1 -90.5 8.01 -60.848 1 -90 8.01 -61.646 1 -90 8.01 -59.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="0.25 1 0 0.25 0.599 0 0.5 0.4 0 0.5 1 0 0.5 0 0 0.5 0.4 0 0.25 0.599 0 0.25 0 0 " />
+                    <Indices Array="0 1 2 0 2 3 4 5 6 4 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441552" Name="floor_stripes_red01-04_solid_4" CreStamp="1651930824" ModStamp="1651930829" WorldPos="-85.25 8 -69.25" Rotation="0 0 0" Scale="0.5 1 4" CurrentSubDiv="2" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="37" UID="16 2087 268441552">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-85 8.01 -71.25 1 -85 8.01 -69.65 1 -85.5 8.01 -68.848 1 -85.5 8.01 -71.25 1 -85.5 8.01 -67.25 1 -85.5 8.01 -68.848 1 -85 8.01 -69.65 1 -85 8.01 -67.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="0.25 1 0 0.25 0.6 0 0.5 0.4 0 0.5 1 0 0.5 0 0 0.5 0.4 0 0.25 0.6 0 0.25 0 0 " />
+                    <Indices Array="0 1 2 0 2 3 4 5 6 4 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441553" Name="floor_stripes_red01-04_solid_5" CreStamp="1651930824" ModStamp="1655563520" WorldPos="-85.25 7.75 -65.25" Rotation="0 0 0" Scale="0.5 1 4" CurrentSubDiv="2" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="37" UID="16 2092 268441553">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-85.5 8.01 -63.25 1 -85.5 8.01 -67.25 1 -85 8.01 -67.25 1 -85 8.01 -63.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="0.5 0 0 0.5 1 0 0.25 1 0 0.25 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441554" Name="floor_stripes_red01-04_solid_6" CreStamp="1651930824" ModStamp="1655563510" WorldPos="-85.25 7.75 -61.25" Rotation="0 0 0" Scale="0.5 1 4" CurrentSubDiv="2" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="37" UID="16 2090 268441554">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-85.5 8.01 -59.25 1 -85.5 8.01 -63.25 1 -85 8.01 -63.25 1 -85 8.01 -59.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="0.5 0 0 0.5 1 0 0.25 1 0 0.25 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441555" Name="mind_your_step_1" CreStamp="1651930871" ModStamp="1651930960" WorldPos="-90 8 -65.25" Rotation="0 -1.5708 0" Scale="4 1 0.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="38" UID="16 2074 268441555">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-90.124 8.01 -67.25 1 -89.874 8.01 -67.25 1 -89.875 8.01 -63.25 1 -90.125 8.01 -63.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 " />
+                    <TexCoords Array="1 0 0 1 1 0 0 1 0 0 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441556" Name="mind_your_step_2" CreStamp="1651930920" ModStamp="1651930959" WorldPos="-90 8 -61.25" Rotation="0 -1.5708 0" Scale="4 1 0.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="38" UID="16 2070 268441556">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-90.124 8.01 -63.25 1 -89.874 8.01 -63.25 1 -89.874 8.01 -61.848 1 -90.125 8.01 -61.45 1 -89.875 8.01 -59.25 1 -90.125 8.01 -59.25 1 -90.125 8.01 -61.45 1 -89.874 8.01 -61.848 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 " />
+                    <TexCoords Array="1 0 0 1 1 0 0.65 1 0 0.55 0 0 0 1 0 0 0 0 0.55 0 0 0.65 1 0 " />
+                    <Indices Array="0 1 2 0 2 3 4 5 6 4 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441557" Name="mind_your_step_3" CreStamp="1651930924" ModStamp="1651930961" WorldPos="-90 8 -69" Rotation="0 -1.5708 0" Scale="4 1 0.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="38" UID="16 2069 268441557">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-90.124 8.01 -71 1 -89.875 8.01 -71 1 -89.875 8.01 -67 1 -90.125 8.01 -67 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 " />
+                    <TexCoords Array="1 0 0 1 0.999 0 0 0.999 0 0 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441558" Name="mind_your_step_4" CreStamp="1651930930" ModStamp="1655563514" WorldPos="-85.5 7.75 -61.25" Rotation="0 1.5708 0" Scale="4 1 0.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="38" UID="16 2073 268441558">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-85.374 8.01 -59.25 1 -85.624 8.01 -59.25 1 -85.625 8.01 -63.25 1 -85.375 8.01 -63.25 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 " />
+                    <TexCoords Array="1 0 0 1 0.999 0 0 0.999 0 0 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441559" Name="mind_your_step_5" CreStamp="1651930930" ModStamp="1655563522" WorldPos="-85.5 7.75 -65" Rotation="0 1.5708 0" Scale="4 1 0.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="38" UID="16 2068 268441559">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-85.374 8.01 -63 1 -85.624 8.01 -63 1 -85.625 8.01 -67 1 -85.375 8.01 -67 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 " />
+                    <TexCoords Array="1 0 0 1 0.999 0 0 0.999 0 0 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441560" Name="mind_your_step_6" CreStamp="1651930930" ModStamp="1651930956" WorldPos="-85.5 8 -69" Rotation="0 1.5708 0" Scale="4 1 0.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="38" UID="16 2072 268441560">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-85.625 8.01 -71 1 -85.375 8.01 -71 1 -85.375 8.01 -69.05 1 -85.624 8.01 -68.65 1 -85.374 8.01 -67 1 -85.624 8.01 -67 1 -85.624 8.01 -68.65 1 -85.375 8.01 -69.05 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 0 0 1 -1 " />
+                    <TexCoords Array="0 0.999 0 0 0 0 0.487 0 0 0.587 0.999 0 0.999 0 0 0.999 0.999 0 0.587 0.999 0 0.487 0 0 " />
+                    <Indices Array="0 1 2 0 2 3 4 5 6 4 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268441563" Name="enter_stripes_4" CreStamp="1651931046" ModStamp="1655632289" WorldPos="-87.75 8 -72" Rotation="0 -0 0" Scale="4.5 1 1" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.458984 0 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="26" UID="16 2066 268441563">
+                <DecalMesh NumVerts="4" NumInds="6">
+                    <Positions Array="-90 8.01 -71.5 1 -90 8.01 -72.5 1 -85.5 8.01 -72.5 1 -85.5 8.01 -71.5 1 " />
+                    <Normals Array="0 1 0 0 1 0 0 1 0 0 1 0 " />
+                    <Tangents Array="-1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 " />
+                    <TexCoords Array="1 0 0 1 1 0 0 1 0 0 0 0 " />
+                    <Indices Array="0 1 2 0 2 3" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268442597" Name="theta_numbers01_1" CreStamp="1655563308" ModStamp="1655584409" WorldPos="-117.5 10.75 -69.2224" Rotation="0 -1.5708 -1.5708" Scale="2.25 1 2.251" CurrentSubDiv="17" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.904297 0.53785 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="33" UID="16 2137 268442597">
+                <DecalMesh NumVerts="27" NumInds="33">
+                    <Positions Array="-117.487 9.659 -69.934 1 -117.487 9.627 -69.983 1 -117.487 9.627 -68.514 1 -117.487 9.659 -68.563 1 -117.487 9.659 -69.934 1 -117.487 9.627 -68.514 1 -117.487 9.624 -69.87 1 -117.487 9.627 -69.983 1 -117.487 9.624 -69.986 1 -117.487 9.624 -68.513 1 -117.487 9.627 -68.514 1 -117.487 9.627 -69.983 1 -117.487 9.624 -69.87 1 -117.487 9.659 -68.563 1 -117.487 9.67 -68.613 1 -117.487 9.659 -69.934 1 -117.487 9.67 -69.884 1 -117.487 9.659 -69.934 1 -117.487 9.67 -68.613 1 -117.488 9.624 -68.096 1 -117.488 11.875 -68.096 1 -117.488 11.875 -70.348 1 -117.488 11.463 -70.348 1 -117.487 9.624 -68.968 1 -117.488 9.624 -70.348 1 -117.487 9.624 -68.968 1 -117.488 11.463 -70.348 1 " />
+                    <Normals Array="1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 0.997 0 0.075 0.997 0 0.075 0.997 0 -0.071 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 " />
+                    <Tangents Array="-0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 0.075 0 -0.997 -1 0.075 0 -0.997 -1 -0.071 0 -0.997 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 " />
+                    <TexCoords Array="0.704 0.196 0 0.709 0.199 0 0.546 0.199 0 0.551 0.196 0 0.704 0.196 0 0.546 0.199 0 0.696 0.2 0 0.709 0.199 0 0.709 0.2 0 0.546 0.2 0 0.546 0.199 0 0.709 0.199 0 0.696 0.2 0 0.551 0.196 0 0.557 0.195 0 0.704 0.196 0 0.698 0.195 0 0.704 0.196 0 0.557 0.195 0 0.499 0.2 0 0.499 0 0 0.75 0 0 0.75 0.036 0 0.596 0.2 0 0.75 0.2 0 0.596 0.2 0 0.75 0.036 0 " />
+                    <Indices Array="0 1 2 3 4 5 6 7 8 9 10 11 9 11 12 13 14 15 16 17 18 19 20 21 19 21 22 19 22 23 24 25 26" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268442598" Name="theta_numbers01_2" CreStamp="1655563358" ModStamp="1655584786" WorldPos="-117.5 2.75 -69.2224" Rotation="-1.57898e-014 -1.5708 -1.5708" Scale="2.25 1 2.251" CurrentSubDiv="18" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.904297 0.53785 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="33" UID="16 1852 268442598">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-117.488 1.624 -68.096 1 -117.488 3.875 -68.096 1 -117.488 3.875 -70.348 1 -117.488 3.463 -70.348 1 -117.487 1.624 -68.968 1 -117.488 1.624 -70.348 1 -117.487 1.624 -68.968 1 -117.488 3.463 -70.348 1 " />
+                    <Normals Array="0.997 0 0.075 0.997 0 0.075 0.997 0 -0.071 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 " />
+                    <Tangents Array="0.075 0 -0.997 -1 0.075 0 -0.997 -1 -0.071 0 -0.997 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 " />
+                    <TexCoords Array="0.249 0.2 0 0.249 0 0 0.5 0 0 0.5 0.036 0 0.346 0.2 0 0.5 0.2 0 0.346 0.2 0 0.5 0.036 0 " />
+                    <Indices Array="0 1 2 0 2 3 0 3 4 5 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268442623" Name="theta_numbers01_3" CreStamp="1655570221" ModStamp="1655584792" WorldPos="-117.5 18.75 -69.2224" Rotation="0 -1.5708 -1.5708" Scale="2.25 1 2.251" CurrentSubDiv="16" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.904297 0.53785 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="33" UID="16 1757 268442623">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-117.488 17.624 -68.096 1 -117.488 19.875 -68.096 1 -117.488 19.875 -70.348 1 -117.488 19.462 -70.348 1 -117.487 17.624 -68.968 1 -117.488 17.624 -70.348 1 -117.487 17.624 -68.968 1 -117.488 19.462 -70.348 1 " />
+                    <Normals Array="0.997 0 0.075 0.997 0 0.075 0.997 0 -0.071 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 " />
+                    <Tangents Array="0.075 0 -0.997 -1 0.075 0 -0.997 -1 -0.071 0 -0.997 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 " />
+                    <TexCoords Array="0.749 0.2 0 0.749 0 0 1 0 0 1 0.036 0 0.846 0.2 0 1 0.2 0 0.846 0.2 0 1 0.036 0 " />
+                    <Indices Array="0 1 2 0 2 3 0 3 4 5 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268442716" Name="theta_numbers01_4" CreStamp="1655572064" ModStamp="1655584797" WorldPos="-117.5 26.75 -69.2224" Rotation="0 -1.5708 -1.5708" Scale="2.25 1 2.251" CurrentSubDiv="15" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.904297 0.53785 0 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="33" UID="16 1851 268442716">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-117.488 25.624 -68.096 1 -117.488 27.875 -68.096 1 -117.488 27.875 -70.348 1 -117.488 27.462 -70.348 1 -117.487 25.624 -68.968 1 -117.488 25.624 -70.348 1 -117.487 25.624 -68.968 1 -117.488 27.462 -70.348 1 " />
+                    <Normals Array="0.997 0 0.075 0.997 0 0.075 0.997 0 -0.071 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 0.999 0 0.018 0.997 0 -0.071 " />
+                    <Tangents Array="0.075 0 -0.997 -1 0.075 0 -0.997 -1 -0.071 0 -0.997 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 0.018 0 -0.999 -1 -0.071 0 -0.997 -1 " />
+                    <TexCoords Array="0 0.4 0 0 0.2 0 0.25 0.2 0 0.25 0.236 0 0.096 0.4 0 0.25 0.4 0 0.096 0.4 0 0.25 0.236 0 " />
+                    <Indices Array="0 1 2 0 2 3 0 3 4 5 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268443066" Name="cargo_sign_1" CreStamp="1655630223" ModStamp="1655630277" WorldPos="-105.75 17.485 -71.25" Rotation="-1.57079 9.49338e-012 3.15007e-017" Scale="0.8 1 1.1" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.010022" SubDiv="1 1" Color="0.142555 0.986328 0.304059 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="41" UID="16 1548 268443066">
+                <DecalMesh NumVerts="40" NumInds="60">
+                    <Positions Array="-106.15 17.516 -71.259 1 -106.01 18.033 -71.259 1 -106.037 18.033 -71.259 1 -106.15 17.562 -71.259 1 -106.15 18.033 -71.259 1 -106.15 17.562 -71.259 1 -106.037 18.033 -71.259 1 -106.01 18.033 -71.259 1 -106.15 17.516 -71.259 1 -106.15 17.312 -71.259 1 -105.718 18.033 -71.259 1 -106.15 17.145 -71.259 1 -105.348 17.145 -71.259 1 -105.348 18.033 -71.259 1 -105.718 18.033 -71.259 1 -106.15 17.312 -71.259 1 -106.15 16.937 -71.259 1 -105.957 16.937 -71.259 1 -106.15 17.042 -71.259 1 -105.348 16.937 -71.259 1 -105.348 17.098 -71.259 1 -106.15 17.098 -71.259 1 -106.15 17.042 -71.259 1 -105.957 16.937 -71.259 1 -106.15 17.098 -71.259 1 -105.348 17.098 -71.259 1 -105.348 17.115 -71.246 1 -106.15 17.127 -71.237 1 -105.348 17.128 -71.236 1 -106.15 17.128 -71.236 1 -106.15 17.127 -71.237 1 -105.348 17.115 -71.246 1 -105.348 17.145 -71.259 1 -106.15 17.145 -71.259 1 -106.15 17.143 -71.258 1 -105.348 17.131 -71.249 1 -106.15 17.115 -71.235 1 -105.348 17.115 -71.235 1 -105.348 17.131 -71.249 1 -106.15 17.143 -71.258 1 " />
+                    <Normals Array="0 -0.145 -0.989 0 -0.107 -0.994 0 -0.107 -0.994 0 -0.142 -0.989 0 -0.107 -0.994 0 -0.142 -0.989 0 -0.107 -0.994 0 -0.107 -0.994 0 -0.145 -0.989 0 -0.161 -0.986 0 -0.106 -0.994 0 -0.173 -0.984 0 -0.173 -0.984 0 -0.106 -0.994 0 -0.106 -0.994 0 -0.161 -0.986 -0 0.28 -0.959 -0 0.28 -0.959 -0 0.31 -0.95 -0 0.28 -0.959 -0 0.326 -0.945 -0 0.326 -0.945 -0 0.31 -0.95 -0 0.28 -0.959 -0 0.326 -0.945 -0 0.326 -0.945 -0 0.493 -0.869 -0 0.604 -0.796 -0 0.617 -0.786 -0 0.617 -0.786 -0 0.604 -0.796 -0 0.493 -0.869 0 -0.173 -0.984 0 -0.173 -0.984 0 -0.199 -0.979 0 -0.407 -0.913 0 -0.661 -0.749 0 -0.661 -0.749 0 -0.407 -0.913 0 -0.199 -0.979 " />
+                    <Tangents Array="-1 -0 0 -1 -1 0 -0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 0 -0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 0 -0 -1 -1 -0 0 -1 -1 0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 0 -0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 -0 -0 -1 -1 -0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 -0 -1 -1 -0 -0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 -0 -1 -1 -0 0 -1 -1 -0 0 -1 " />
+                    <TexCoords Array="1 0.471 0 0.825 0 0 0.859 0 0 1 0.429 0 1 0 0 1 0.429 0 0.859 0 0 0.825 0 0 1 0.471 0 1 0.656 0 0.46 0 0 1 0.808 0 0 0.808 0 0 0 0 0.46 0 0 1 0.656 0 1 0.997 0 0.759 0.997 0 1 0.901 0 0 0.997 0 0 0.851 0 1 0.851 0 1 0.901 0 0.759 0.997 0 1 0.851 0 0 0.851 0 0 0.836 0 1 0.825 0 0 0.823 0 1 0.823 0 1 0.825 0 0 0.836 0 0 0.808 0 1 0.808 0 1 0.81 0 0 0.82 0 1 0.835 0 0 0.835 0 0 0.82 0 1 0.81 0 " />
+                    <Indices Array="0 1 2 0 2 3 4 5 6 7 8 9 7 9 10 11 12 13 11 13 14 11 14 15 16 17 18 19 20 21 19 21 22 19 22 23 24 25 26 24 26 27 28 29 30 28 30 31 32 33 34 32 34 35 36 37 38 36 38 39" />
+                </DecalMesh>
+            </Decal>
+        </Objects>
+    </Section>
+</HPLMapTrack_Decal>

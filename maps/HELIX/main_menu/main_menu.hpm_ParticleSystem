@@ -1,0 +1,8 @@
+<HPLMapTrack_ParticleSystem ID="E1E2DB7611E9D6F532692D5191A11F7C46B93C8A" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <ParticleSystem ID="268435587" Name="ParticleSystem_1" CreStamp="1658319100" ModStamp="1658319690" WorldPos="-2 0.5 -2.25" Rotation="0 0 0" Scale="0.5 1 0.75" File="D:/JEUX/steamapps/common/SOMA/particles/water/edge_continuous_med.ps" Color="1 1 1 1" Brightness="1.5" FadeAtDistance="true" MinFadeDistanceStart="2" MaxFadeDistanceStart="100" MinFadeDistanceEnd="1" MaxFadeDistanceEnd="110" CulledByDistance="true" CulledByFog="true" ConnectLight="" UID="16 147 268435587" />
+            <ParticleSystem ID="268435588" Name="ParticleSystem_2" CreStamp="1658319153" ModStamp="1658319744" WorldPos="-1.75 3.66147 -3.11662" Rotation="-1.5708 4.15483 1.5708" Scale="2.25 0.5 1" File="D:/JEUX/steamapps/common/SOMA/particles/water/stream_airlock_fill.ps" Color="1 1 1 1" Brightness="15" FadeAtDistance="true" MinFadeDistanceStart="2" MaxFadeDistanceStart="20" MinFadeDistanceEnd="1" MaxFadeDistanceEnd="30" CulledByDistance="true" CulledByFog="true" ConnectLight="" UID="16 132 268435588" />
+        </Objects>
+    </Section>
+</HPLMapTrack_ParticleSystem>

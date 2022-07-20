@@ -1,0 +1,42 @@
+<HPLMapTrack_Decal ID="E1E2DB7611E9D6F532692D5191A11F7C46B93C8A" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <FileIndex_Decals NumOfFiles="7">
+            <File Id="0" Path="mods/SOMA HELIX/textures/decals/helix_logos/helixlogocharlie.mat" />
+            <File Id="1" Path="textures/liquid/water/waterplane_waves_calm.mat" />
+            <File Id="2" Path="static_objects/station/floor/lab_linoleum_details.mat" />
+            <File Id="3" Path="mods/SOMA HELIX/textures/decals/helix_posters/poster_compromise.mat" />
+            <File Id="4" Path="textures/liquid/oil/oilplane.mat" />
+            <File Id="5" Path="textures/decals/oil/oil_splatter01.mat" />
+            <File Id="6" Path="textures/decals/oil/oil_puddle01.mat" />
+        </FileIndex_Decals>
+        <Objects>
+            <Decal ID="268435583" Name="helixlogocharlie_1" CreStamp="1658318751" ModStamp="1658318827" WorldPos="-2.75 2.375 -6" Rotation="-3.74305 4.71239 -3.7511" Scale="2 1.5 1.25" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.0739122" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="0" UID="16 118 268435583">
+                <DecalMesh NumVerts="16" NumInds="24">
+                    <Positions Array="-2.676 1.75 -5 1 -2.676 2.167 -5 1 -2.676 1.75 -5.243 1 -2.676 3 -6 1 -2.676 1.75 -6 1 -2.676 1.75 -5.243 1 -2.676 2.167 -5 1 -2.676 3 -5 1 -2.676 3 -7 1 -2.676 2.167 -7 1 -2.676 3 -6.513 1 -2.676 1.75 -6 1 -2.676 3 -6 1 -2.676 3 -6.513 1 -2.676 2.167 -7 1 -2.676 1.75 -7 1 " />
+                    <Normals Array="1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 " />
+                    <Tangents Array="0 0 -1 -1 0 0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 0 0 -1 -1 0 0 -1 -1 0 0 -1 -1 " />
+                    <TexCoords Array="0 1 0 0 0.665 0 0.121 1 0 0.5 0 0 0.5 1 0 0.121 1 0 0 0.665 0 0 0 0 1 0 0 1 0.665 0 0.756 0 0 0.5 1 0 0.5 0 0 0.756 0 0 1 0.665 0 1 1 0 " />
+                    <Indices Array="0 1 2 3 4 5 3 5 6 3 6 7 8 9 10 11 12 13 11 13 14 11 14 15" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268435715" Name="poster_compromise_1" CreStamp="1658321489" ModStamp="1658321565" WorldPos="-2 2 4.75" Rotation="0.209175 -1.57045 -3.06296" Scale="1.25 1.66376 1.81279" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.0426359" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="3" UID="16 164 268435715">
+                <DecalMesh NumVerts="8" NumInds="12">
+                    <Positions Array="-2.707 2.84 4.125 1 -2.707 1.019 4.125 1 -2.707 1.019 4.329 1 -2.707 2.809 5.375 1 -2.707 2.84 5.375 1 -2.707 1.019 5.375 1 -2.707 2.809 5.375 1 -2.707 1.019 4.329 1 " />
+                    <Normals Array="1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 " />
+                    <Tangents Array="0 -0 -1 -1 0 0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 0 0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 0 -0 -1 -1 " />
+                    <TexCoords Array="1 0.002 0 1 1 0 0.836 1 0 0 0.018 0 0 0.002 0 0 1 0 0 0.018 0 0.836 1 0 " />
+                    <Indices Array="0 1 2 0 2 3 0 3 4 5 6 7" />
+                </DecalMesh>
+            </Decal>
+            <Decal ID="268435740" Name="oil_puddle01_1" CreStamp="1658321906" ModStamp="1658321915" WorldPos="-9 4.76837e-007 -1.6958" Rotation="3.82137e-015 -6.6815e-022 1.74846e-007" Scale="1 1 1.75" CurrentSubDiv="0" MaxTriangles="-1" Offset="0.0718659" SubDiv="1 1" Color="1 1 1 1" OnStatic="true" OnPrimitive="true" OnEntity="true" MaterialIndex="6" UID="16 205 268435740">
+                <DecalMesh NumVerts="22" NumInds="30">
+                    <Positions Array="-8.5 0.071 -1.5 1 -9 0.071 -2 1 -8.5 0.071 -2 1 -9 0.071 -0.82 1 -9 0.071 -2 1 -8.5 0.071 -1.5 1 -8.5 0.071 -0.82 1 -9 0.071 -0.82 1 -9.5 0.071 -0.82 1 -9.5 0.071 -2 1 -9 0.071 -2 1 -9 0.071 -2.57 1 -8.5 0.071 -2.57 1 -8.5 0.071 -2 1 -9 0.071 -2 1 -9 0.071 -2.57 1 -9 0.071 -2 1 -9.5 0.071 -2.5 1 -9.5 0.071 -2.57 1 -9.5 0.071 -2.5 1 -9 0.071 -2 1 -9.5 0.071 -2 1 " />
+                    <Normals Array="-0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 -0 1 0 " />
+                    <Tangents Array="-1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 0 -1 -1 -0 -0 -1 -1 -0 -0 -1 -1 -0 0 -1 " />
+                    <TexCoords Array="0.5 0.694 0 0.75 0.836 0 0.5 0.836 0 0.75 0.5 0 0.75 0.836 0 0.5 0.694 0 0.5 0.5 0 0.75 0.5 0 1 0.5 0 1 0.836 0 0.75 0.836 0 0.75 1 0 0.5 1 0 0.5 0.836 0 0.75 0.836 0 0.75 1 0 0.75 0.836 0 1 0.979 0 1 1 0 1 0.979 0 0.75 0.836 0 1 0.836 0 " />
+                    <Indices Array="0 1 2 3 4 5 3 5 6 7 8 9 7 9 10 11 12 13 11 13 14 15 16 17 15 17 18 19 20 21" />
+                </DecalMesh>
+            </Decal>
+        </Objects>
+    </Section>
+</HPLMapTrack_Decal>

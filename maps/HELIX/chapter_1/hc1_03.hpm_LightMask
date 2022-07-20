@@ -1,0 +1,13 @@
+<HPLMapTrack_LightMask ID="BE55B144109F3AE1F653B6ABE998EA625FF70FA6" Version="1.00">
+    <Section Name="Koneko@DESKTOP-7BSC6LH">
+        <Objects>
+            <LightMaskBox ID="268441497" Name="LightMaskBox_3" CreStamp="1651916199" ModStamp="1651916310" WorldPos="-87.75 10.75 -65.25" Rotation="0 0 0" Scale="1 1 1" Size="8.25 6.25 12.25" UID="16 2029 268441497" />
+            <LightMaskBox ID="268442587" Name="LightMaskBox_1" CreStamp="1655562951" ModStamp="1655572516" WorldPos="-118.25 14 -69.25" Rotation="0 0 0" Scale="1 1 1" Size="12.25 36.75 13.25" UID="16 2135 268442587" />
+            <LightMaskBox ID="268442815" Name="LightMaskBox_2" CreStamp="1655582008" ModStamp="1655582039" WorldPos="-104.25 11.5 -81.75" Rotation="0 0 0" Scale="1 1 1" Size="24.25 7.5 12.75" UID="16 2168 268442815" />
+            <LightMaskBox ID="268443063" Name="LightMaskBox_4" CreStamp="1655598189" ModStamp="1655598223" WorldPos="-106.25 19.5 -75.25" Rotation="0 0 0" Scale="1 1 1" Size="8.25 7.5 8.25" UID="16 1551 268443063" />
+            <LightMaskBox ID="268443280" Name="LightMaskBox_5" CreStamp="1655733896" ModStamp="1655734404" WorldPos="-69.25 10 -92.25" Rotation="0 0 0" Scale="1 1 1" Size="8.25 4.25 8.25" UID="16 1392 268443280" />
+            <LightMaskBox ID="268443356" Name="LightMaskBox_6" CreStamp="1655743322" ModStamp="1655743401" WorldPos="-73.25 14 -83.75" Rotation="0 0 0" Scale="1 1 1" Size="20.25 12.25 8.75" UID="16 1347 268443356" />
+            <LightMaskBox ID="268443384" Name="LightMaskBox_7" CreStamp="1655743823" ModStamp="1655743875" WorldPos="-87.75 10 -81.75" Rotation="0 0 0" Scale="1 1 1" Size="9 4.5 20.75" UID="16 1340 268443384" />
+        </Objects>
+    </Section>
+</HPLMapTrack_LightMask>

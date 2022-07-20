@@ -1,0 +1,57 @@
+<PreloadCache>
+    <Materials>
+        <Material DebugPos="0.000000 : 0.499500 : -2.000000" Path="/textures/liquid/water/waterplane_waves_calm.mat" />
+        <Material DebugPos="-2.588924 : 2.658164 : -6.000000" Path="d:/work/studio/frictional games/depth/redist/billboards/halo/lampglow_cone01.mat" />
+        <Material DebugPos="-2.875000 : 1.531250 : -2.000000" Path="entities/station/doors/slidedoor_theta_small/slidedoor_theta_small.mat" />
+        <Material DebugPos="-4.365380 : 0.883867 : -2.495597" Path="entities/station/furniture/chair_work_theta/chair_work_theta.mat" />
+        <Material DebugPos="-5.496144 : 1.005581 : -2.886653" Path="entities/station/furniture/table_lab/sink_kitchen.mat" />
+        <Material DebugPos="-6.750000 : 0.531022 : -1.727650" Path="entities/station/furniture/table_lab/table_lab.mat" />
+        <Material DebugPos="-9.939184 : 0.500376 : -5.500000" Path="entities/station/furniture/trash_can_theta/trash_can_theta.mat" />
+        <Material DebugPos="-9.853559 : 0.913217 : -5.500000" Path="entities/station/furniture/trash_can_theta/trash_can_theta_flap.mat" />
+        <Material DebugPos="-9.976712 : 0.499462 : -5.503130" Path="entities/station/furniture/trash_can_theta/trash_can_theta_insides.mat" />
+        <Material DebugPos="-8.938383 : 0.438383 : -1.500000" Path="entities/station/gameplay/structure_gel_sample/structure_gel_sample.mat" />
+        <Material DebugPos="-9.000000 : 0.250000 : -1.848107" Path="entities/station/gameplay/structure_gel_sample/structure_gel_sample_glass.mat" />
+        <Material DebugPos="-9.250000 : 0.298015 : -0.250003" Path="entities/station/gameplay/structure_gel_sample/structure_gel_sample_waujuice.mat" />
+        <Material DebugPos="-5.756499 : 1.195109 : 0.664916" Path="entities/station/lab/acetone/acetone.mat" />
+        <Material DebugPos="-5.701684 : 1.200375 : -1.089972" Path="entities/station/lab/beaker/beaker.mat" />
+        <Material DebugPos="-5.322529 : 1.283075 : 1.165764" Path="entities/station/lab/beaker_large_w_algae/algae_diffuse.mat" />
+        <Material DebugPos="-5.168386 : 1.257483 : 1.433710" Path="entities/station/lab/beaker_large_w_algae/beaker_large_w_algae_diffuse.mat" />
+        <Material DebugPos="-6.748960 : 1.301403 : 1.529281" Path="entities/station/lab/centrifuge/cap.mat" />
+        <Material DebugPos="-6.826258 : 1.172519 : 1.530082" Path="entities/station/lab/centrifuge/centrifuge.mat" />
+        <Material DebugPos="-6.749629 : 1.208894 : -2.055020" Path="entities/station/lab/flask/flask.mat" />
+        <Material DebugPos="-5.259812 : 1.088357 : -0.333741" Path="entities/station/lab/geigercounter/geigercounter.mat" />
+        <Material DebugPos="-6.552629 : 1.297507 : 2.295040" Path="entities/station/lab/microscope/microscope.mat" />
+        <Material DebugPos="-6.871664 : 1.187309 : -0.120846" Path="entities/station/lab/oscilloscope/oscilloscope.mat" />
+        <Material DebugPos="-5.874957 : 1.220410 : -0.234647" Path="entities/station/lab/testtube_rack/glass.mat" />
+        <Material DebugPos="-5.874997 : 1.157842 : -0.249991" Path="entities/station/lab/testtube_rack/rack.mat" />
+        <Material DebugPos="0.000000 : 3.870636 : -11.000000" Path="entities/station/lamp/fluorescent_ceil_cabin_large/fluorescent_ceil_cabin_large.mat" />
+        <Material DebugPos="-2.641491 : 3.508228 : -6.000250" Path="entities/station/lamp/lamp_wall_sign/lamp_wall_sign.mat" />
+        <Material DebugPos="-2.851648 : 3.562500 : -7.999999" Path="entities/station/lamp/wall_small/wall_small.mat" />
+        <Material DebugPos="-2.749500 : 3.500000 : -2.000000" Path="entities/station/ornaments_wall/03_02_signs_direction/03_02_signs_direction_biologicallab.mat" />
+        <Material DebugPos="-2.749500 : 1.500000 : -6.000000" Path="entities/station/ornaments_wall/03_02_signs_direction/03_02_signs_direction_biomechslab.mat" />
+        <Material DebugPos="-2.749500 : 1.125000 : -6.000000" Path="entities/station/ornaments_wall/03_02_signs_direction/03_02_signs_direction_hydroponicslab.mat" />
+        <Material DebugPos="-2.518434 : 1.498480 : -3.502992" Path="entities/station/panels/laboratory/laboratory.mat" />
+        <Material DebugPos="-10.212390 : 1.310000 : 1.249997" Path="entities/station/tech/incubator/incubator.mat" />
+        <Material DebugPos="-9.734510 : 1.598390 : 1.249995" Path="entities/station/tech/incubator/incubator_glass.mat" />
+        <Material DebugPos="-2.676500 : 2.375000 : -6.000000" Path="mods/soma helix/textures/decals/helix_logos/helixlogocharlie.mat" />
+        <Material DebugPos="-2.707500 : 1.929500 : 4.750000" Path="mods/soma helix/textures/decals/helix_posters/poster_compromise.mat" />
+        <Material DebugPos="0.000000 : 0.000000 : 0.000000" Path="particles/dust/materials/dust_light_tiny.mat" />
+        <Material DebugPos="0.000000 : 0.000000 : 0.000000" Path="particles/impacts/materials/ps_water_ripple01_norefraction.mat" />
+        <Material DebugPos="0.000000 : 0.000000 : 0.000000" Path="particles/water/materials/droplet.mat" />
+        <Material DebugPos="0.000000 : 0.000000 : 0.000000" Path="particles/water/materials/water_blob01.mat" />
+        <Material DebugPos="0.000000 : 0.000000 : 0.000000" Path="particles/water/materials/water_blob02.mat" />
+        <Material DebugPos="0.000000 : 0.000000 : 0.000000" Path="particles/water/materials/water_blob03.mat" />
+        <Material DebugPos="0.000000 : 0.006451 : -2.000000" Path="static_objects/station/details/maintenance_hatch_tau/maintenance_hatch_tau.mat" />
+        <Material DebugPos="-6.999996 : -0.000505 : -0.000004" Path="static_objects/station/floor/lab_linoleum_details.mat" />
+        <Material DebugPos="0.000000 : 2.500000 : -4.000000" Path="static_objects/station/floor/lab_linolium_plain.mat" />
+        <Material DebugPos="0.000007 : -0.060443 : -4.000000" Path="static_objects/station/pipes/floor_grate_metal.mat" />
+        <Material DebugPos="-6.825252 : 2.002258 : -0.000005" Path="static_objects/station/pipes/lab_set.mat" />
+        <Material DebugPos="0.000497 : -0.086462 : -2.000546" Path="static_objects/station/walls/fencing_chainlink_pplant.mat" />
+        <Material DebugPos="0.000007 : -0.086462 : -4.000547" Path="static_objects/station/walls/fencing_pplant.mat" />
+        <Material DebugPos="-2.875000 : 1.625000 : 2.000000" Path="static_objects/station/walls/glass_02_06_lab_less_reflection.mat" />
+        <Material DebugPos="-0.061801 : 1.937736 : -4.000000" Path="static_objects/station/walls/pipe_lab.mat" />
+        <Material DebugPos="-0.000601 : -0.565216 : -3.324156" Path="static_objects/station/walls/sensor_env_ceil_large.mat" />
+        <Material DebugPos="0.000272 : -0.472269 : -2.000000" Path="static_objects/station/walls/theta.mat" />
+        <Material DebugPos="-9.000000 : 0.070500 : -1.695000" Path="textures/decals/oil/oil_puddle01.mat" />
+    </Materials>
+</PreloadCache>

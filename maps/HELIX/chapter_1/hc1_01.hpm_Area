@@ -101,10 +101,10 @@
                     <Var Name="CustomInteractIcon" Value="PushButton" />
                 </UserVariables>
             </Area>
-            <Area ID="268436145" Name="ClimbArea_2" CreStamp="1639306370" ModStamp="1639306409" WorldPos="-9.375 1.25 -32.75" Rotation="0 -1.5708 0" Scale="1.75 0.5 0.25" Active="true" Mesh="" UID="16 273 268436145" AreaType="Climb">
+            <Area ID="268436145" Name="ClimbArea_2" CreStamp="1639306370" ModStamp="1655373928" WorldPos="-9.375 1.25 -32.75" Rotation="0 -1.5708 0" Scale="1.75 0.5 0.25" Active="true" Mesh="" UID="16 273 268436145" AreaType="Climb">
                 <UserVariables>
                     <Var Name="Crouch" Value="true" />
-                    <Var Name="FeetPosition" Value="TriggerArea_1" />
+                    <Var Name="FeetPosition" Value="TriggerArea_2" />
                     <Var Name="CanBeClimbed" Value="true" />
                     <Var Name="ParentAttachEntity" Value="" />
                     <Var Name="ParentAttachUseRotation" Value="true" />
@@ -250,7 +250,7 @@
                     <Var Name="MaxFocusDistance" Value="-1" />
                 </UserVariables>
             </Area>
-            <Area ID="268437165" Name="OmnitoolConsoleInsert_1" CreStamp="1641069250" ModStamp="1641113516" WorldPos="14.75 1.30258 -48.5" Rotation="0 -0 -0.262793" Scale="0.531053 0.5 0.578022" Active="true" Mesh="" UID="16 591 268437165" AreaType="Trigger">
+            <Area ID="268437165" Name="OmnitoolConsoleInsert_1" CreStamp="1641069250" ModStamp="1641482265" WorldPos="14.75 1.30258 -48.375" Rotation="0 -0 -0.262793" Scale="0.531053 0.5 0.578022" Active="true" Mesh="" UID="16 591 268437165" AreaType="Trigger">
                 <UserVariables>
                     <Var Name="BlocksLineOfSight" Value="false" />
                     <Var Name="EventInstanceTag" Value="" />
@@ -274,7 +274,7 @@
                     <Var Name="CustomInteractIcon" Value="None" />
                 </UserVariables>
             </Area>
-            <Area ID="268437252" Name="ConfigChipConsoleInsert" CreStamp="1641122539" ModStamp="1641127035" WorldPos="14.7796 1.41258 -48.4729" Rotation="0 -0 -0.262793" Scale="1.00679 0.5 0.747391" Active="false" Mesh="" UID="16 690 268437252" AreaType="Trigger">
+            <Area ID="268437252" Name="ConfigChipConsoleInsert" CreStamp="1641122539" ModStamp="1641482265" WorldPos="14.7796 1.41258 -48.3479" Rotation="0 -0 -0.262793" Scale="1.00679 0.5 0.747391" Active="false" Mesh="" UID="16 690 268437252" AreaType="Trigger">
                 <UserVariables>
                     <Var Name="BlocksLineOfSight" Value="false" />
                     <Var Name="EventInstanceTag" Value="" />
@@ -298,7 +298,7 @@
                     <Var Name="CustomInteractIcon" Value="None" />
                 </UserVariables>
             </Area>
-            <Area ID="268437253" Name="ConfigChipConsoleInsert_ToolArea" CreStamp="1641122562" ModStamp="1641146611" WorldPos="15.25 0.5 -48.7698" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 668 268437253" AreaType="Tool">
+            <Area ID="268437253" Name="ConfigChipConsoleInsert_ToolArea" CreStamp="1641122562" ModStamp="1641482265" WorldPos="15.25 0.5 -48.6448" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 668 268437253" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="securitychip" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -306,14 +306,14 @@
                     <Var Name="LookEntityLOS" Value="true" />
                 </UserVariables>
             </Area>
-            <Area ID="268437257" Name="RCO_Area" CreStamp="1641128987" ModStamp="1641129267" WorldPos="14.875 1.375 -48.5" Rotation="0 0 0" Scale="1 1 1" Active="false" Mesh="" UID="16 588 268437257" AreaType="InteractAux">
+            <Area ID="268437257" Name="RCO_Area" CreStamp="1641128987" ModStamp="1641482265" WorldPos="14.875 1.375 -48.375" Rotation="0 0 0" Scale="1 1 1" Active="false" Mesh="" UID="16 588 268437257" AreaType="InteractAux">
                 <UserVariables>
                     <Var Name="InteractParent" Value="omnitool_configured" />
                     <Var Name="UseParentMainBody" Value="true" />
                     <Var Name="MaxFocusDistance" Value="-1" />
                 </UserVariables>
             </Area>
-            <Area ID="268437664" Name="OmnitoolConsoleInsert_ToolArea" CreStamp="1641146566" ModStamp="1641146758" WorldPos="15.25 0.5 -48.75" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 807 268437664" AreaType="Tool">
+            <Area ID="268437664" Name="OmnitoolConsoleInsert_ToolArea" CreStamp="1641146566" ModStamp="1641482265" WorldPos="15.25 0.5 -48.625" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 807 268437664" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -321,15 +321,15 @@
                     <Var Name="LookEntityLOS" Value="true" />
                 </UserVariables>
             </Area>
-            <Area ID="268437665" Name="OmnitoolConsoleInsert_ToolArea_1" CreStamp="1641146709" ModStamp="1641147185" WorldPos="15.25 0.5 -48.7353" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 809 268437665" AreaType="Tool">
+            <Area ID="268437665" Name="OmnitoolConsoleInsert_ToolArea_1" CreStamp="1641146709" ModStamp="1642329441" WorldPos="15.25 0.5 -48.6103" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 809 268437665" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
-                    <Var Name="LookEntities" Value="OmnitoolConsoleInsert_2" />
+                    <Var Name="LookEntities" Value="" />
                     <Var Name="LookEntityLOS" Value="true" />
                 </UserVariables>
             </Area>
-            <Area ID="268437666" Name="OmnitoolConsoleInsert_2" CreStamp="1641147034" ModStamp="1641147035" WorldPos="14.75 1.30258 -48.4526" Rotation="0 -0 -0.262793" Scale="0.531053 0.5 0.578022" Active="true" Mesh="" UID="16 875 268437666" AreaType="Trigger">
+            <Area ID="268437666" Name="OmnitoolConsoleInsert_2" CreStamp="1641147034" ModStamp="1642328865" WorldPos="14.75 1.30258 -48.3276" Rotation="0 -0 -0.262793" Scale="0.531053 0.5 0.578022" Active="false" Mesh="" UID="16 875 268437666" AreaType="Trigger">
                 <UserVariables>
                     <Var Name="BlocksLineOfSight" Value="false" />
                     <Var Name="EventInstanceTag" Value="" />
@@ -353,7 +353,7 @@
                     <Var Name="CustomInteractIcon" Value="None" />
                 </UserVariables>
             </Area>
-            <Area ID="268437727" Name="OmnitoolConsoleInsert_ToolArea_2" CreStamp="1641233219" ModStamp="1641233221" WorldPos="15.25 0.5 -50.875" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 877 268437727" AreaType="Tool">
+            <Area ID="268437727" Name="OmnitoolConsoleInsert_ToolArea_2" CreStamp="1641233219" ModStamp="1641482265" WorldPos="15.25 0.5 -50.75" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 877 268437727" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -361,7 +361,7 @@
                     <Var Name="LookEntityLOS" Value="true" />
                 </UserVariables>
             </Area>
-            <Area ID="268437728" Name="OmnitoolConsoleInsert_ToolArea_3" CreStamp="1641233223" ModStamp="1641233224" WorldPos="15.25 0.5 -52.875" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 806 268437728" AreaType="Tool">
+            <Area ID="268437728" Name="OmnitoolConsoleInsert_ToolArea_3" CreStamp="1641233223" ModStamp="1641482265" WorldPos="15.25 0.5 -52.75" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 806 268437728" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -369,7 +369,7 @@
                     <Var Name="LookEntityLOS" Value="true" />
                 </UserVariables>
             </Area>
-            <Area ID="268437729" Name="OmnitoolConsoleInsert_ToolArea_4" CreStamp="1641233235" ModStamp="1641233239" WorldPos="15.25 0.5 -51" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 876 268437729" AreaType="Tool">
+            <Area ID="268437729" Name="OmnitoolConsoleInsert_ToolArea_4" CreStamp="1641233235" ModStamp="1641482265" WorldPos="15.25 0.5 -50.875" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 876 268437729" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -377,7 +377,7 @@
                     <Var Name="LookEntityLOS" Value="true" />
                 </UserVariables>
             </Area>
-            <Area ID="268437730" Name="OmnitoolConsoleInsert_ToolArea_5" CreStamp="1641233240" ModStamp="1641233242" WorldPos="15.25 0.5 -53" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 808 268437730" AreaType="Tool">
+            <Area ID="268437730" Name="OmnitoolConsoleInsert_ToolArea_5" CreStamp="1641233240" ModStamp="1641482265" WorldPos="15.25 0.5 -52.875" Rotation="0 0 0" Scale="1.75 1 1.5" Active="true" Mesh="" UID="16 808 268437730" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -401,7 +401,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437826" Name="ToolArea_4" CreStamp="1641311582" ModStamp="1641311651" WorldPos="32.2675 0.5 -41.25" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 928 268437826" AreaType="Tool">
+            <Area ID="268437826" Name="ToolArea_4" CreStamp="1641311582" ModStamp="1641482265" WorldPos="32.2675 0.5 -41.125" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 928 268437826" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -409,7 +409,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437827" Name="ToolArea_5" CreStamp="1641311582" ModStamp="1641311648" WorldPos="32.2325 0.5 -41.25" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 927 268437827" AreaType="Tool">
+            <Area ID="268437827" Name="ToolArea_5" CreStamp="1641311582" ModStamp="1641482265" WorldPos="32.2325 0.5 -41.125" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 927 268437827" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -417,7 +417,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437828" Name="ToolArea_6" CreStamp="1641311597" ModStamp="1641311640" WorldPos="32.2675 0.5 -42.5" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 924 268437828" AreaType="Tool">
+            <Area ID="268437828" Name="ToolArea_6" CreStamp="1641311597" ModStamp="1641482265" WorldPos="32.2675 0.5 -42.375" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 924 268437828" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -425,7 +425,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437829" Name="ToolArea_7" CreStamp="1641311597" ModStamp="1641311642" WorldPos="32.2325 0.5 -42.5" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 922 268437829" AreaType="Tool">
+            <Area ID="268437829" Name="ToolArea_7" CreStamp="1641311597" ModStamp="1641482265" WorldPos="32.2325 0.5 -42.375" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 922 268437829" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -433,7 +433,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437830" Name="ToolArea_8" CreStamp="1641311599" ModStamp="1641311635" WorldPos="30.0175 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 929 268437830" AreaType="Tool">
+            <Area ID="268437830" Name="ToolArea_8" CreStamp="1641311599" ModStamp="1641482265" WorldPos="30.0175 0.5 -43.875" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 929 268437830" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -441,7 +441,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437831" Name="ToolArea_9" CreStamp="1641311599" ModStamp="1641311633" WorldPos="29.9825 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 923 268437831" AreaType="Tool">
+            <Area ID="268437831" Name="ToolArea_9" CreStamp="1641311599" ModStamp="1641482265" WorldPos="29.9825 0.5 -43.875" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 923 268437831" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -449,7 +449,7 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437832" Name="ToolArea_10" CreStamp="1641311604" ModStamp="1641311624" WorldPos="28.7675 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 926 268437832" AreaType="Tool">
+            <Area ID="268437832" Name="ToolArea_10" CreStamp="1641311604" ModStamp="1641482265" WorldPos="28.7675 0.5 -43.875" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 926 268437832" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_configured" />
                     <Var Name="ConnectedToolAreas" Value="" />
@@ -457,12 +457,40 @@
                     <Var Name="LookEntityLOS" Value="false" />
                 </UserVariables>
             </Area>
-            <Area ID="268437833" Name="ToolArea_11" CreStamp="1641311604" ModStamp="1641311622" WorldPos="28.7325 0.5 -44" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 925 268437833" AreaType="Tool">
+            <Area ID="268437833" Name="ToolArea_11" CreStamp="1641311604" ModStamp="1641482265" WorldPos="28.7325 0.5 -43.875" Rotation="0 0 0" Scale="1 1 1" Active="true" Mesh="" UID="16 925 268437833" AreaType="Tool">
                 <UserVariables>
                     <Var Name="ToolsToEquip" Value="omnitool_starternotconfig" />
                     <Var Name="ConnectedToolAreas" Value="" />
                     <Var Name="LookEntities" Value="omnitool_panel_3" />
                     <Var Name="LookEntityLOS" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437958" Name="devtpelev" CreStamp="1642329846" ModStamp="1642329852" WorldPos="8.75 1.125 4.125" Rotation="0 0 0" Scale="0.7 1.9 0.7" Active="true" Mesh="" UID="16 1036 268437958" AreaType="PlayerStart">
+                <UserVariables>
+                    <Var Name="Crouching" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268437959" Name="devtplabs" CreStamp="1642329860" ModStamp="1642329868" WorldPos="25.25 1.125 -33.75" Rotation="0 0 0" Scale="0.7 1.9 0.7" Active="true" Mesh="" UID="16 1035 268437959" AreaType="PlayerStart">
+                <UserVariables>
+                    <Var Name="Crouching" Value="false" />
+                </UserVariables>
+            </Area>
+            <Area ID="268438330" Name="Cam8713" CreStamp="1643879069" ModStamp="1643879237" WorldPos="21.7184 4.42477 -48.1769" Rotation="0.346256 4.22427 -0.0108207" Scale="0.25 0.25 0.5" Active="true" Mesh="" UID="16 960 268438330" AreaType="CameraAnimation">
+                <UserVariables>
+                    <Var Name="MaxYaw" Value="45" />
+                    <Var Name="MaxPitch" Value="45" />
+                    <Var Name="LookSpeedMultiplier" Value="1" />
+                    <Var Name="ForwardTime" Value="1" />
+                    <Var Name="BackwardTime" Value="1" />
+                    <Var Name="AutoMovement" Value="0" />
+                    <Var Name="LookMoveDistance" Value="0" />
+                    <Var Name="LookMoveMaxAngle" Value="0" />
+                    <Var Name="InteractiveMovement" Value="true" />
+                    <Var Name="UseSpeedFading" Value="true" />
+                    <Var Name="CrouchOnExit" Value="false" />
+                    <Var Name="InitToCamera" Value="false" />
+                    <Var Name="UsePlayerEyeline" Value="false" />
+                    <Var Name="CallbackFunc" Value="" />
                 </UserVariables>
             </Area>
         </Objects>

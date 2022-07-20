@@ -28,9 +28,11 @@ enum CameraTerminal1
 	CameraTerminal1LoadingCam8687,
 	CameraTerminal1LoadingCam8654,
 	CameraTerminal1LoadingCam8689,
+	CameraTerminal1LoadingCam8713,
 	CameraTerminal1Loaded8687,
 	CameraTerminal1Loaded8654,
 	CameraTerminal1Loaded8689,
+	CameraTerminal1Loaded8713,
 	CameraTerminal1SecLogs,
 	CameraTerminal1Emails,
 	CameraTerminal1LogIn,
@@ -77,7 +79,8 @@ enum CryoChamberTerminal
 
 
 bool bPowerStatusOnline = true;
- 
+bool mbElevPanelLck = false;
+
 class cScrMap : iScrMap
 {
 	//--------------------------------------------
@@ -89,6 +92,17 @@ class cScrMap : iScrMap
 	//{///////////////////////////////////////////////////////////////////////////////////////
  
 	//-------------------------------------------------------
+
+	////////////////////////////
+	// Preload Data
+	void PreloadData()
+	{
+		//Preload Derek
+		PlayerHands_PreloadHandModel_Human();
+		//Preload Terminals / ImGui
+		StationGui_PreloadDefault();
+		OmnitoolGui_Preload();
+	}
  
 	////////////////////////////
 	// Set up map environment
@@ -96,6 +110,8 @@ class cScrMap : iScrMap
 	{
 		CathTool_ResetScreen(eCathToolVariant_HelperJane);
 		CathTool_SetChipBroken(true);
+		Voice_SetSource("HelperJane","omnitoolconfigterm_a",1.0f,12.0f,true);
+		Voice_SetSource("Player","Player",1.0f,12.0f,true);
 	}
 	
 	//-------------------------------------------------------
@@ -113,16 +129,21 @@ class cScrMap : iScrMap
 	// Run when entering map
 	void OnEnter()
 	{
-		//ImGui_PreloadImage("inv_omnitool.tga");
+		//Omnitool
+		Prop_SetAllowMapTransfer("omnitool_configured",true);
+		//Misc
+		//Effect_Fade_In(2.0f);
 		Entity_SetActive("camera_surveillance_theta_headtrack_1", false);
 		Map_AddTimer("timerName",2,"waucamtest");
 		Player_SetJumpDisabled(true);
 		Player_SetCrouchDisabled(true);
 		Player_SetStandDisabled(true);
 		Player_SetHeadBobMul(0.0f);
-		Effect_Fade_Out(0);
+		//Effect_Fade_Out(0);
 		StartMap1();
+		Map_AddTimer("CountdownBeforeSystemReset",60,"CountdownBeforeSystemReset");
 		//Sound_CreateAtEntity("Fire Alarm Test","helix_fire_alarms/chapter1/fire_alarm_lvl1","slidedoor_large_bulkhead_vertical_fastclose_1",0,false);
+		mbElevPanelLck = false;
 	}
 
 	void waucamtest (const tString &in asName)
@@ -215,6 +236,9 @@ class cScrMap : iScrMap
 		{
 			//Player_SetFlashlightDisabled(true);
 			cLux_AddTodoMessage("Activate Wakeup Sequence");
+			//Voice_Play("1_01_SeqWakeUp"); 1_03_SeqElevFail
+			Voice_Play("1_03_SeqElevFail");
+
 			///Set up here the current music
 			cLux_AddTodoMessage("Turn on the theme music");
 
@@ -227,6 +251,7 @@ class cScrMap : iScrMap
 			//Sound_CreateAtEntity("WakeUp","00_05_apartment2/SFX/bed_awaken","Player",0,false);
 			///Set up here the WAU camera going online + make the camera look at the WAU camera
 			cLux_AddTodoMessage("Activate the WAU camera sound and light");
+			
 
 			///Free the player from the stuck position after the camera and WAU cam animations
 			cLux_AddTodoMessage("Free the player from default position");
@@ -373,13 +398,21 @@ class cScrMap : iScrMap
 				Entity_SetEffectsActive("reactor_flow_control_1", true, true);
 				Sound_CreateAtEntity("PowerActive","Entities_Station/object/upsilon_transformer/hum","reactor_flow_control_1",0,false);
 				Sound_CreateAtEntity("PowerActive","01_02_upsilon_inside_02/special/fuse/fuse_machine_on","reactor_flow_control_1",0,false);
+				Sound_CreateAtEntity("PowerActive","02_05_theta/amb/spots/small_spark_loop","reactor_flow_control_1",0,false);
 				Sound_CreateAtEntity("PowerActive","01_01_upsilon_awake/sfx/wake_up/lights_on","reactor_flow_control_1",0,false);
 				//Panels updates
 				Button_SetLocked("omnitool_panel_1", false);
+				Button_SetLocked("panel_large_inside_6", false);
+				Button_SetLocked("panel_large_inside_7", false);
 				Button_SetDisabled("panel_large_inside_3", false);
 				Button_SetDisabled("highsecurity_3", false);
+				Button_SetDisabled("omnitool_panel_1", false);
+				Button_SetLocked("omnitool_panel_1", true);
 				//Light updates
 				Lamp_SetLit("ceilingtunnellights_*", true, true);
+				//Terminal updates
+				Entity_SetEffectsActive("computer_case_1",true,true);
+				Terminal_SetGuiActive("computer_parts_monitor_swivvel_GUI_1", true, 0.4);
 			}
 		}
 		 //} END Event *Power Reactivation*
@@ -545,8 +578,6 @@ class cScrMap : iScrMap
 		// Special: Config Chip
 		bool securitychip_3_CanBeUsed(const tString &in asTool, const tString &in asEntity)
 		{
-			////////////////////////////
-			// Player is looking at config chip slot to insert it
 			if (asEntity == "ConfigChipConsoleInsert") return true;
 			return false;
 		}
@@ -569,8 +600,8 @@ class cScrMap : iScrMap
 			if(asEntity=="omnitool_panel_7") return true;
 			if(asEntity=="omnitool_panel_8") return true;
 			if(asEntity=="omnitool_panel_9") return true;
-			if(asEntity=="OmnitoolConsoleInsert_1") return true;
-			if(asEntity=="OmnitoolConsoleInsert_2") return true;
+			//if(asEntity=="OmnitoolConsoleInsert_1") return true;
+			//if(asEntity=="OmnitoolConsoleInsert_2") return true;
 			if(asEntity=="omnitool_inside_2") return true;
 			if(asEntity=="omnitool_inside_3") return true;
 			return false;
@@ -686,7 +717,7 @@ class cScrMap : iScrMap
 		void UpdateChipInsertionStatus(const tString &in asTimer)
 		{
 			//Sound_PlayGui("general_helperjaneplugtoolchipfound_001_helperjane_001.ogg", 0.7f, eSoundEntryType_Gui);
-			Voice_Play("helperjane_serviceconsoleactivated");
+			Voice_Play("ServConsole_SecurityCipherFound");
 			Entity_SetActive("securitychip_insertstart",false);
 			Entity_SetActive("OmniTool_NotConfigured",false);
 			Entity_SetActive("omnitool_configured", true);
@@ -878,6 +909,7 @@ class cScrMap : iScrMap
 		}
 		void ElevatorAlarmsStarting (const tString &in asName)
 		{
+			mbElevPanelLck = true;
 			cLux_AddTodoMessage("Emergency Alarms are now turning on!");
 		    /// Activate the emergency alarms + the emergency lights
 			Sound_CreateAtEntity("EmergencyAlarms1","01_02_upsilon_inside_02/special/collapse_sequence/alarm","powerfailingsound_1",0,false);
@@ -938,11 +970,11 @@ class cScrMap : iScrMap
 			Sound_CreateAtEntity("ElevatorMoving","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/loop","02_06_elevator_1",0,false);
 
 			Prop_MoveLinearTo("elevshaftstartpos_1","elevshaftarrivalpos_2",5.0f,2.0f,0,true);
-			int lShakeID = Effect_Shake_Start(0.02,0.2,8,0.2);
-			//Time before floor arrival: 8/10
+			int lShakeID = Effect_Shake_Start(0.02,0.2,11,0.2);
+			//WRNG: Time before floor arrival: 8/10
 			Effect_Shake_SetSourceEntity(lShakeID, "02_06_elevator_1", 0.5, 7.5);
 			
-			Map_AddTimer("timerName",8,"StopElevator");
+			Map_AddTimer("timerName",10.5f,"StopElevator");
 	    }
 	    
 	    void StopElevator (const tString &in asName)
@@ -956,13 +988,14 @@ class cScrMap : iScrMap
 	    	/// Add a chime
 	    	
 	    	/// End the chime
-	    	Map_AddTimer("timerName",4,"MapTransition");
+	    	Map_AddTimer("timerName",8,"MapTransition");
+			Effect_Fade_Out(5.0f);
 	    }
 	    void MapTransition (const tString &in asName)
 	    {
 	    	///add a fade out effect to the player gui
 	    	///then make the map transition
-	    	Sound_CreateAtEntity("ElevatorStopping","02_06_theta_tunnels/sfx/events/elevator_sequence/motor/stop","02_06_elevator_1",0,false);
+			Map_ChangeMap("hc1_02.hpm", "elevspawnpoint", "", "", "");
 	    }
 		 //} END Event *Name Of Event*
 	 
@@ -1030,10 +1063,10 @@ class cScrMap : iScrMap
 		 //} END Terminal "Chamber Customization Terminal"
 
 		 /////////////////////////////////////////
-		 // "Chamber Customization Terminal"
+		 // "Maintenance Area Management Terminal"
 		 //{//////////////////////////////////////
 	 	bool bMaintenanceLockdownTunnelTerminalLockdown = true;
-		void computer_floor_1_OnGui(const tString&in asEntityName, float afTimeStep)
+		void mntmanagementterm_OnGui(const tString&in asEntityName, float afTimeStep)
 		{
 			ImGui_SetTransCategory("");
 			//cStationGui_ErrorSettings error;
@@ -1050,42 +1083,54 @@ class cScrMap : iScrMap
 			label.mFont.mvSize = cVector2f(60,60);
 			label2.mFont.mvSize = cVector2f(50,50);
 			cGuiDialogBoxSettings dialogBox = StationGui_CreateDefaultDialogBox();
-			bool bDrawBackButton = true;
-			bool bBackButton = true;
+
+			//Special: Shutdown settings
+			cImGuiWindowData sdwindow = StationGui_CreateDefaultWindowData();
+			sdwindow.mColorBase = ImGui_FadeOscillateColor("ShutDownColor", gStationGuiColor_Warning, gStationGuiColor_Warning*0.8, 0.3);
+			sdwindow.mfCaptionSizeMul = 1.2;
+
+			cImGuiTextFrameData sdtextData;
+			sdtextData.mbUseBackgroundGfx = false;
+			sdtextData.mFont.mvSize = cVector2f(28, 28);
+			sdtextData.mFontAlign = eFontAlign_Center;
+			sdtextData.mColorText = cColor(0.8, 1);
+
 			int selectedMenu=0;
 			if (ImGui_IsFirstRun()) StationGui_SetActiveApp(MaintenanceLockdownTunnelTerminalInsufficientPower);
 			switch (lActiveApp)
 			{
 				case MaintenanceLockdownTunnelTerminalInsufficientPower:
-					bBackButton = false;
 					StationGui_BigStatusMessage("Insufficient power!", statusMessage);
 					if(bPowerStatusOnline==true) StationGui_SetActiveApp(MaintenanceLockdownTunnelTerminalMainMenu);
 				break;
 				case MaintenanceLockdownTunnelTerminalTest:
-					bBackButton = true;
+					StationGuiBG_Taskbar("");
 					StationGui_TextReaderSingle("Info", "New user detected. \nExternal registration found: Zabala, Cezar \nOrigin: TSH-1 Station. \nClearance granted.", cStationGui_TextReaderSettings(), cVector3f(0.125, 0.175, 0), cVector2f(0.75, 0.5));
 					if (ImGui_DoButtonExt("SeqPart1", "OK", button, ImGui_NrmPosGroup(cVector3f(0.5-0.075, 0.5, 1)), ImGui_NrmSizeGroup(cVector2f(0.125, 0.1))))
 					{
 						StationGui_SetActiveApp(MaintenanceLockdownTunnelTerminalMainMenu);
 					}
-					if(bPowerStatusOnline==true) StationGui_SetActiveApp(MaintenanceLockdownTunnelTerminalMainMenu);
+					StationGui_BackButton(true);
 				break;
 				case MaintenanceLockdownTunnelTerminalMainMenu:
-					bBackButton = false;
 					StationGuiBG_Taskbar("");
 					StationGui_AddApp("Disable Lockdown",bMaintenanceLockdownTunnelTerminalLockdown,MaintenanceLockdownTunnelTerminalUnlockingDoors);
+					StationGui_AddApp("Log #SEC.D-2452",!bMaintenanceLockdownTunnelTerminalLockdown,MaintenanceLockdownTunnelTerminalTest);
 					StationGui_AddApp("Shutdown",!bMaintenanceLockdownTunnelTerminalLockdown,MaintenanceLockdownTunnelTerminalShutdown);
-					StationGui_AddApp("Test lole",!bMaintenanceLockdownTunnelTerminalLockdown,MaintenanceLockdownTunnelTerminalTest);
 					StationGui_MainMenu();
+					StationGui_BackButton(false);
 				break;
 				case MaintenanceLockdownTunnelTerminalUnlockingDoors:
-					bBackButton = false;
-					if(DoLoadingWindow("AttemptRemovingLockdown", "Lockdown System", "Lifting lockdown...", 7, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_systemcontrol_1"))
+					StationGuiBG_Taskbar("");
+					StationGui_BackButton(false);
+					if(DoLoadingWindow("AttemptRemovingLockdown", "Lockdown System", "Lifting lockdown...", 7, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_case_1"))
 					{
 						StationGui_SetActiveApp(MaintenanceLockdownTunnelTerminalUnlockDone);
 					}
 				break;
 				case MaintenanceLockdownTunnelTerminalUnlockDone:
+					StationGuiBG_Taskbar("");
+					StationGui_BackButton(false);
 					ImGui_SetModColorMul(cColor_Red);
 					//ImGui_SetModColorMul(gStationGuiColor_Error);
 					if (StationGui_DrawAndCheckErrors()) return;
@@ -1109,12 +1154,28 @@ class cScrMap : iScrMap
 						//}
 				break;
 				case MaintenanceLockdownTunnelTerminalShutdown:
-					bBackButton = false;
-					ImGui_SetModUseInput(false);
-					if(DoLoadingWindow("ShutdownMaintenanceTerminal1", "Shutting down...", "Goodbye user!", 3, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_systemcontrol_1"))
+					//if(DoLoadingWindow("ShutdownMaintenanceTerminal1", "Shutting down...", "Goodbye user!", 3, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "computer_systemcontrol_1"))
+					//{
+					//	Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_shutdown",1.0);
+					//	Terminal_SetGuiActive("computer_parts_monitor_swivvel_GUI_1", false, 0.4);
+					//	//ImGui_SetModUseInput(false);
+					//}
+		
+					ImGui_DoWindowStart("Shutdown", sdwindow, ImGui_NrmPosGroup(cVector3f((1.f-0.6)*0.5, (1.f-0.2)*0.5, 1.5)), ImGui_NrmSizeGroup(cVector2f(0.6, 0.2)));
+
+					ImGui_DoTextFrameExt("Shutting Down...", ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, sdtextData, ImGui_NrmPosGroup(cVector3f(0.0, 0.25, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+					ImGui_DoWindowEnd();
+		
+					if (!ImGui_TimerExists("ShutdownTimer"))
 					{
-						Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_shutdown",1.0);
-						Terminal_SetGuiActive("computer_systemcontrol_1", false, 0);
+						ImGui_AddTimer("ShutdownTimer", 4);
+					}
+					if (ImGui_TimerOver("ShutdownTimer"))
+					{
+						ImGui_SetModUseInput(false);
+						Terminal_SetGuiActive(asEntityName, false, 0.4);
+						Entity_SetEffectsActive("computer_case_1", false, true);
+						Sound_CreateAtEntity("MntTermShutdown","02_05_theta/sfx/events/brandon_scan/scan_end","computer_case_1",0,false);
 					}
 				break;
 			}
@@ -1145,7 +1206,7 @@ class cScrMap : iScrMap
 				button.mColorBase = cColor(0.227f, 0.51f, 0.557f) * 0.75f;
 				button.mColorInFocus = cColor(0.227f, 0.51f, 0.557f); //cColor_Blue*1.3;
 				button.mColorTriggered = cColor(0.9, 0.6, 0.1);
-				button.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.06);
+				button.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.06); //0.06 
 				button.mFont.mMaterial = eGuiMaterial_Alpha;
 				ImGui_SetDefaultButton(button);
 			
@@ -1158,41 +1219,52 @@ class cScrMap : iScrMap
 				bool bActivateElevator = false;
 			
 				int lSelectedFloor = ImGui_GetStateInt("SelectedFloor",0);
+
+				if(mbElevPanelLck)
+				{
+					cStationGui_BigStatusMessageSettings statusMessage;
+					statusMessage.mbBlinking = true;
+					statusMessage.mfBlinkTime = 1;
+					StationGui_BigStatusMessage("Elevator Override", statusMessage);
+				}
+				if(!mbElevPanelLck)
+				{
+
+					ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(-0.02,0.1, 1)), ImGui_NrmSizeGroup(cVector2f(1, 0.825))); //0,0.1, 1 // 1, 0.825
 			
-				ImGui_GroupBegin(ImGui_NrmPosGroup(cVector3f(0,0.1, 1)), ImGui_NrmSizeGroup(cVector2f(1, 0.825)));
-			
-					///////////////////////////////
-					// ELEVATOR BUTTONS
-					DoElevatorFloorIndicator(lSelectedFloor,0);
-					if (DoElevatorButton("Cryo-Stations", 0, button))
-					{
-						SlideDoor_SetClosed("slidedoor_theta_elevator_rear_1",false);
-						SlideDoor_SetClosed("slidedoor_theta_elevator_rear_2",false);
-					}
-					DoElevatorFloorIndicator(lSelectedFloor,1);
-					if (DoElevatorButton("Maintenance",1, button))
-					{
-						cLux_AddTodoMessage("Sound: Error sound, floor is ded");
-						Sound_CreateAtEntity("Elevator error","Entities_Station/tech/terminal_beeps/theta_elevator/error",asEntityName,0,false);
-					}
-					DoElevatorFloorIndicator(lSelectedFloor,2);
-					if (DoElevatorButton("Sector D Lobby",2, button))
-					{
-						bActivateElevator = true;
-						ImGui_SetStateInt("SelectedFloor",2);
-						StartElevatorPhase1();
-					}
+						///////////////////////////////
+						// ELEVATOR BUTTONS
+						DoElevatorFloorIndicator(lSelectedFloor,0);
+						if (DoElevatorButton("Cryo-Stations", 0, button))
+						{
+							SlideDoor_SetClosed("slidedoor_theta_elevator_rear_1",false);
+							SlideDoor_SetClosed("slidedoor_theta_elevator_rear_2",false);
+						}
+						DoElevatorFloorIndicator(lSelectedFloor,1);
+						if (DoElevatorButton("Maintenance",1, button))
+						{
+							cLux_AddTodoMessage("Sound: Error sound, floor is ded");
+							Sound_CreateAtEntity("Elevator error","Entities_Station/tech/terminal_beeps/theta_elevator/error",asEntityName,0,false);
+						}
+						DoElevatorFloorIndicator(lSelectedFloor,2);
+						if (DoElevatorButton("Sector D Lobby",2, button))
+						{
+							bActivateElevator = true;
+							ImGui_SetStateInt("SelectedFloor",2);
+							StartElevatorPhase1();
+						}
 				
-					///////////////////////////////
-					// CHECK FOR FLOOR CHANGE
-					if (bActivateElevator)
-					{				
-						ImGui_SetStateBool("ElevatorMoving",true);
-						Player_ChangeStateToNormal();
-						Entity_SetInteractionDisabled(asEntityName, true);
-					}
-					ImGui_SetModUseInput(true);
-				ImGui_GroupEnd();
+						///////////////////////////////
+						// CHECK FOR FLOOR CHANGE
+						if (bActivateElevator)
+						{				
+							ImGui_SetStateBool("ElevatorMoving",true);
+							Player_ChangeStateToNormal();
+							Entity_SetInteractionDisabled(asEntityName, true);
+						}
+						ImGui_SetModUseInput(true);
+					ImGui_GroupEnd();
+				}
 			}
 
 		//-------------------------------------------------------
@@ -1281,6 +1353,8 @@ class cScrMap : iScrMap
 			Gui_AttachCameraTextureToEntity("ChamberCamera8687", "ChamberCameraArea");
 			Gui_CreateCameraTexture("ChamberCamera8654", cVector2l(768, 613), 30, 90.0f, 0.1, 60);
 			Gui_AttachCameraTextureToEntity("ChamberCamera8654", "Cam8654");
+			Gui_CreateCameraTexture("ChamberCamera8713", cVector2l(768, 613), 30, 90.0f, 0.1, 60);
+			Gui_AttachCameraTextureToEntity("ChamberCamera8713", "Cam8713");
 
 			//mMatChamberCamRotation = Map_GetEntity("ChamberCameraArea").GetMatrix().GetRotation();
 		}
@@ -1319,6 +1393,7 @@ class cScrMap : iScrMap
 			//Defining Cameras
 			cImGuiGfx gfx8687("ChamberCamera8687", eImGuiGfx_Special);
 			cImGuiGfx gfx8654("ChamberCamera8654", eImGuiGfx_Special);
+			cImGuiGfx gfx8713("ChamberCamera8713", eImGuiGfx_Special);
 			//Defining Active App
 			int lActiveApp = StationGui_GetActiveApp();
 			//Defining buttons
@@ -1339,16 +1414,28 @@ class cScrMap : iScrMap
 			textFrame.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.04); //Sets the font size to 4% of the screen size.
 			//Defining dialog boxes
 			cGuiDialogBoxSettings dialogBox = StationGui_CreateDefaultDialogBox();
+			//Defining login dialog boxes
+			cGuiDialogBoxSettings logindialog = StationGui_CreateDefaultDialogBox();
+			logindialog.mType = eGuiDialogBoxType_OK;
+			//Bools
 			bool bDrawBackButton = true;
 			bool bBackButton = true;
 			int selectedMenu=0;
+			//Gauge Data
 			cImGuiGaugeData gaugeData1 = StationGui_CreateDefaultGaugeData();
 			gaugeData1.mGfxFill.mColor = gStationGuiColor_Warning;
 			gaugeData1.mOrientation = eImGuiGaugeOrientation_Vert;
 			cImGuiGaugeData gaugeData2 = StationGui_CreateDefaultGaugeData();
 			gaugeData2.mGfxFill.mColor = cColor_Red;
 			gaugeData2.mOrientation = eImGuiGaugeOrientation_Vert;
+			float fYOffset = 0;
+			//Defining textdata
+			cImGuiTextFrameData textData = StationGui_CreateDefaultTextFrameData();
+			textData.mFont.SetFile(Helper_Font_GetFontName(eLuxFontType_Sansation_Large));
+			textData.mFontAlign = eFontAlign_Center;
+			textData.mFont.mvSize = cVector2f(33, 33);
 			cVector2f vBarSize = ImGui_NrmSize(cVector2f(0.04f, 0.25f));
+			//ImGui First Run Definition
 			if (ImGui_IsFirstRun()) StationGui_SetActiveApp(CameraTerminal1MainMenu);
 
 			switch (lActiveApp)
@@ -1386,6 +1473,8 @@ class cScrMap : iScrMap
 					ImGui_DoGauge(gaugeData1, Depth_ImGui_GetOscillatingSignalValue("CryoStatusAlpha", 5), cVector3f_Zero, vBarSize);
 					ImGui_DoLabelExt("F", cryoinfolabel, ImGui_NrmPosGroup(cVector3f(-0.0525, -0.065, 1)), -1);
 					ImGui_LayoutEnd();
+
+					ImGui_DoTextFrameExt(String_SecondsToClockDisplay(Map_GetTimerTime("CountdownBeforeSystemReset"), false, false, true, true), ImGui_NrmSizeGroup(cVector2f(0.05, 0.05)), 5, 0, textData, ImGui_NrmPosGroup(cVector3f(0, 0.45, 0))+cVector3f_Up*fYOffset, ImGui_NrmSizeGroup(cVector2f(1,1)));
 					
 
 					if(StationGui_BackButton(true)) StationGui_SetActiveApp(CameraTerminal1MainMenu);
@@ -1417,6 +1506,12 @@ class cScrMap : iScrMap
 								StationGui_SetActiveApp(CameraTerminal1LoadingCam8689);
 								StationGui_SetNumpadInput("");
 							}
+							else if (sCode=="8713")
+							{
+								Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_ granted",1.0);
+								StationGui_SetActiveApp(CameraTerminal1LoadingCam8713);
+								StationGui_SetNumpadInput("");
+							}
 							else
 							{	
 								//CameraAccessErrorBox();
@@ -1444,6 +1539,9 @@ class cScrMap : iScrMap
 				case CameraTerminal1LoadingCam8689:
 					CameraTerminalCamera8689LoadingSequence();
 				break;
+				case CameraTerminal1LoadingCam8713:
+					CameraTerminalCamera8713LoadingSequence();
+				break;
 
 				case CameraTerminal1Loaded8687:
 					/////////////////////////////////////
@@ -1468,6 +1566,23 @@ class cScrMap : iScrMap
 					ImGui_DrawGfx(gfx8654, cVector3f(0,0,5.0f), ImGui_GetSize(), cColor(1, 1));
 					//ImGui_DoLabelExt("HELIX Corp.", label, ImGui_NrmPos(cVector3f(0.50f, 0.0f, 6.0f)));
 					ImGui_DoLabelExt("Camera #8654", label2, ImGui_NrmPos(cVector3f(0.01f, -0.025f, 6.0f)));
+					ImGui_DoImage(cImGuiGfx("helix_custom/helix_wau_logo_1"), cVector3f(650, 25, 10), cVector2f(100, 100));
+					bBackButton = false;
+					//if(StationGui_BackButton(true)) StationGui_SetActiveApp(CameraTerminal1MainMenu);
+					if (ImGui_DoButtonExt("ExitCamButton", "Exit", button, ImGui_NrmPosGroup(cVector3f(0.01, 0.1, 6.0f)), ImGui_NrmSizeGroup(cVector2f(0.15, 0.085))))
+					{
+						Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_device_disconnect",1.0);
+						StationGui_SetActiveApp(CameraTerminal1CamSelect);
+					}
+				break;
+
+				case CameraTerminal1Loaded8713:
+					cam8654active = true;
+					/////////////////////////////////////
+					// Draw Camera View
+					ImGui_DrawGfx(gfx8713, cVector3f(0,0,5.0f), ImGui_GetSize(), cColor(1, 1));
+					//ImGui_DoLabelExt("HELIX Corp.", label, ImGui_NrmPos(cVector3f(0.50f, 0.0f, 6.0f)));
+					ImGui_DoLabelExt("Camera #8713", label2, ImGui_NrmPos(cVector3f(0.01f, -0.025f, 6.0f)));
 					ImGui_DoImage(cImGuiGfx("helix_custom/helix_wau_logo_1"), cVector3f(650, 25, 10), cVector2f(100, 100));
 					bBackButton = false;
 					//if(StationGui_BackButton(true)) StationGui_SetActiveApp(CameraTerminal1MainMenu);
@@ -1530,6 +1645,16 @@ class cScrMap : iScrMap
 		{
 
 		}
+
+		void CameraTerminalCamera8713LoadingSequence()
+		{
+			if(DoLoadingWindow("LoadCamFromTerminal1", "Accessing Camera...", "Connecting to Camera #8713...", 7, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "cameratestterminal_2"))
+			{
+				//Map_RemoveTimer("SOMATerminalLoadingLoop");
+				StationGui_SetActiveApp(CameraTerminal1Loaded8713);
+				Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_device_connect",1.0);
+			}
+		}
 		void CameraAccessErrorBox()
 		{
 			StationGui_DrawAndCheckErrors();
@@ -1561,16 +1686,52 @@ class cScrMap : iScrMap
 			label.mFont.mvSize = cVector2f(60,60);
 			label2.mFont.mvSize = cVector2f(50,50);
 			cGuiDialogBoxSettings dialogBox = StationGui_CreateDefaultDialogBox();
-			bool bDrawBackButton = true;
-			bool bBackButton = true;
+			//bool bDrawBackButton = true;
+			//bool bBackButton = true;
 			int selectedMenu=0;
-			if (ImGui_IsFirstRun()) StationGui_SetActiveApp(ElevatorBlastdoorTerminalMainMenu);
+			if (ImGui_IsFirstRun())
+			{
+				StationGui_SetActiveApp(ElevatorBlastdoorTerminalMainMenu);
+				ImGui_SetStateBool("BdoorLoggedIn", false);
+			}
 			//if (ImGui_IsFirstRun()) bLoggedIn = false;
+
+			//Special: Non-generic loading window settings
+			cImGuiWindowData nglwindow = StationGui_CreateDefaultWindowData();
+			nglwindow.mColorBase = ImGui_FadeOscillateColor("NGLoadingColor", gStationGuiColor_Warning*1.8, gStationGuiColor_Warning*1.2, 0.3);
+			nglwindow.mfCaptionSizeMul = 1.2;
+
+			cImGuiTextFrameData ngltextData;
+			ngltextData.mbUseBackgroundGfx = false;
+			ngltextData.mFont.mvSize = cVector2f(28, 28);
+			ngltextData.mFontAlign = eFontAlign_Center;
+			ngltextData.mColorText = cColor(0.8, 1);
+
+			//Defining login dialog boxes
+			cGuiDialogBoxSettings logindialog = StationGui_CreateDefaultDialogBox();
+			logindialog.mType = eGuiDialogBoxType_OK;
+			cImGuiTextFrameData logintext = ImGui_GetDefaultTextFrame();
+			logintext.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.0375);
+			logintext.mbUseBackgroundGfx = true;
+			
+			if (ImGui_GetStateBool("BdoorLoggedIn", true))
+			{
+				//ImGui_SetStateBool("BdoorLoggedIn", false);
+				eGuiDialogCode returnCode = Depth_ImGui_DialogBox("Controls unlocked!", "Yee", logindialog);
+				if (returnCode == eGuiDialogCode_OK)
+				{
+					Depth_Audio_Terminal_Forward(ImGui_GetName());
+					bLoggedIn = true;
+					StationGui_SetActiveApp(ElevatorBlastdoorTerminalMainMenu);
+					ImGui_SetStateBool("BdoorLoggedIn", false);
+				}
+				return;
+			}
 
 			switch (lActiveApp)
 			{
 				case ElevatorBlastdoorTerminalMainMenu:
-					bBackButton = false;
+					StationGui_BackButton(false);
 					StationGui_AddApp("Unlock Controls",!bLoggedIn,ElevatorBlastdoorTerminalLoginBlastdoorKeypad);
 					StationGui_AddApp("Status",bLoggedIn,ElevatorBlastdoorTerminalStatus);
 					StationGui_AddApp("Unlock / Close Blastdoor",bLoggedIn,ElevatorBlastdoorTerminalCycleBlastdoor);
@@ -1585,7 +1746,7 @@ class cScrMap : iScrMap
 					}
 				break;
 				case ElevatorBlastdoorTerminalLoginBlastdoorKeypad:
-					bBackButton = true;
+					StationGui_BackButton(true);
 					//SOMATerminalStart();
 					//CameraTerminalLoadingSequence();
 					if(!StationGui_DrawAndCheckErrors())
@@ -1595,8 +1756,12 @@ class cScrMap : iScrMap
 							tString sCode = StationGui_GetNumpadInput();
 							if (sCode=="28965579")
 							{
-								StationGui_SetActiveApp(ElevatorBlastdoorTerminalLoginInProgress);
+								Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_omnitool_configured",1.0);
+								//Depth_Audio_Terminal_Confirm(ImGui_GetName());
+								//StationGui_SetActiveApp(ElevatorBlastdoorTerminalLoginInProgress);
+								ImGui_SetStateBool("BdoorLoggedIn", true);
 								StationGui_SetNumpadInput("");
+								//return;
 							}
 							else
 							{	
@@ -1616,12 +1781,15 @@ class cScrMap : iScrMap
 					if(StationGui_BackButton(true)) StationGui_SetActiveApp(ElevatorBlastdoorTerminalMainMenu);
 				break;
 				case ElevatorBlastdoorTerminalLoginInProgress:
+					StationGui_BackButton(false);
 					if(DoLoadingWindow("UnlockBDControls", "Unlocking...", "Unlocking Blastdoor #4105", 4, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "ElevatorBlastdoorTerminal_1"))
 					{
 						bLoggedIn = true;
 						StationGui_SetActiveApp(ElevatorBlastdoorTerminalMainMenu);
 						Sound_PlayGui("Entities_Station/tech/terminal_beeps/pathOS_comp/pathOS_comp_start",1.0);
 					}
+					//Replace that with something better
+
 				break;
 				//case ElevatorBlastdoorTerminalLogoffInProgress:
 				//	if(DoLoadingWindow("UnloadUserProfileFromBDTerm", "Logging off...", "Logging off user... Goodbye!", 3, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "ElevatorBlastdoorTerminal_1"))
@@ -1634,7 +1802,17 @@ class cScrMap : iScrMap
 				case ElevatorBlastdoorTerminalCycleBlastdoor:
 					if (bBlastdoorOpened==true)
 					{
-						if(DoLoadingWindow("CloseBlastdoor", "Blastdoor Cycle", "Closing Blastdooor...", 2, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "ElevatorBlastdoorTerminal_1"))
+						StationGui_BackButton(false);
+						ImGui_DoWindowStart("Blastdoor Controls", nglwindow, ImGui_NrmPosGroup(cVector3f((1.f-0.6)*0.5, (1.f-0.2)*0.5, 1.5)), ImGui_NrmSizeGroup(cVector2f(0.6, 0.2)));
+
+						ImGui_DoTextFrameExt("Closing...", ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, ngltextData, ImGui_NrmPosGroup(cVector3f(0.0, 0.25, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+						ImGui_DoWindowEnd();
+		
+						if (!ImGui_TimerExists("BlastdoorNGLoadingTimer"))
+						{
+							ImGui_AddTimer("BlastdoorNGLoadingTimer", 4);
+						}
+						if (ImGui_TimerOver("BlastdoorNGLoadingTimer"))
 						{
 							SlideDoor_SetClosed("slidedoor_large_bulkhead_vertical_fastclose_3", true);
 							bBlastdoorOpened = false;
@@ -1643,7 +1821,17 @@ class cScrMap : iScrMap
 					}
 					else if(bBlastdoorOpened==false)
 					{
-						if(DoLoadingWindow("OpenBlastdoor", "Blastdoor Cycle", "Opening Blastdooor...", 2, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "ElevatorBlastdoorTerminal_1"))
+						StationGui_BackButton(false);
+						ImGui_DoWindowStart("Blastdoor Controls", nglwindow, ImGui_NrmPosGroup(cVector3f((1.f-0.6)*0.5, (1.f-0.2)*0.5, 1.5)), ImGui_NrmSizeGroup(cVector2f(0.6, 0.2)));
+
+						ImGui_DoTextFrameExt("Opening...", ImGui_NrmSizeGroup(cVector2f(0.05, 0)), 0, 0, ngltextData, ImGui_NrmPosGroup(cVector3f(0.0, 0.25, 1)), ImGui_NrmSizeGroup(cVector2f(1, 1)));
+						ImGui_DoWindowEnd();
+		
+						if (!ImGui_TimerExists("BlastdoorNGLoadingTimer"))
+						{
+							ImGui_AddTimer("BlastdoorNGLoadingTimer", 4);
+						}
+						if (ImGui_TimerOver("BlastdoorNGLoadingTimer"))
 						{
 							SlideDoor_SetClosed("slidedoor_large_bulkhead_vertical_fastclose_3", false);
 							bBlastdoorOpened = true;
@@ -1652,7 +1840,7 @@ class cScrMap : iScrMap
 					}
 				break;
 				case ElevatorBlastdoorTerminalStatus:
-					bBackButton = true;
+					StationGui_BackButton(true);
 					StationGui_BigStatusMessage("Status data corrupted!", statusMessage);
 					if(StationGui_BackButton(true)) StationGui_SetActiveApp(ElevatorBlastdoorTerminalMainMenu);
 				break;
@@ -1671,7 +1859,7 @@ class cScrMap : iScrMap
 			bool bTerminalUnlocked = false;
 			bool bLogoutAuthorized = false;
 			bool bChipBoxCanBeOpened = true;
-			ImGui_SetTransCategory("");
+			ImGui_SetTransCategory("OmnitoolManagementTerminal");
 			int lOmniMenuSelection = -1;
 			int lMainMenuSelection = -1;
 			//bool bBackButton = false;
@@ -1710,7 +1898,7 @@ class cScrMap : iScrMap
 			textData1.mFont.mvSize = cVector2f(20);
 			textData1.mColorBase.a = 0;
 			//Config Chip Status Declaration
-			tString sConfigChipStatus = (bOmnitoolConfigChipInserted&&bOmnitoolInserted) ? "HaiTT-7 (Update required!)" : "Not Inserted";
+			tString sConfigChipStatus = (bOmnitoolConfigChipInserted&&bOmnitoolInserted) ? "ToolChip_ToUpdate" : "ToolChip_None";
 			//Config Omni Status Declaration
 			cGuiDialogBoxSettings dialogBox = StationGui_CreateDefaultDialogBox();
 			if (ImGui_IsFirstRun())
@@ -1723,9 +1911,9 @@ class cScrMap : iScrMap
 			switch (lActiveApp)
 			{
 				case OmnitoolConfigTermAlphaOmniLocked:
-					StationGui_BigStatusMessage_Old("SERVICE CONSOLE\nPlease insert Omnitool to unlock.", gStationGuiColor_Warning, 0.875);
+					StationGui_BigStatusMessage_Old("LockedTerminal", gStationGuiColor_Warning, 0.875);
 					Entity_SetActive("OmnitoolConsoleInsert_1", true);
-					Entity_SetActive("OmnitoolConsoleInsert_2", true);
+					//Entity_SetActive("OmnitoolConsoleInsert_2", true);
 					if (bOmnitoolInserted == true)
 					{
 						StationGui_SetActiveApp(OmnitoolConfigTermAlphaOmniUnlocking);
@@ -1733,11 +1921,11 @@ class cScrMap : iScrMap
 				//return;
 				break;
 				case OmnitoolConfigTermAlphaOmniUnlocking:
-					if(DoLoadingWindow("ReadOmnitool", "Scanning Omnitool", "Reading...", 7, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "omnitoolconfigterm_a"))
+					if(DoLoadingWindow("ReadOmnitool", "Unlock_OmniScanTitle", "Unlock_OmniScanText", 7, true, 1.5,"01_02_upsilon_inside_02/sfx/power_plant_terminal_loop", "omnitoolconfigterm_a"))
 					{
-						cLux_AddTodoMessage("Unlock terminal A");
-						Voice_SetSource("HelperJane","omnitoolconfigterm_a",1.0f,12.0f,true);
-						Sound_PlayGui("3_OmnitoolJaneServiceActivate.ogg", 0.7f, eSoundEntryType_Gui);
+						cLux_AddDebugMessage("Unlock Terminal A");
+						Voice_Play("ServConsole_ServConsActive");
+						//Sound_PlayGui("3_OmnitoolJaneServiceActivate.ogg", 0.7f, eSoundEntryType_Gui);
 						bTerminalUnlocked = true;
 						if(bTerminalUnlocked==true) StationGui_SetActiveApp(OmnitoolConfigTermAlphaMainMenu);
 					} else {
@@ -1747,16 +1935,16 @@ class cScrMap : iScrMap
 				case OmnitoolConfigTermAlphaMainMenu:
 					if(bOmnitoolInserted)
 					{
-						ImGui_DoLabelExt("Welcome, Mathias Markson (#5879).", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
+						ImGui_DoLabelExt("LoggedIn_ID", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
 					} else {
-						ImGui_DoLabelExt("[USER UNIDENTIFIED!]", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
+						ImGui_DoLabelExt("LoggedIn_NoID", logstatuslabel, ImGui_NrmPosGroup(cVector3f(0.3, 0.0875, 1)), -1);
 					}
 					StationGuiBG_Taskbar("");
 					//bBackButton = true;
-					StationGui_AddApp("Omnitool Management",true,OmnitoolConfigTermAlphaOmnitoolMenu);
-					StationGui_AddApp("WAU Certificator",true);
-					StationGui_AddApp("Disconnect Omnitool",bOmnitoolDetachAllowed);
-					StationGui_AddApp("Lock",ImGui_GetStateBool("LogoutUnlockedA", true),OmnitoolConfigTermAlphaOmniLocked);
+					StationGui_AddApp("MenuA_OmniManagement",true,OmnitoolConfigTermAlphaOmnitoolMenu);
+					StationGui_AddApp("MenuA_WAUCertif",true);
+					StationGui_AddApp("MenuA_RemoveOmnitool",bOmnitoolDetachAllowed);
+					StationGui_AddApp("MenuA_Lock",ImGui_GetStateBool("LogoutUnlockedA", true),OmnitoolConfigTermAlphaOmniLocked);
 					lMainMenuSelection = StationGui_MainMenu();
 
 					//bBackButtonEnabled = false;
@@ -1774,7 +1962,7 @@ class cScrMap : iScrMap
 					if (lMainMenuSelection==1)
 					{
 						//ImGui_SetModColorMul(cColor_Red);
-						StationGui_SetError("WAU Access Denied!");
+						StationGui_SetError("WAUCertif_AccDen");
 						StationGui_SetActiveApp(OmnitoolConfigTermAlphaMainMenu);
 					}
 				break;
@@ -1782,13 +1970,13 @@ class cScrMap : iScrMap
 					StationGuiBG_Taskbar("");
 					//bBackButton = true;
 					bBackButtonEnabled = true;
-					StationGui_AddApp("Manage Tool Chip",bOmnitoolInserted,OmnitoolConfigTermAlphaOmnitoolUpdate);
-					StationGui_AddApp("Manage Cortex Chip",bOmnitoolInserted,OmnitoolConfigTermAlphaCortexChip);
-					StationGui_AddApp("Unlock Tool Box", ImGui_GetStateBool("ChipContainerClosed", true), false);
+					StationGui_AddApp("MenuB_ToolChipManage",bOmnitoolInserted,OmnitoolConfigTermAlphaOmnitoolUpdate);
+					StationGui_AddApp("MenuB_CortexChipManage",bOmnitoolInserted,OmnitoolConfigTermAlphaCortexChip);
+					StationGui_AddApp("MenuB_ToolBox", ImGui_GetStateBool("ChipContainerClosed", true), false);
 					lOmniMenuSelection = StationGui_MainMenu();
 					if (lOmniMenuSelection==2)
 					{
-						cLux_AddTodoMessage("PHYS: Open toolchip slidedoor!");
+						cLux_AddDebugMessage("PHYS: Open toolchip slidedoor!");
 						ImGui_SetStateBool("ChipContainerClosed", false);
 						// Security chip door opens
 						Map_AddTimer("timerName",1.05f,"OpenChipContainer");
@@ -1800,7 +1988,7 @@ class cScrMap : iScrMap
 				case OmnitoolConfigTermAlphaOmnitoolUpdate:
 					bBackButtonEnabled = true;
 					StationGuiBG_Taskbar("");
-					ImGui_DoWindowStart("Manage Tool Chip", window, ImGui_NrmPosGroup(0.05, 0.02, 1), ImGui_NrmSizeGroup(0.9, 0.775));
+					ImGui_DoWindowStart("ManageToolChip_Title", window, ImGui_NrmPosGroup(0.05, 0.02, 1), ImGui_NrmSizeGroup(0.9, 0.775));
 		
 					
 		
@@ -1810,11 +1998,11 @@ class cScrMap : iScrMap
 						{
 							if(!bOmnitoolConfigChipInserted)
 							{
-								ImGui_DoTextFrameExt("Welcome back, Mathias Markson (#5879).\n\nYour omnitool is in perfect condition, but not fitted with a Tool Chip.\n\nNote that without a tool chip your 'pathOS-HELIX' kit will be unavailable, including your cross-sector security and secured terminals access.\n\nTo continue using your designated privileges, please insert a Tool Chip and run an Update.", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
+								ImGui_DoTextFrameExt("ManageToolChip_Text_NoTC", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
 							} else if(bOmnitoolConfigChipInserted && !bOmnitoolUpdateLevelC02) {
-								ImGui_DoTextFrameExt("Welcome back, Mathias Markson (#5879).\n\nYour omnitool is in perfect condition and fitted with a Tool Chip.\n\nRun an Update to confirm the 'pathOS-HELIX' kit installation and the latest security ciphers.", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
+								ImGui_DoTextFrameExt("ManageToolChip_Text_TCNotUpdated", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
 							} else {
-								ImGui_DoTextFrameExt("Welcome back, Mathias Markson (#5879).\n\nYour omnitool is in perfect condition and fitted with a Tool Chip configured with 'C-02' clearance ciphers.\n\nNo further actions required.", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
+								ImGui_DoTextFrameExt("ManageToolChip_Text_TCUpToDate", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
 							}
 						}
 					//ImGui_DoTextFrameExt("OmniTool"+sOmniToolStatus, cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
@@ -1823,9 +2011,10 @@ class cScrMap : iScrMap
 					// Display Status of Config Chip
 					if(!bOmnitoolUpdateLevelC02)
 					{
-						ImGui_DoTextFrameExt("TOOL CHIP: "+sConfigChipStatus, 0, 0, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.8, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 1)));
+						//ManageToolChip_ToolChipStat_A
+						ImGui_DoTextFrameExt(sConfigChipStatus, 0, 0, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.8, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 1)));
 					} else {
-						ImGui_DoTextFrameExt("TOOL CHIP: HaiTT-7", 0, 0, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.8, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 1)));
+						ImGui_DoTextFrameExt("ToolChip_UpToDate", 0, 0, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.8, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 1)));
 					}	
 
 					//////////////////////////////////
@@ -1834,9 +2023,9 @@ class cScrMap : iScrMap
 					ImGui_SetModUseInput(bOmnitoolInserted && bOmnitoolConfigChipInserted && !bOmnitoolUpdateLevelC02);
 					
 		
-					if (ImGui_DoButton("ButtonConfigureChip","Update", ImGui_NrmPos(cVector3f(0.55, 0.55, 2)), ImGui_NrmSize(cVector2f(0.3, 0.125))))
+					if (ImGui_DoButton("ButtonConfigureChip","ManageChips_UpdateButton", ImGui_NrmPos(cVector3f(0.55, 0.55, 2)), ImGui_NrmSize(cVector2f(0.3, 0.125))))
 					{
-						cLux_AddTodoMessage("SOUND: BEGIN OMNITOOL CONFIGURATION HERE");
+						cLux_AddDebugMessage("SOUND: BEGIN OMNITOOL CONFIGURATION HERE");
 						Sound_PlayGui("Entities_Station/tech/terminal_beeps/terminal_forward",1.0);
 						Sound_CreateAtEntity("OmnitoolConfig", "01_01_upsilon_awake/sfx/omnitool/chip_calibrate", "omnitool_configured");
 						StationGui_SetActiveApp(OmnitoolConfigTermAlphaOmnitoolUpdating);
@@ -1852,12 +2041,14 @@ class cScrMap : iScrMap
 					//bBackButton = true;
 					//bBackButtonEnabled = false;
 					StationGui_BackButton(false);
-					if(DoLoadingWindow("UpdateConfChip", "Configuring Omnitool", "Updating security ciphers", 5, true, 1.5,"level_amb_shared_machines/tech/HDD/underload_loop", "omnitoolconfigterm_a"))
+					if(DoLoadingWindow("UpdateConfChip", "ToolChip_ConfInProgress_Title", "ToolChip_ConfInProgress_Text", 5, true, 1.5,"", "omnitoolconfigterm_a"))
 					{
 						cLux_AddTodoMessage("OmniChip Updated");
 						bOmnitoolUpdateLevelC02 = true;
-						if(bOmnitoolUpdateLevelC02==true) StationGui_SetActiveApp(OmnitoolConfigTermAlphaOmnitoolUpdate);
-						Sound_PlayGui("general_helperjaneupdatetoolchip_001_helperjane_001.ogg", 0.7f, eSoundEntryType_Gui);
+						//if(bOmnitoolUpdateLevelC02==true)
+						Voice_Play("ServConsole_SecurityCipherUpdated");
+						StationGui_SetActiveApp(OmnitoolConfigTermAlphaOmnitoolUpdate);
+						//Sound_PlayGui("general_helperjaneupdatetoolchip_001_helperjane_001.ogg", 0.7f, eSoundEntryType_Gui);
 						//StationGui_SetActiveApp(OmnitoolConfigTermAlphaOmnitoolMenu);
 						bOmnitoolDetachAllowed = true;
 					}
@@ -1865,23 +2056,23 @@ class cScrMap : iScrMap
 				case OmnitoolConfigTermAlphaCortexChip:
 					bBackButtonEnabled = true;
 					StationGuiBG_Taskbar("");
-					ImGui_DoWindowStart("Manage Cortex Chip", window, ImGui_NrmPosGroup(0.05, 0.02, 1), ImGui_NrmSizeGroup(0.9, 0.775));
+					ImGui_DoWindowStart("ManageCortexChip_Title", window, ImGui_NrmPosGroup(0.05, 0.02, 1), ImGui_NrmSizeGroup(0.9, 0.775));
 		
 					
 		
 					///////////////////////////////////
 					// Display Status of Omnitool
-					ImGui_DoTextFrameExt("Welcome back, Mathias Markson (#5879).\n\nYour omnitool is in perfect condition, but not fitted with a custom Cortex Chip.\n\nYou are currently being serviced by the default on-board intelligence: 'Helper Jane'. Note that installing a Cortex Chip will override the helper and may severely alter your user experience.", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
+					ImGui_DoTextFrameExt("ManageCortexChip_Text", cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
 					//ImGui_DoTextFrameExt("OmniTool"+sOmniToolStatus, cVector2f(3,3), 3.0f, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.05, 1)), ImGui_NrmSizeGroup(cVector2f(0.9, 0.8f)));
 
 					//////////////////////////////////
 					// Display Status of Config Chip
-					ImGui_DoTextFrameExt("CORTEX CHIP: Not Inserted", 0, 0, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.8, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 1)));
+					ImGui_DoTextFrameExt("ManageCortexChip_CortexChipStat", 0, 0, 0, frame, ImGui_NrmPosGroup(cVector3f(0.05, 0.8, 1)), ImGui_NrmSizeGroup(cVector2f(0.5, 1)));
 
 					//////////////////////////////////
 					// Configuration/Install button is greyed out until both components are inserted (above)
 					ImGui_SetModUseInput(false);
-					ImGui_DoButton("ButtonConfigureChip","Update", ImGui_NrmPos(cVector3f(0.55, 0.55, 2)), ImGui_NrmSize(cVector2f(0.3, 0.125)));
+					ImGui_DoButton("ButtonConfigureChip","ManageChips_UpdateButton", ImGui_NrmPos(cVector3f(0.55, 0.55, 2)), ImGui_NrmSize(cVector2f(0.3, 0.125)));
 					ImGui_SetModUseInput(true);
 					ImGui_DoWindowEnd();
 
@@ -1907,10 +2098,10 @@ class cScrMap : iScrMap
 	 
 		 void omnitoolconfigterm_bnc_OnGui(const tString&in asEntityName, float afTimeStep)
 		{
-			ImGui_SetTransCategory("");
+			ImGui_SetTransCategory("OmnitoolManagementTerminal");
 			//StationGuiBG_Scanlines();
 			StationGuiBG_Backdrop("background/helix_sec_logo_terminal", cVector2f(-0.2, -0.1), 1);
-			StationGui_BigStatusMessage_Old("TERMINAL LOCKDOWN\nPlease contact your sector administrator.", gStationGuiColor_Warning, 0.875);
+			StationGui_BigStatusMessage_Old("FullyLockedTerminal", gStationGuiColor_Warning, 0.875);
 		}
 	 
 		 //} END Terminal *Other Omnitool Update Terminals*
@@ -1921,8 +2112,8 @@ class cScrMap : iScrMap
 	 
 		 void server_mainframe_1_OnGui(const tString&in asEntityName, float afTimeStep)
 		{
-			ImGui_SetTransCategory("");
-			StationGui_BigStatusMessage_Old("MAINFRAME ONLINE\nSTATUS CODE: 042-J6", gStationGuiColor_Warning, 0.875);
+			ImGui_SetTransCategory("MainframeA");
+			StationGui_BigStatusMessage_Old("MainframeOnline", gStationGuiColor_Warning, 0.875);
 		}
 	 
 		 //} END Terminal *Mainframe Status*
@@ -1986,15 +2177,47 @@ class cScrMap : iScrMap
 		 // Terminal *Cam test terminal*
 		 //{//////////////////////////////////////
 	 
-		 //-------------------------------------------------------
-	 
-		 /*Put any variables that are only used Terminal here.*/
-	 
-		 //-------------------------------------------------------
-	 
-		 /*Put any functions that are only used Terminal here.*/
-	 
-		 //-------------------------------------------------------
+		void DoorInfoPanel(const tString &in asEntityName, float afTimeStep)
+		{
+			ImGui_SetTransCategory("InfoDoorTerminal");
+			
+			//////////////////////////////
+			// Window data
+			cImGuiWindowData window = StationGui_CreateDefaultWindowData();
+			window.mColorBase = gStationGuiColor_Normal;
+			
+			////////////////////////////
+			// Text
+			cImGuiTextFrameData textData = StationGui_CreateDefaultTextFrameData();
+			textData.mFont.SetFile(Helper_Font_GetFontName(eLuxFontType_Sansation_Large));
+			textData.mbUseBackgroundGfx = false;
+			textData.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.125);
+			textData.mFontAlign = eFontAlign_Center;
+			
+			/////////////////////////////////
+			// Backdrop
+			StationGuiBG_Scanlines();
+
+			tString sName = Entity_GetVarString(asEntityName, "");
+			
+			ImGui_DoWindowStart("", window, ImGui_NrmPosGroup(cVector3f(0.1,0.1, 1)), ImGui_NrmSizeGroup(cVector2f(0.8, 0.8)));	
+				// Resize for translations
+				array<tWString> vRows;
+				float fMaxWidth = ImGui_GetCurrentGroupSize().x*0.9;
+				GetFontWordWrapRows(textData.mFont, 1, sName, fMaxWidth, vRows);
+				if (vRows.length() > 5) textData.mFont.mvSize = ImGui_NrmSizeKeepRatio(0.1);
+				for(int i = 0; i < vRows.length(); i++)
+					ImGui_ResizeFontToFit(vRows[i], textData.mFont, fMaxWidth);
+			
+				cVector2f vSize = ImGui_NrmSizeGroup(0.95, 1);
+				vSize.y = textData.mFont.mvSize.y*float(vRows.length());
+				cVector3f vPos = ImGui_NrmPosGroup(0, 0.5, 1);
+				vPos.y -= vSize.y*0.5;
+				ImGui_SetAlignment(eImGuiAlign_CenterCenter);
+				ImGui_DoTextFrameExt(sName, ImGui_NrmSizeGroup(cVector2f(0, 0.0)), 0, 0, textData, vPos, vSize);
+				ImGui_SetAlignment(eImGuiAlign_TopLeft);
+			ImGui_DoWindowEnd();
+		}
 	 
 		 //} END Terminal *Name Of Terminal*
 
